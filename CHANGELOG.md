@@ -1,0 +1,3 @@
+# 📝 Changelog
+
+* Initial Release
