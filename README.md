@@ -2,18 +2,18 @@
 
 A modifier/optimizer to improve battery efficiency and resource usage for Samsung devices running One UI and for DS-ACK/Apollo kernels (Exynos 9810)
 
-[![DOWNLOAD](https://img.shields.io/badge/DOWNLOAD-%2300d712?style=for-the-badge&logo=git&logoColor=%2300d712
-)](link)
+[![DOWNLOAD](https://img.shields.io/badge/DOWNLOAD-%230eb802?style=for-the-badge&logo=git&logoColor=%230eb802&labelColor=gray&color=%230eb802
+)](https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.zip)
 [![LicenseGPL2.0](https://img.shields.io/badge/LICENCE-GPL_2.0-orange?style=for-the-badge&logo=gnu&logoColor=orange)](https://github.com/EliezerB03/Battery-GURU-Optimizer/blob/master/LICENSE)
 
 ### 📱 Requirements
 
 * One UI 5+ ROMs
-* Apollo v6.5+/DS v6.5+/DS-ACK 1.0+ Kernels with KSU Support
+* Apollo v6.5+/DS v6.5+/DS-ACK 1.0+ Kernels with KSU/Next Support
 
 
 ### 📝 Changelog
-* **[Changelog History]**
+* [**[Changelog History]**](https://github.com/EliezerB03/Battery-GURU-Optimizer/master/CHANGELOG.md)
 
 
 ### 🧩 Features
@@ -27,7 +27,7 @@ A modifier/optimizer to improve battery efficiency and resource usage for Samsun
 
 
 ### ⚙️ Installation
-* Download latest version **\[HERE]**
+* Download latest version [**[HERE]**](https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.zip)
 * Flash via KernelSU/Next Manager Only
 * Reboot your Device to Apply Changes
 
