@@ -2,7 +2,7 @@
 
 A modifier/optimizer to improve battery efficiency and resource usage for Samsung devices running One UI and for DS-ACK/Apollo kernels (Exynos 9810)
 
-[![DOWNLOAD](https://img.shields.io/badge/DOWNLOAD-GPL%202.0-%2300d712?style=for-the-badge&logo=git&logoColor=%2300d712
+[![DOWNLOAD](https://img.shields.io/badge/DOWNLOAD-%2300d712?style=for-the-badge&logo=git&logoColor=%2300d712
 )](link)
 [![LicenseGPL2.0](https://img.shields.io/badge/LICENCE-GPL_2.0-orange?style=for-the-badge&logo=gnu&logoColor=orange)](https://github.com/EliezerB03/Battery-GURU-Optimizer/blob/master/LICENSE)
 
