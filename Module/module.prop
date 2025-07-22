@@ -5,4 +5,4 @@ versionCode=100
 author=EliezerB03
 description=A modifier/optimizer to improve battery efficiency and resource usage for Samsung devices running One UI and for DS-ACK/Apollo kernels (Exynos 9810)
 banner=logo.png
-updateJson=https://github.com/EliezerB03/Battery-GURU-Optimizer/master/updater.json
+updateJson=https://raw.githubusercontent.com/EliezerB03/Battery-GURU-Optimizer/master/Module/updater.json
