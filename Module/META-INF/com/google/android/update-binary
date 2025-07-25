@@ -10,9 +10,10 @@ umask 022
 ui_print() { echo "$1"; }
 
 require_new_magisk() {
-  ui_print "*******************************"
-  ui_print " Please install Magisk v20.4+! "
-  ui_print "*******************************"
+  ui_print "----------------------------------------------"
+  ui_print "   UNSUPPORTED MAGISK VERSION! (ABORTING...)  "
+  ui_print "   MAGISK V20.4 REQUIRED!                     "
+  ui_print "----------------------------------------------"
   exit 1
 }
 

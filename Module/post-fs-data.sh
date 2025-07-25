@@ -1,35 +1,21 @@
-# BATTERY OPTIMIZER (CHECKS/ALL SETTINGS)
+# BATTERY GURU OPTIMIZER (SETTINGS)
 # Developed by @EliezerB03
 
-#!/data/adb/magisk/busybox sh
-set -o standalone
+#!/sbin/sh
+
+function OPTIMIZER_WAIT() {
+ while [[ -z $(getprop sys.boot_completed) ]]; do sleep 5; done
+}
+OPTIMIZER_WAIT()
 
 # ============================= GENERAL OPTIMIZATIONS =============================
 
+# DISABLE KERNEL DEBUGGING
 echo '0' > /proc/sys/kernel/panic
 echo 'N' > /sys/kernel/debug/debug_enabled
 echo 'N' > /sys/kernel/debug/seclog/seclog_enabled
-echo 'Y' > /sys/module/workqueue/parameters/power_efficient
 
-# ============================= CPU FREQ SETTINGS =============================
-
-echo '1690000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-echo '1794000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
-
-# ============================= CPU HOTPLUG OPTIMIZATIONS =============================
-
-echo '10' > /sys/power/cpuhotplug/governor/single_change_ms
-echo '10' > /sys/power/cpuhotplug/governor/dual_change_ms
-echo '1' > /sys/power/cpuhotplug/governor/skip_lit_enabled
-echo '1' > /sys/power/cpuhotplug/governor/ldsum_enabled
-echo '175' > /sys/power/cpuhotplug/governor/big_idle_thr
-
-# ============================= THERMAL OPTIMIZATIONS =============================
-
-
-
-# ============================= STORAGE OPTIMIZATIONS =============================
-
+# STORAGE OPTIMIZATIONS
 echo '1' > /sys/block/sda/queue/rotational
 echo '1' > /sys/block/sda/queue/add_random
 echo '256' > /sys/block/sda/queue/nr_requests
@@ -40,8 +26,50 @@ echo '0' > /sys/block/sda/queue/iostats
 echo 'cfq' > /sys/block/mmcblk0/queue/scheduler
 echo '0' > /sys/block/mmcblk0/queue/iostats
 
-# ============================= UNDERVOLT SETTINGS =============================
+# THERMAL OPTIMIZATIONS
+system_table_set activity_manager_constants max_cached_processes=0,background_settle_time=0,fgservice_min_shown_time=0,fgservice_min_report_time=0,fgservice_screen_on_before_time=0,fgservice_screen_on_after_time=0,content_provider_retain_time=0,gc_timeout=0,gc_min_interval=0,full_pss_min_interval=0,full_pss_lowered_interval=0,power_check_interval=0,power_check_max_cpu_1=0,power_check_max_cpu_2=0,power_check_max_cpu_3=0,power_check_max_cpu_4=0,service_usage_interaction_time=0,usage_stats_interaction_interval=0,service_restart_duration=0,service_reset_run_duration=0,service_restart_duration_factor=0,service_min_restart_time_between=0,service_max_inactivity=0,service_bg_start_timeout=0,CUR_MAX_CACHED_PROCESSES=0,CUR_MAX_EMPTY_PROCESSES=0,CUR_TRIM_EMPTY_PROCESSES=0,CUR_TRIM_CACHED_PROCESSES=0
+chmod 666 /sys/devices/system/cpu/cpu[0-7]/max_cpus; chmod 666 /sys/devices/system/cpu/cpu[0-7]/min_cpus
+echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/max_cpus; echo 0 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus; echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres
+echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres; echo 80 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms
+echo 2 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/max_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/task_thres
+echo 80 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms; echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
+chmod 444 /sys/devices/system/cpu/cpu[0-7]/max_cpus
+pm disable com.google.android.gms/.chimera.GmsIntentOperationService
 
+# GMS OPTIMIZATIONS 
+{
+GMS0="\"com.google.android.gms"\"
+STR1="allow-unthrottled-location package=$GMS0"
+STR2="allow-ignore-location-settings package=$GMS0"
+STR3="allow-in-power-save package=$GMS0"
+STR4="allow-in-data-usage-save package=$GMS0"
+NULL="/dev/null"
+}
+{
+find /data/adb/* -type f -iname "*.xml" |
+while IFS= read -r XML; do
+for X in $XML; do
+if grep -qE "$STR1|$STR2|$STR3|$STR4" $X 2> $NULL; then
+sed -i "/$STR1/d;/$STR2/d;/$STR3/d;/$STR4/d" $X
+fi
+done
+done
+}
+
+# ================================== CPU SETTINGS =================================
+
+# CPU FREQ SETTINGS
+echo '1690000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+echo '1794000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
+
+# CPU HOTPLUG OPTIMIZATIONS
+echo '0' > /sys/power/cpuhotplug/governor/user_mode
+echo '0' > /sys/power/cpuhotplug/governor/enabled
+
+# ENABLE POWER EFFICIENT
+echo 'Y' > /sys/module/workqueue/parameters/power_efficient
+
+# UNDERVOLT SETTINGS
 echo '-5' > /sys/power/percent_margin/big_margin_percent
 echo '-5' > /sys/power/percent_margin/lit_margin_percent
 echo '-5' > /sys/power/percent_margin/g3d_margin_percent
@@ -54,26 +82,3 @@ echo '-5' > /sys/power/percent_margin/int_margin_percent
 echo '-5' > /sys/power/percent_margin/intcam_margin_percent
 echo '-5' > /sys/power/percent_margin/iva_margin_percent
 echo '-5' > /sys/power/percent_margin/score_margin_percent
-
-# ===============================================================================
-
-# ============================= CHECKING AND PATCHING ANY CONFLICTING MODULES (if present) =============================
-{
-GMS0="\"com.google.android.gms"\"
-STR1="allow-unthrottled-location package=$GMS0"
-STR2="allow-ignore-location-settings package=$GMS0"
-STR3="allow-in-power-save package=$GMS0"
-STR4="allow-in-data-usage-save package=$GMS0"
-NULL="/dev/null"
-}
-
-{
-find /data/adb/* -type f -iname "*.xml" -print |
-while IFS= read -r XML; do
-for X in $XML; do
-if grep -qE "$STR1|$STR2|$STR3|$STR4" $X 2> $NULL; then
-sed -i "/$STR1/d;/$STR2/d;/$STR3/d;/$STR4/d" $X
-fi
-done
-done
-}

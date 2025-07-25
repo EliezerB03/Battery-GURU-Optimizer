@@ -1,9 +1,7 @@
-# BATTERY OPTIMIZER (ALL SETTINGS)
+# BATTERY GURU OPTIMIZER (CHECKS/INITS)
 # Developed by @EliezerB03
 
-#!/data/adb/magisk/busybox sh
-set -o standalone
-set -x
+#!/sbin/sh
 
 ui_print " "
 ui_print "=============================================="
@@ -17,7 +15,6 @@ ui_print " |  |_|  || |___| || |___| || | \ \ | |___| | "
 ui_print " |       | \______| \_____/ |_|  \_\ \_____/  "
 ui_print " |_______|         BATTERY OPTIMIZER          "
 ui_print "                                              "
-#ui_print "            Developed by EliezerB03           "
 ui_print "=============================================="
 ui_print " "
 
@@ -50,15 +47,13 @@ sleep 1.0
 ui_print "  - CHECKING ROOT IMPLEMENTATION...           "
 sleep 0.8
 if [ "$BOOTMODE" ] && [ "$KSU" ]; then
-ui_print "   * KERNELSU/NEXT DETECTED! (PASSED)         "
-if [ "$(which magisk)" ]; then
-ui_print "   MULTIPLE ROOT DETECTED! (ABORTING...)      "
-abort
-fi
-elif [ "$BOOTMODE" ] && [ "$MAGISK_VER_CODE" ]; then
-ui_print "   MAGISK IS NOT SUPPORTED! (ABORTING...)     "
-ui_print "----------------------------------------------"
-abort
+        ui_print "   * KERNELSU/NEXT DETECTED! (PASSED)         "
+elif [ "$BOOTMODE" ] && [ "$APATCH" ]; then
+        ui_print "   * APATCH DETECTED! (PASSED)                "
+elif [ "$BOOTMODE" ] && [ -z "$KSU" ] && [ -z "$APATCH" ]; then
+        ui_print "   * MAGISK DETECTED! (PASSED)                "
+elif [ "$(which magisk)" ]; then
+        ui_print "   * MAGISK DETECTED! (PASSED)                "
 fi
 sleep 1.0
 ui_print "  - CHECKING ANDROID VERSION...               "
@@ -80,56 +75,20 @@ ui_print " "
 ui_print "----------------------------------------------"
 ui_print "        APPLYING GENERAL OPTIMIZATIONS        "
 ui_print "----------------------------------------------"
+sleep 0.5
+ui_print "  - DISABLING KERNEL DEGUGGING...             "
 sleep 0.8
 ui_print "   * DONE!                                    "
-sleep 0.5
-
-# =================== CPU FREQ SETTINGS ===================
-
-ui_print " "
-ui_print "----------------------------------------------"
-ui_print "          APPLYING CPU FREQ SETTINGS          "
-ui_print "----------------------------------------------"
-sleep 0.6
+sleep 0.3
+ui_print "  - APPLYING STORAGE OPTIMIZATIONS...         "
+sleep 1.1
 ui_print "   * DONE!                                    "
-sleep 0.5
-
-# =================== CPU HOTPLUG OPTIMIZATIONS ===================
-
-ui_print " "
-ui_print "----------------------------------------------"
-ui_print "      APPLYING CPU HOTPLUG OPTIMIZATIONS      "
-ui_print "----------------------------------------------"
-sleep 1
+sleep 0.3
+ui_print "  - APPLYING THERMAL OPTIMIZATIONS...         "
+sleep 1.3
 ui_print "   * DONE!                                    "
-sleep 0.5
-
-# =================== THERMAL OPTIMIZATIONS ===================
-
-#ui_print " "
-#ui_print "----------------------------------------------"
-#ui_print "        APPLYING THERMAL OPTIMIZATIONS        "
-#ui_print "----------------------------------------------"
-#sleep 1
-#ui_print "   * DONE!                                    "
-#sleep 0.5
-
-# =================== STORAGE OPTIMIZATIONS ===================
-
-ui_print " "
-ui_print "----------------------------------------------"
-ui_print "        APPLYING STORAGE OPTIMIZATIONS        "
-ui_print "----------------------------------------------"
-sleep 1
-ui_print "   * DONE!                                    "
-sleep 0.5
-
-# =================== GMS OPTIMIZATIONS (U-GMS-D by gloeyisk) ===================
-
-ui_print " "
-ui_print "----------------------------------------------"
-ui_print "          APPLYING GMS OPTIMIZATIONS          "
-ui_print "----------------------------------------------"
+sleep 0.3
+ui_print "  - APPLYING GMS OPTIMIZATIONS...             "
 {
 GMS0="\"com.google.android.gms"\"
 STR1="allow-in-power-save package=$GMS0"
@@ -137,80 +96,79 @@ STR2="allow-in-data-usage-save package=$GMS0"
 NULL="/dev/null"
 }
 SYS_XML="$(
-SXML="$(find /system_ext/* /system/* /product/* \
-/vendor/* /india/* /my_bigball/* -type f -iname '*.xml' -print)"
+SXML="$(find /system_ext/* /system/* /product/* /vendor/* -type f -iname '*.xml')"
 for S in $SXML; do
-if grep -qE "$STR1|$STR2" $ROOT$S 2> $NULL; then
 echo "$S"
-fi
 done
 )"
-
 PATCH_SX() {
-for SX in $SYS_XML; do
+for SX in $SYS_XML; 
+do
 mkdir -p "$(dirname $MODPATH$SX)"
 cp -af $ROOT$SX $MODPATH$SX
 sed -i "/$STR1/d;/$STR2/d" $MODPATH/$SX
 done
-
-for P in product vendor; do
-if [ -d $MODPATH/$P ]; then
-mkdir -p $MODPATH/system/$P
-mv -f $MODPATH/$P $MODPATH/system/
-fi
-done
+mkdir -p $MODPATH/system/product
+mv -f $MODPATH/product $MODPATH/system/
 }
-
 MOD_XML="$(
-MXML="$(find /data/adb/* -type f -iname "*.xml" -print)"
+MXML="$(find /data/adb/* -type f -iname "*.xml")"
 for M in $MXML; do
-if grep -qE "$STR1|$STR2" $M; then
 echo "$M"
-fi
 done
 )"
-
 PATCH_MX() {
 for MX in $MOD_XML; do
-MOD="$(echo "$MX" | awk -F'/' '{print $5}')"
+MOD="$(echo "$MX" | awk -f'/' '{$5}')"
 sed -i "/$STR1/d;/$STR2/d" $MX
 done
 }
-
 PATCH_SX && PATCH_MX
-
-ADDON() {
-mkdir -p $MODPATH/system/bin
-mv -f $MODPATH/gmsc $MODPATH/system/bin/gmsc
-}
 
 cd /data/data
 find . -type f -name '*gms*' -delete
 
 FINALIZE() {
-
 find $MODPATH/* -maxdepth 0 \
 ! -name 'module.prop' \
 ! -name 'post-fs-data.sh' \
 ! -name 'service.sh' \
 ! -name 'system' \
 -exec rm -rf {} \;
-
 set_perm_recursive $MODPATH 0 0 0755 0755
-set_perm $MODPATH/system/bin/gmsc 0 2000 0755
 }
+FINALIZE
+
 ui_print "   * DONE!                                    "
+ui_print "----------------------------------------------"
 sleep 0.5
 
-# =================== UNDERVOLT SETTINGS ===================
+# ======================= CPU SETTINGS ========================
 
 ui_print " "
 ui_print "----------------------------------------------"
-ui_print "          APPLYING UNDERVOLT SETTINGS         "
+ui_print "        APPLYING CPU/UNDERVOLT SETTINGS       "
 ui_print "----------------------------------------------"
-sleep 1.5
-ui_print "   * DONE!                                    "
 sleep 0.5
+ui_print "  - APPLYING CPU FREQ SETTINGS...             "
+sleep 1.2
+ui_print "   * DONE!                                    "
+sleep 0.3
+ui_print "  - APPLYING CPU HOTPLUG OPTIMIZATIONS...     "
+sleep 0.8
+ui_print "   * DONE!                                    "
+sleep 0.3
+ui_print "  - ENABLING POWER EFFICIENT...               "
+sleep 0.7
+ui_print "   * DONE!                                    "
+sleep 0.3
+ui_print "  - APPLYING UNDERVOLT SETTINGS               "
+sleep 1.8
+ui_print "   * DONE!                                    "
+ui_print "----------------------------------------------"
+sleep 0.5
+
+# =============================================================
 
 ui_print " "
 ui_print " "
@@ -218,5 +176,5 @@ ui_print " "
 ui_print "----------------------------------------------"
 ui_print "BATTERY GURU OPTIMIZER SUCCESSFULLY INSTALLED!"
 ui_print "----------------------------------------------"
-
-ADDON && FINALIZE
+ui_print "   * REBOOT YOUR DEVICE TO APPLY!             "
+ui_print " "

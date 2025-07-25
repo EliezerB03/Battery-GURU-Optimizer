@@ -1,3 +1,7 @@
-#### 🔋 v1.0
+#### 🔋 v1.1
 
-* Initial Release
+* Added Support to Magisk/Apatch
+* Added Thermal Optimizations (Less Heating)
+* CPU Hotplug Optimizations Adjusted
+* Script Updated
+* Misc. Fixes
