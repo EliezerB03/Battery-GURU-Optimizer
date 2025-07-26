@@ -4,22 +4,30 @@
 #!/sbin/sh
 
 # =================== GMS OPTIMIZATIONS ===================
-
-(   
-until [ $(resetprop sys.boot_completed) -eq 1 ] &&
-[ -d /sdcard ]; do
 sleep 100
-done
-GMS="com.google.android.gms"
-GC1="auth.managed.admin.DeviceAdminReceiver"
-GC2="mdm.receivers.MdmDeviceAdminReceiver"
-NLL="/dev/null"
-for U in $(ls /data/user); do
-for C in $GC1 $GC2 $GC3; do
-pm disable --user $U "$GMS/$GMS.$C" &> $NLL
-done
-done
-dumpsys deviceidle whitelist -com.google.android.gms &> $NLL
-exit 0
-)
+for i in $(ls /data/user/)
+do
+pm disable com.google.android.gms/com.google.android.gms.auth.managed.admin.DeviceAdminReceiver
+pm disable com.google.android.gms/com.google.android.gms.mdm.receivers.MdmDeviceAdminReceiver
+pm disable com.google.android.gms/.chimera.GmsIntentOperationService
 
+cmd appops set com.google.android.gms BOOT_COMPLETED ignore
+cmd appops set com.google.android.ims BOOT_COMPLETED ignore
+cmd appops set com.google.android.gms BOOT_COMPLETED ignore
+cmd appops set com.google.android.ims BOOT_COMPLETED ignore
+cmd appops set com.google.android.gms.location.history BOOT_COMPLETED ignore
+cmd appops set com.google.android.gm BOOT_COMPLETED ignore
+cmd appops set com.google.android.marvin.talkback BOOT_COMPLETED ignore
+cmd appops set com.google.android.apps.googleassistant BOOT_COMPLETED ignore
+cmd appops set com.google.android.apps.carrier.log BOOT_COMPLETED ignore
+cmd appops set com.android.providers.partnerbookmarks BOOT_COMPLETED ignore
+cmd appops set com.google.android.apps.wellbeing BOOT_COMPLETED ignore
+cmd appops set com.google.android.as BOOT_COMPLETED ignore
+cmd appops set com.android.connectivity.metrics BOOT_COMPLETED ignore
+cmd appops set com.android.bips BOOT_COMPLETED ignore
+cmd appops set com.google.android.printservice.recommendation BOOT_COMPLETED ignore
+cmd appops set com.android.hotwordenrollment.xgoogle BOOT_COMPLETED ignore
+cmd appops set com.google.android.printservice.recommendation BOOT_COMPLETED ignore
+cmd appops set com.android.hotwordenrollment.xgoogle BOOT_COMPLETED ignore
+done
+exit 0

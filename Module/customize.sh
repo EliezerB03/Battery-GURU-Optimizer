@@ -89,6 +89,7 @@ sleep 1.3
 ui_print "   * DONE!                                    "
 sleep 0.3
 ui_print "  - APPLYING GMS OPTIMIZATIONS...             "
+
 {
 GMS0="\"com.google.android.gms"\"
 STR1="allow-in-power-save package=$GMS0"
@@ -96,33 +97,40 @@ STR2="allow-in-data-usage-save package=$GMS0"
 NULL="/dev/null"
 }
 SYS_XML="$(
-SXML="$(find /system_ext/* /system/* /product/* /vendor/* -type f -iname '*.xml')"
+SXML="$(find /system_ext/* /system/* /product/* \
+/vendor/* -type f -iname '*.xml')"
 for S in $SXML; do
 echo "$S"
 done
 )"
+
 PATCH_SX() {
-for SX in $SYS_XML; 
-do
+for SX in $SYS_XML; do
 mkdir -p "$(dirname $MODPATH$SX)"
 cp -af $ROOT$SX $MODPATH$SX
 sed -i "/$STR1/d;/$STR2/d" $MODPATH/$SX
 done
-mkdir -p $MODPATH/system/product
-mv -f $MODPATH/product $MODPATH/system/
+for P in product; do
+mkdir -p $MODPATH/system/$P
+mv -f $MODPATH/$P $MODPATH/system/
+done
 }
 MOD_XML="$(
 MXML="$(find /data/adb/* -type f -iname "*.xml")"
 for M in $MXML; do
+if grep -qE "$STR1|$STR2" $M; then
 echo "$M"
+fi
 done
 )"
+
 PATCH_MX() {
 for MX in $MOD_XML; do
-MOD="$(echo "$MX" | awk -f'/' '{$5}')"
+MOD="$(echo "$MX" | awk -F'/' '{print $5}')"
 sed -i "/$STR1/d;/$STR2/d" $MX
 done
 }
+
 PATCH_SX && PATCH_MX
 
 cd /data/data
@@ -138,6 +146,10 @@ find $MODPATH/* -maxdepth 0 \
 set_perm_recursive $MODPATH 0 0 0755 0755
 }
 FINALIZE
+
+conflict=$(xml=$(find /data/adb -iname "*.xml")
+echo "conflict")
+sed -i '/allow-in-power-save package="com.google.android.gms"/d;/allow-in-data-usage-save package="com.google.android.gms"/d' $xml
 
 ui_print "   * DONE!                                    "
 ui_print "----------------------------------------------"

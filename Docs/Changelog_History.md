@@ -2,6 +2,12 @@
 
 
 
+### V1.1.1
+
+* Fixed Booploop in GMS Optimizer code
+
+
+
 ### V1.1
 
 * Added Support to Magisk/Apatch
