@@ -2,13 +2,19 @@
 
 
 
-### V1.1.1
+### v1.1.2
+
+* Removed GMS Optimizer due to stability issues/bootloops
+
+
+
+### v1.1.1
 
 * Fixed Booploop in GMS Optimizer code
 
 
 
-### V1.1
+### v1.1
 
 * Added Support to Magisk/Apatch
 * Added Thermal Optimizations (Less Heating)
@@ -18,6 +24,6 @@
 
 
 
-### V1.0
+### v1.0
 
 * Initial Release

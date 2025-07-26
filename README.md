@@ -32,4 +32,3 @@ A modifier/optimizer to improve battery efficiency and resource usage for Samsun
 
 ### 🙏 Thanks/Credits
 * [**[SchweGELBin]**](https://github.com/SchweGELBin) for KSU Module Template
-* [**[gloeyisk]**](https://github.com/gloeyisk) for universal-gms-doze

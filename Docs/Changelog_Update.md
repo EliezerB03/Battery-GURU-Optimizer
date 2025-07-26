@@ -1,3 +1,3 @@
-#### 🔋 v1.1.1
+### 🔋 v1.1.2
 
-* Fixed Booploop in GMS Optimizer code
+* Removed GMS Optimizer due to stability issues/bootloops
