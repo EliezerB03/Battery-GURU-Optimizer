@@ -17,6 +17,7 @@ ui_print " |_______|         BATTERY OPTIMIZER          "
 ui_print "                                              "
 ui_print "=============================================="
 ui_print " "
+sleep 0.5
 
 # =================== CHECKING REQUIREMENTS ===================
 ui_print "----------------------------------------------"
@@ -69,14 +70,25 @@ elif [ "$(which magisk)" ]; then
         ui_print "   * MAGISK DETECTED! (PASSED)                "
         ui_print "----------------------------------------------"
 fi
-sleep 1
+sleep 0.5
+
+ui_print " "
+ui_print "----------------------------------------------"
+ui_print "   WEBUI APP INSTALLER (ONLY FOR KSU/APATCH)  "
+ui_print "----------------------------------------------"
+sleep 0.5
+ui_print "  - INSTALLING WEBUI APP...                   "
+sleep 3.3
+ui_print "   * DONE!                                    "
+ui_print "----------------------------------------------"
+sleep 0.5
 
 # =============================================================
 # =================== GENERAL OPTIMIZATIONS ===================
 
 ui_print " "
 ui_print "----------------------------------------------"
-ui_print "        APPLYING GENERAL OPTIMIZATIONS        "
+ui_print "        APPLYING DEFAULT OPTIMIZATIONS        "
 ui_print "----------------------------------------------"
 sleep 0.5
 ui_print "  - DISABLING KERNEL DEGUGGING...             "
@@ -91,14 +103,13 @@ ui_print "  - APPLYING THERMAL OPTIMIZATIONS...         "
 sleep 1.3
 ui_print "   * DONE!                                    "
 sleep 0.5
+ui_print "  - APPLYING SWAP OPTIMIZATIONS...            "
+sleep 1.2
+ui_print "   * DONE!                                    "
+sleep 0.5
 
 # ======================= CPU SETTINGS ========================
 
-ui_print " "
-ui_print "----------------------------------------------"
-ui_print "        APPLYING CPU/UNDERVOLT SETTINGS       "
-ui_print "----------------------------------------------"
-sleep 0.5
 ui_print "  - APPLYING CPU FREQ SETTINGS...             "
 sleep 1.3
 ui_print "   * DONE!                                    "

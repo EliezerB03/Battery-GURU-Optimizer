@@ -1,0 +1,88 @@
+.oui-button {
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 17px 45px;
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background-color: var(--control-background);
+  color: var(--app-accent);
+  min-width: 140px;
+  max-width: 90%; 
+  line-height: normal; 
+  box-sizing: border-box;
+  touch-action: auto;
+}
+
+.oui-button-label {
+  top: 2px;
+  position: relative;
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 800;
+  line-height: 1; 
+  font-size: 15px !important;
+}
+
+.oui-button--active {
+  background-color: var(--app-accent);
+  color: var(--on-primary);
+  border-color: var(--app-accent);
+}
+
+.button-container {
+  text-align: center;
+}
+
+.button-effect {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-origin: center center;
+  display: block; 
+  pointer-events: none;
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--select-button);
+  border-radius: inherit;
+  opacity: 1;
+}
+
+.button-effect.rounded-all {
+  border-radius: 26px;
+}
+
+.button-effect.animate-in {
+  animation: buttonFadeIn 0.25s ease forwards;
+}
+
+.button-effect.animate-out {
+  animation: buttonFadeOut 0.5s ease forwards;
+}
+
+@keyframes buttonFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes buttonFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.button-inner {
+  will-change: transform;
+  touch-action: auto;
+}
+
+.oui-button.pressed-effect {
+  transform: scale(0.985); 
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1); 
+}
+
+.oui-button.released-effect {
+  transform: scale(1);
+  transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}

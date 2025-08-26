@@ -1,0 +1,130 @@
+.slider-wrapper {
+  padding-top: 15px;
+  padding-bottom: 60px;
+  width: 100%;
+  border-bottom: 2px solid rgba(121, 121, 121, 0.2);
+}
+
+.slider-wrapper:last-child {
+    border-bottom: none;
+} 
+
+.slider-label {
+  flex: 1;
+  padding: 10px 15px;
+  font-family: 'SamsungSharpSans-Regular', sans-serif;
+  font-weight: normal;
+  font-size: 15px !important;
+  color: inherit;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.slider-container {
+  touch-action: none;
+  position: relative;
+  padding: 30px 10px 15px 10px;
+  width: 100%;
+  height: 36px;
+}
+
+.oui-input-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 14px; 
+  background-color: var(--bg-slider-accent);
+  border-radius: 10px;
+  position: relative;
+}
+
+.oui-input-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px; 
+  height: 20px; 
+  background: var(--slider-accent);
+  border: 2px solid var(--app-accent);
+  border-radius: 100%;
+  cursor: pointer;
+  margin-top: 0px;
+  z-index: 3;
+  position: relative;
+  transition: 0.3s all;
+  -webkit-tap-highlight-color: transparent; 
+}
+
+.oui-input-slider.active-thumb::-webkit-slider-thumb {
+  box-shadow: 0 0 0 6px rgba(0,0,0,0.2);
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 2px;
+  width: 100%;
+  height: 8px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  transform: none;
+  padding: 0px;
+}
+
+.slider-dots span {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ps-slider-accent);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.slider-values {
+  position: relative; 
+  margin-top: 20px;
+  padding: 10px 0px;
+  height: 20px;
+  pointer-events: none;
+  font-family: 'SamsungSharpSans-Regular', sans-serif;
+  font-weight: normal;
+  font-size: 15px !important;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+.slider-values span {
+  white-space: nowrap;
+}
+
+.slider-value-float {
+  position: absolute;
+  top: -40px;
+  transform: translateX(-10%);
+  pointer-events: none;
+  background-color: var(--slider-accent);
+  border-radius: 100%;
+  min-width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 10; 
+  border: 3px solid var(--app-accent);
+}
+
+.slider-value-float.visible {
+  opacity: 1;
+}
+
+.slider-value-text {
+  color: inherit;
+  font-family: 'SamsungSharpSans-Bold', sans-serif;
+  font-weight: normal;
+  font-size: 15px !important;
+  line-height: 1;
+  text-align: center;
+  user-select: none;
+  margin-top: 3.5px;
+}

@@ -1,0 +1,221 @@
+:root {
+  --oui-tab-height: 90px; 
+  --nav-height: 60px;
+  --glow-height: 13px;
+  /* -- Spacing -- */
+  --margin-s: 16px;
+  --margin-m: 24px;
+  --margin-l: 32px;
+  /* -- Media -- */
+  --s-handset: 240px;
+  --m-handset: 360px;
+  --l-handset: 480px;
+  --s-tablet: 600px;
+  --m-tablet: 720px;
+  --l-tablet: 840px;
+  --desktop: 960px;
+  /* -- Easings -- */
+  /* Cubic */
+  --easeInCubic    : cubic-bezier(0.550, 0.055, 0.675, 0.190);
+  --easeOutCubic   : cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  --easeInOutCubic : cubic-bezier(0.645, 0.045, 0.355, 1.000);
+  /* Circ */
+  --easeInCirc     : cubic-bezier(0.600, 0.040, 0.980, 0.335);
+  --easeOutCirc    : cubic-bezier(0.075, 0.820, 0.165, 1.000);
+  --easeInOutCirc  : cubic-bezier(0.785, 0.135, 0.150, 0.860);
+  /* Expo */
+  --easeInExpo     : cubic-bezier(0.950, 0.050, 0.795, 0.035);
+  --easeOutExpo    : cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  --easeInOutExpo  : cubic-bezier(1.000, 0.000, 0.000, 1.000);
+  /* Quad */
+  --easeInQuad     : cubic-bezier(0.550, 0.085, 0.680, 0.530);
+  --easeOutQuad    : cubic-bezier(0.250, 0.460, 0.450, 0.940);
+  --easeInOutQuad  : cubic-bezier(0.455, 0.030, 0.515, 0.955);
+  /* Quart */
+  --easeInQuart    : cubic-bezier(0.895, 0.030, 0.685, 0.220);
+  --easeOutQuart   : cubic-bezier(0.165, 0.840, 0.440, 1.000);
+  --easeInOutQuart : cubic-bezier(0.770, 0.000, 0.175, 1.000);
+  /* Quint */
+  --easeInQuint    : cubic-bezier(0.755, 0.050, 0.855, 0.060);
+  --easeOutQuint   : cubic-bezier(0.230, 1.000, 0.320, 1.000);
+  --easeInOutQuint : cubic-bezier(0.860, 0.000, 0.070, 1.000);
+  /* Sine */
+  --easeInSine     : cubic-bezier(0.470, 0.000, 0.745, 0.715);
+  --easeOutSine    : cubic-bezier(0.390, 0.575, 0.565, 1.000);
+  --easeInOutSine  : cubic-bezier(0.445, 0.050, 0.550, 0.950);
+  /* Back */
+  --easeInBack     : cubic-bezier(0.600, -0.280, 0.735, 0.045);
+  --easeOutBack    : cubic-bezier(0.175,  0.885, 0.320, 1.275);
+  --easeInOutBack  : cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  /* Circle Loading */
+  --circle-size: 50px;
+}
+
+.container {
+  max-width: 95%;
+  margin: 0 auto;
+}
+
+.scroll-container { 
+  scrollbar-gutter: stable both-edges;
+  height: 100%;
+  overflow-y: overlay;
+  overscroll-behavior: none; 
+  -webkit-overflow-scrolling: auto;
+  height: calc(100vh - var(--oui-tab-height, 60px) - env(safe-area-inset-bottom));
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 3px; 
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-accent); 
+  border-radius: 3px;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.top-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--glow-height);
+  pointer-events: none; 
+  background: var(--top-glow-effect);
+}
+
+.bottom-glow  {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--nav-height));
+  height: var(--glow-height);
+  pointer-events: none;
+  background: var(--bottom-glow-effect);
+}
+
+.tab-section { display: none; }
+.tab-section.active { display: block; }
+
+.oui-loading-no-interaction {
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+.oui-loading-mask {
+  position: fixed;
+  inset: 0;
+  background: var(--loading-mask);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 500ms ease;
+}
+
+.oui-loading-circle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--circle-size);
+    height: var(--circle-size);
+    background: var(--loading-circle);
+    border-radius: 50%;
+    z-index: 1001; 
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 500ms ease;
+}
+
+.oui-loading-circle.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.oui-loading {
+  --dot: 8px;
+  --r-min: 7px;
+  --r-max: 15px;
+  --spin: 1s;
+  --pulse: 1s;
+  --blue: #0080FC;
+  --green: #00D490;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  animation: spin var(--spin) linear infinite;
+  will-change: transform;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1002;
+  transform: translate(-50%, -50%);
+  animation: spin var(--spin) linear infinite;
+}
+
+.arm {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  transform: rotate(var(--angle));
+  transform-origin: 0 0;
+}
+
+.ball {
+  position: absolute;
+  width: var(--dot); height: var(--dot);
+  left: calc(-1 * var(--dot) / 2);
+  top:  calc(-1 * var(--dot) / 2);
+  border-radius: 50%;
+  transform: translateX(var(--r-min));
+  animation: radiusPulse var(--pulse) ease-in-out infinite;
+  will-change: transform;
+}
+
+.ball.blue  { background: var(--blue); }
+.ball.green { background: var(--green); }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes radiusPulse {
+  0%, 100% { transform: translateX(var(--r-min)); }
+  50%      { transform: translateX(var(--r-max)); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .oui-loading { animation: none; }
+  .ball { animation: none; }
+}
+
+@keyframes spin {
+  0%   { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+} 
+
+.oui-loading-mask,
+.oui-loading {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+}
+
+.oui-loading-mask.active {
+  opacity: 0.7;
+  pointer-events: all; 
+}
+
+.oui-loading.active {
+  opacity: 1;
+  pointer-events: all; 
+}

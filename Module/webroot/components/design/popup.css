@@ -1,0 +1,213 @@
+.popup {
+  position: absolute;
+  background: var(--surface-background);
+  color: inherit;
+  border-radius: 25px;
+  padding: 0px 0;
+  min-width: 100px;
+  max-width: 300px; 
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+  pointer-events: none;
+  transition: 
+    opacity 250ms ease,
+    transform 250ms ease,
+    top 250ms ease,
+    left 250ms ease;
+  box-sizing: border-box; 
+  overflow: hidden;      
+}
+
+.popup.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+.popup-content {
+  transition: opacity 150ms ease, transform 150ms ease;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.popup-content.switching {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+.popup ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.oui-bubble-item.selected .popup-text{
+  display: flex;
+  align-items: center;
+  transform: translateY(3px);
+}
+
+.popup li {
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 300;
+  font-size: 15px !important;
+  padding: 13px 15px 13px 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent; 
+  touch-action: none;
+  white-space: nowrap; 
+  overflow: hidden;        
+  max-width: 100%;         
+  box-sizing: border-box; 
+}
+
+.popup li.selected {
+  touch-action: none;
+  color: var(--app-accent);
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 800;
+  padding: 13px 15px 13px 15px;
+  font-size: 15px !important;
+}
+
+.popup-icon-selected {
+  width: 24px !important;
+  height: 24px !important;
+  vertical-align: middle;
+  fill: currentColor; 
+  flex-shrink: 0;
+  transform-origin: top left;
+  transform: scale(1);
+  fill: currentColor;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.popup-icon-selected.checkmark {
+  flex-shrink: 0;
+  transform: scale(0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.popup-trigger {
+  touch-action: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid rgba(121, 121, 121, 0.2);
+  padding: 14px 0;
+}
+
+.popup-label {
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 300;
+  font-size: 15px !important;
+  max-width: 250px;
+  flex: 1;
+  padding-left: 10px;
+  padding-bottom: 1px;
+  margin: 5px;
+  overflow: hidden;       
+  white-space: nowrap;   
+  text-overflow: ellipsis;
+}
+
+.popup-trigger.popup-label-active .popup-label {
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 800;
+  font-size: 15px !important;
+  transform: translateY(2px);
+}
+
+.popup-value {
+  min-width: 75px;
+  max-width: 100px;
+  padding-right: 15px;
+  color: var(--app-accent);
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 800;
+  transform: translateY(2px);
+  text-align: right;
+  white-space: nowrap;
+  flex: 1;
+  font-size: 15px !important;
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 1;
+}
+
+.popup-effect {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--select-option);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1);
+  z-index: 0;
+}
+
+.popup-effect.rounded-top {
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
+}
+
+.popup-effect.rounded-bottom {
+  border-bottom-left-radius: 26px;
+  border-bottom-right-radius: 26px;
+}
+
+.popup-effect.rounded-all {
+  border-radius: 26px;
+}
+
+.popup-effect.animate-in {
+  animation: touchIn 0.25s forwards;
+}
+
+.popup-effect.animate-out {
+  animation: touchOut 0.5s forwards;
+}
+
+@keyframes touchIn {
+  from {opacity: 0;vtransform: scale(1);}
+  to {opacity: 1;vtransform: scale(1);}
+}
+
+@keyframes touchOut {
+  from {opacity: 1; transform: scale(1);}
+  to {opacity: 0; transform: scale(1);}
+}
+
+.popup-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 15px;
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.popup-inner.pressed-effect {
+  transform: scale(0.97); 
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.popup-inner.released-effect {
+  transform: scale(1);
+  transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}

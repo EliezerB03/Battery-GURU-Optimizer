@@ -1,0 +1,223 @@
+.oui-dialog {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(20px);
+  width: 95%;
+  min-height: 100px;
+  background-color: var(--surface-background);
+  border-radius: 24px;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms ease, transform 250ms ease;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.oui-dialog-header {
+  font-family: 'SamsungSharpSans-Bold', sans-serif;
+  font-weight: normal;
+  font-size: 16.8px !important;
+  margin-top: -15px;
+}
+
+.oui-dialog-description {
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 300;
+  font-size: 15px !important;
+  padding-top: 20px;
+  color: inherit;
+  line-height: 20px;
+}
+
+.oui-dialog-action {
+  padding: 15px;
+  background-color: var(--surface-background, #fff);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.oui-dialog-action-button {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  will-change: transform;
+}
+
+.oui-dialog-action-button.pressed-effect {
+  transform: scale(0.965);
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.oui-dialog-action-button.released-effect {
+  transform: scale(1);
+  transition: transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
+.oui-dialog-divider {
+  width: 2px;
+  margin: 0px 5px;
+  height: 1.5em;
+  background: rgb(121, 121, 121, 0.3);
+  align-self: center;
+}
+
+.oui-dialog-mask {
+  position: fixed;
+  inset: 0;
+  background: var(--dialog-mask);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 500ms ease;
+}
+
+.oui-dialog.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.oui-dialog.hide {
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.oui-dialog-mask.show {
+  opacity: 0.7;
+  pointer-events: auto;
+}
+
+.close-dialog-btn {
+  cursor: pointer;
+  user-select: none;
+  transition: transform 250ms ease, text-shadow 250ms ease;
+}
+
+.reboot-dialog-btn {
+  cursor: pointer;
+  user-select: none;
+  transition: transform 250ms ease, text-shadow 250ms ease;
+}
+
+.close-dialog-text {
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 800;
+  display: inline-block;
+  text-align: center;
+  transform: translateY(3px);
+  font-size: 15px !important;
+}
+
+.close-dialog-text-reset {
+  font-family: 'SamsungOne-Regular', sans-serif;
+  font-weight: 800;
+  display: inline-block;
+  text-align: center;
+  transform: translateY(3px);
+  color: red;
+  font-size: 15px !important;
+}
+
+.oui-dialog-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 40px 17pt 20px; 
+}
+
+.oui-dialog-button-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.oui-dialog-icon {
+  width: 35px !important;
+  height: 35px !important;
+  margin-right: 5px;
+  fill: currentColor; 
+  flex-shrink: 0;
+  transform-origin: center center;
+  transform: scale(1);
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -5px;
+}
+
+.oui-dialog-icon-reset {
+  margin-right: 10px;
+  width: 35px !important;
+  height: 35px !important;
+  fill: currentColor; 
+  flex-shrink: 0;
+  transform-origin: center center;
+  transform: scale(0.90);
+  fill: currentColor;
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -3px;
+}
+
+.oui-dialog-icon-close {
+  margin-right: 10px;
+  width: 35px !important;
+  height: 35px !important;
+  vertical-align: middle;
+  fill: currentColor; 
+  flex-shrink: 0;
+  transform-origin: center center;
+  transform: scale(0.90);
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+.dialog-button-effect {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: var(--select-option);
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dialog-button-effect.animate-in {
+  animation: dialogbtnIn 0.25s forwards;
+}
+
+.dialog-button-effect.animate-out {
+  animation: dialogbtnOut 0.5s forwards;
+}
+
+.dialog-button-effect.rounded-all {
+  border-radius: 26px;
+}
+
+@keyframes dialogbtnIn {
+  from { opacity: 0; transform: scale(1); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes dialogbtnOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1); }
+}
+
+.no-scroll {
+  overflow: hidden !important; 
+  height: 100vh !important; 
+  overscroll-behavior: none !important; 
+  touch-action: none !important;
+}
