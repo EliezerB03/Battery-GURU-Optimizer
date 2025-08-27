@@ -45,7 +45,6 @@ document.querySelectorAll('.oui-container-toggle, .oui-bubble-item').forEach(opt
   let cancelled = false;
   let moved = false;
   let animationTimeout = null;
-  let startX = 0;
   let startY = 0;
   const createEffect = () => {
     if (cancelled) return;
@@ -84,13 +83,11 @@ document.querySelectorAll('.oui-container-toggle, .oui-bubble-item').forEach(opt
       effect.remove();
     }, 550);
   };
-  const getDistance = (x1, y1, x2, y2) => {
-    return Math.hypot(x2 - x1, y2 - y1);
-  };
   const onMove = (e) => {
     if (!pointerDown) return;
-    const dist = getDistance(startX, startY, e.clientX, e.clientY);
-    if (!moved && dist > 5) {
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    const deltaY = Math.abs(clientY - startY);
+    if (!moved && deltaY > 8) {
       cancelled = true;
       moved = true;
       cleanupEffect();
@@ -107,6 +104,8 @@ document.querySelectorAll('.oui-container-toggle, .oui-bubble-item').forEach(opt
     pointerDown = false;
     document.removeEventListener('pointermove', onMove);
     document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
     if (pointerInside && !cancelled && !moved) {
       option.click();
     }
@@ -121,13 +120,28 @@ document.querySelectorAll('.oui-container-toggle, .oui-bubble-item').forEach(opt
       e.stopPropagation();
     }
   }, true);
+  option.addEventListener('touchstart', (e) => {
+    pointerDown = true;
+    pointerInside = true;
+    cancelled = false;
+    moved = false;
+    startY = e.touches[0].clientY;
+    clearTimeout(animationTimeout);
+    const inner = option.querySelector('.oui-inner');
+    if (inner) {
+      inner.classList.remove('released-effect');
+      inner.classList.add('pressed-effect');
+    }
+    createEffect();
+    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchend', onUp);
+  });
   option.addEventListener('pointerdown', (e) => {
     pointerDown = true;
     pointerInside = true;
     cancelled = false;
     moved = false;
-    startX = e.clientX;
-    startY = e.clientY;
+    startY = e.touches ? e.touches[0].clientY : e.clientY;
     clearTimeout(animationTimeout);
     const inner = option.querySelector('.oui-inner');
     if (inner) {
@@ -137,6 +151,8 @@ document.querySelectorAll('.oui-container-toggle, .oui-bubble-item').forEach(opt
     createEffect();
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerup', onUp);
+    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchend', onUp);
   });
 });
 // Button Press Behavior-Animation
@@ -146,7 +162,6 @@ document.querySelectorAll('.oui-button').forEach(button => {
   let cancelled = false;
   let moved = false;
   let animationTimeout = null;
-  let startX = 0;
   let startY = 0;
   const createEffect = () => {
     if (cancelled) return;
@@ -173,13 +188,10 @@ document.querySelectorAll('.oui-button').forEach(button => {
       effect.remove();
     }, 550);
   };
-  const getDistance = (x1, y1, x2, y2) => {
-    return Math.hypot(x2 - x1, y2 - y1);
-  };
   const onMove = (e) => {
     if (!pointerDown) return;
-    const dist = getDistance(startX, startY, e.clientX, e.clientY);
-    if (!moved && dist > 5) {
+    const deltaY = Math.abs(e.clientY - startY);
+    if (!moved && deltaY > 8) {
       cancelled = true;
       moved = true;
       cleanupEffect();
@@ -201,7 +213,6 @@ document.querySelectorAll('.oui-button').forEach(button => {
     cancelled = false;
     moved = false;
   };
-
   button.addEventListener('click', (e) => {
     if (!pointerInside) {
       e.preventDefault();
@@ -213,7 +224,6 @@ document.querySelectorAll('.oui-button').forEach(button => {
     pointerInside = true;
     cancelled = false;
     moved = false;
-    startX = e.clientX;
     startY = e.clientY;
     clearTimeout(animationTimeout);
     button.classList.remove('released-effect');
@@ -231,7 +241,6 @@ document.querySelectorAll('.oui-tab-link').forEach(tab => {
   let moved = false;
   let animationTimeout = null;
   let startX = 0;
-  let startY = 0;
   const tabInner = tab.closest('.oui-tab-inner');
   const createEffect = () => {
     if (cancelled) return;
@@ -250,7 +259,6 @@ document.querySelectorAll('.oui-tab-link').forEach(tab => {
     if (!effect) return;
     effect.classList.remove('animate-in');
     effect.classList.add('animate-out');
-
     if (tabInner) {
       tabInner.classList.remove('pressed-effect');
       tabInner.classList.add('released-effect');
@@ -262,15 +270,18 @@ document.querySelectorAll('.oui-tab-link').forEach(tab => {
       effect.remove();
     }, 550);
   };
-  const getDistance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
   const onMove = (e) => {
     if (!pointerDown) return;
-    const dist = getDistance(startX, startY, e.clientX, e.clientY);
-    if (!moved && dist > 5) {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const deltaX = Math.abs(clientX - startX);
+    if (!moved && deltaX > 8) {
       cancelled = true;
       moved = true;
       cleanupEffect();
       pointerInside = false;
+      if (tabInner) {
+        tabInner.classList.remove('pressed-effect');
+      }
       return;
     }
   };
@@ -279,6 +290,8 @@ document.querySelectorAll('.oui-tab-link').forEach(tab => {
     pointerDown = false;
     document.removeEventListener('pointermove', onMove);
     document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('touchmove', onMove);
+    document.removeEventListener('touchend', onUp);
     if (pointerInside && !cancelled && !moved) {
       tab.click();
     }
@@ -287,61 +300,80 @@ document.querySelectorAll('.oui-tab-link').forEach(tab => {
     cancelled = false;
     moved = false;
   };
-  tab.addEventListener('pointerdown', (e) => {
-    pointerDown = true;
-    pointerInside = true;
-    cancelled = false;
-    moved = false;
-    startX = e.clientX;
-    startY = e.clientY;
-    clearTimeout(animationTimeout);
-    createEffect();
-    document.addEventListener('pointermove', onMove);
-    document.addEventListener('pointerup', onUp);
-  });
   tab.addEventListener('click', (e) => {
     if (!pointerInside) {
       e.preventDefault();
       e.stopPropagation();
     }
   }, true);
+  tab.addEventListener('touchstart', (e) => {
+    pointerDown = true;
+    pointerInside = true;
+    cancelled = false;
+    moved = false;
+    startX = e.touches[0].clientX;
+    clearTimeout(animationTimeout);
+    if (tabInner) {
+      tabInner.classList.remove('released-effect');
+      tabInner.classList.add('pressed-effect');
+    }
+    createEffect();
+    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchend', onUp);
+  });
+  tab.addEventListener('pointerdown', (e) => {
+    pointerDown = true;
+    pointerInside = true;
+    cancelled = false;
+    moved = false;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+
+    clearTimeout(animationTimeout);
+    if (tabInner) {
+      tabInner.classList.remove('released-effect');
+      tabInner.classList.add('pressed-effect');
+    }
+    createEffect();
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+    document.addEventListener('touchmove', onMove);
+    document.addEventListener('touchend', onUp);
+  });
 });
 // Dialog Button Behavior-Animation
-document.querySelectorAll('.oui-dialog-action-button').forEach(button => {
+document.querySelectorAll('.oui-dialog-action-button').forEach(dialog => {
   let pointerDown = false;
   let pointerInside = false;
   let cancelled = false;
   let moved = false;
   let animationTimeout = null;
-  let startX = 0;
   let startY = 0;
   const createEffect = () => {
     if (cancelled) return;
-    button.querySelector('.dialog-button-effect')?.remove();
+    dialog.querySelector('.dialog-button-effect')?.remove();
     const effect = document.createElement('span');
     effect.className = 'dialog-button-effect animate-in rounded-all';
-    button.appendChild(effect);
-    button.classList.add('pressed-effect');
-    button.classList.remove('released-effect');
+    dialog.appendChild(effect);
+    dialog.classList.add('pressed-effect');
+    dialog.classList.remove('released-effect');
   };
   const cleanupEffect = () => {
     clearTimeout(animationTimeout);
-    const effect = button.querySelector('.dialog-button-effect');
+    const effect = dialog.querySelector('.dialog-button-effect');
     if (!effect) return;
     effect.classList.remove('animate-in');
     effect.classList.add('animate-out');
-    button.classList.remove('pressed-effect');
-    button.classList.add('released-effect');
+    dialog.classList.remove('pressed-effect');
+    dialog.classList.add('released-effect');
     animationTimeout = setTimeout(() => {
-      button.classList.remove('released-effect');
+      dialog.classList.remove('released-effect');
       effect.remove();
     }, 550);
   };
-  const getDistance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
   const onMove = (e) => {
     if (!pointerDown) return;
-    const dist = getDistance(startX, startY, e.clientX, e.clientY);
-    if (!moved && dist > 5) {
+    const deltaY = Math.abs(e.clientY - startY);
+    if (!moved && deltaY > 8) {
       cancelled = true;
       moved = true;
       cleanupEffect();
@@ -355,26 +387,25 @@ document.querySelectorAll('.oui-dialog-action-button').forEach(button => {
     document.removeEventListener('pointermove', onMove);
     document.removeEventListener('pointerup', onUp);
     if (pointerInside && !cancelled && !moved) {
-      button.click();
+      dialog.click();
     }
     cleanupEffect();
     pointerInside = false;
     cancelled = false;
     moved = false;
   };
-  button.addEventListener('pointerdown', (e) => {
+  dialog.addEventListener('pointerdown', (e) => {
     pointerDown = true;
     pointerInside = true;
     cancelled = false;
     moved = false;
-    startX = e.clientX;
     startY = e.clientY;
     clearTimeout(animationTimeout);
     createEffect();
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerup', onUp);
   });
-  button.addEventListener('click', (e) => {
+  dialog.addEventListener('click', (e) => {
     if (!pointerInside) {
       e.preventDefault();
       e.stopPropagation();

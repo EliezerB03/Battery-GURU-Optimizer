@@ -259,10 +259,10 @@ pm enable com.google.android.gms/.chimera.GmsIntentOperationService`;
         const selected = trigger.dataset.selected;
         const isOpen = popup.classList.contains("show");
         if (isOpen) {
+          positionPopup(trigger);
           popupContent.classList.add("switching");
           setTimeout(() => {
             fillPopup(options, selected, trigger);
-            positionPopup(trigger);
             popupContent.classList.remove("switching");
           }, 150);
         } else {

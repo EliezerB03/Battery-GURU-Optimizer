@@ -2,6 +2,14 @@
 
 
 
+### v2.0.1
+
+* Improved Behavior when pressing Buttons, Toggles, etc.
+* The Pop-Up opening animation has been Improved
+* Fixed a Visual Bug with some Dialog Windows
+
+
+
 ### v2.0
 
 * New WebUI App based on One UI Theme (ONLY on KernelSU/Next/APatch)

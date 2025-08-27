@@ -9,13 +9,11 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
   z-index: 1000;
   opacity: 0;
-  transform: scale(0.95) translateY(10px);
+  transform: scale(0.93);
   pointer-events: none;
   transition: 
     opacity 250ms ease,
-    transform 250ms ease,
-    top 250ms ease,
-    left 250ms ease;
+    transform 250ms ease;
   box-sizing: border-box; 
   overflow: hidden;      
 }

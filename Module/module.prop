@@ -1,7 +1,7 @@
 id=battery-guru-optimizer-9810
 name=🔋 Battery GURU Optimizer
-version=2.0
-versionCode=200
+version=2.0.1
+versionCode=201
 author=EliezerB03
 description=A modifier/optimizer to improve battery efficiency and resource usage for Samsung devices running One UI and DS-ACK/Apollo kernels (Exynos 9810)
 banner=logo.png
