@@ -1,5 +1,9 @@
-### 🔋 v2.0.1
+### 🔋 v2.1
 
-* Improved Behavior when pressing Buttons, Toggles, etc.
-* The Pop-Up opening animation has been Improved
-* Fixed a Visual Bug with some Dialog Windows
+* WebUI Compiled with ParcelJS (Improves Page Performance and Stability)
+* SWAP Optimizations Re-adjusted
+* Fixed Black Screens when Opening the WebUI
+* Fixed Conflicts Caused by Other Installed Modules
+* Minor Visual Improvements
+* Minor Improvements to Dialog Windows
+* Other Misc. Improvements and Fixes
