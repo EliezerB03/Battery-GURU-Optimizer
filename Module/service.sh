@@ -30,11 +30,12 @@ pm disable com.google.android.gms/.chimera.GmsIntentOperationService
 
 #---------------< SWAP OPTIMIZATIONS >---------------#
 # swapset_on=1
-echo '35' > /proc/sys/vm/dirty_ratio
-echo '200000' > /proc/sys/vm/dirty_expire_centisecs
-echo '500000' > /proc/sys/vm/dirty_writeback_centisecs
-echo '5' > /proc/sys/vm/laptop_mode
-echo '0' > /proc/sys/vm/swappiness
+echo '10' > /proc/sys/vm/dirty_ratio
+echo '3' > /proc/sys/vm/dirty_background_ratio
+echo '2500' > /proc/sys/vm/dirty_expire_centisecs
+echo '1250' > /proc/sys/vm/dirty_writeback_centisecs
+echo '2' > /proc/sys/vm/laptop_mode
+echo '70' > /proc/sys/vm/swappiness
 
 # ============== CPU SETTINGS ============== #
 
