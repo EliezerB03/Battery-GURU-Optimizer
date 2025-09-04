@@ -1,4 +1,6 @@
-### 🔋 v2.1.1
+### 🔋 v2.2
 
-* Fixed App Crashes and Freezes due to SWAP optimizations
-* Other Minor Improvements and Fixes
+* Fixed Thermal optimizations that were not being work correctly
+* Description in some Dialogs has been Updated
+* Minor improvements to Dialog windows
+* Other Minor Fixes
