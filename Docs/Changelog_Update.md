@@ -1,6 +1,10 @@
-### 🔋 v2.2
+### 🔋 v2.5
 
-* Fixed Thermal optimizations that were not being work correctly
-* Description in some Dialogs has been Updated
-* Minor improvements to Dialog windows
-* Other Minor Fixes
+* Improvements in Light/Dark Themes
+* Improve Animations
+* Added Battery Protection Option (Limit from 85% to 95%)
+* Added Force Battery Optimizations on Apps Option (Labs)
+* Added Force Doze on Device Idle Option (Labs)
+* Voltage Settings have been changed to UV Settings
+* Removed Kernel Debugging Option from Labs
+* Other Many Improvements and Fixes

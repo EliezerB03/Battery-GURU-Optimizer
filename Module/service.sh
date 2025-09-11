@@ -3,19 +3,16 @@
 
 #!/sbin/sh
 
-# ============== GENERAL OPTIMIZATIONS  ============== #
+# ============== ALL OPTIMIZATIONS  ============== #
 
-#---------------< KERNEL DEBUGGING >---------------#
-# kerneldebug_on=0
-echo '0' > /proc/sys/kernel/panic
-echo 'N' > /sys/kernel/debug/debug_enabled
-echo 'N' > /sys/kernel/debug/seclog/seclog_enabled
+#---------------< CPU HOTPLUG OPTIMIZATIONS >---------------#
+# hotplugset_on=1
+echo '0' > /sys/power/cpuhotplug/governor/user_mode
+echo '0' > /sys/power/cpuhotplug/governor/enabled
 
-#---------------< STORAGE OPTIMIZATIONS >---------------#
-# storageset_on=1
-echo '1' > /sys/block/sda/queue/rotational
-echo '1' > /sys/block/sda/queue/add_random
-echo '2' > /sys/block/sda/queue/rq_affinity
+#---------------< CPU POWER EFFICIENT >---------------#
+# powereffiset_on=1
+echo 'Y' > /sys/module/workqueue/parameters/power_efficient
 
 #---------------< THERMAL OPTIMIZATIONS >---------------#
 # thermalset_on=1
@@ -37,23 +34,23 @@ echo '1250' > /proc/sys/vm/dirty_writeback_centisecs
 echo '2' > /proc/sys/vm/laptop_mode
 echo '70' > /proc/sys/vm/swappiness
 
-# ============== CPU SETTINGS ============== #
+#---------------< STORAGE OPTIMIZATIONS >---------------#
+# storageset_on=1
+echo '1' > /sys/block/sda/queue/rotational
+echo '1' > /sys/block/sda/queue/add_random
+echo '2' > /sys/block/sda/queue/rq_affinity
 
-#---------------< CPU FREQ SETTINGS >---------------#
+#---------------< BATTERY PROTECTION >---------------#
+# batteryprotect_on=0
+# battery_litmit=90%
+echo '100' > /sys/class/power_supply/battery/batt_full_capacity
+
+#---------------< FREQS SETTINGS >---------------#
 # frqset_on=1
 # lit=1690 Mhz
 echo '1690000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
 # big=1794 Mhz
 echo '1794000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
-
-#---------------< CPU HOTPLUG OPTIMIZATIONS >---------------#
-# hotplugset_on=1
-echo '0' > /sys/power/cpuhotplug/governor/user_mode
-echo '0' > /sys/power/cpuhotplug/governor/enabled
-
-#---------------< ENABLE POWER EFFICIENT >---------------#
-# powereffiset_on=1
-echo 'Y' > /sys/module/workqueue/parameters/power_efficient
 
 #---------------< VOLTAGE SETTINGS >---------------#
 # voltset_on=1
@@ -83,5 +80,13 @@ echo '-4' > /sys/power/percent_margin/intcam_margin_percent
 echo '-4' > /sys/power/percent_margin/iva_margin_percent
 # score_volt=-4
 echo '-4' > /sys/power/percent_margin/score_margin_percent
+
+#---------------< FORCE DOZE (LABS) >---------------#
+# forcedoze_on=0
+dumpsys deviceidle unforce
+
+#---------------< FORCE BATTERY OPTIMIZATIONS ON APPS (LABS) >---------------#
+# forceappsbattopt_on=0
+settings put global forced_app_standby_enabled 0
 
 # ======================================
