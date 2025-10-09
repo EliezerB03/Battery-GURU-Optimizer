@@ -39,6 +39,8 @@ elif [ "$current_device" = "SM-G965N" ]; then
         ui_print "   * GALAXY S9+ DETECTED! (PASSED)            "
 elif [ "$current_device" = "SM-N960N" ]; then
         ui_print "   * GALAXY NOTE9 DETECTED! (PASSED)          "
+elif [ "$current_device" = "SM-N770F" ]; then
+        ui_print "   * GALAXY NOTE10 LITE DETECTED! (PASSED)    "
 else
         ui_print "   UNSUPPORTED DEVICE! (ABORTING...)          "
         ui_print "----------------------------------------------"
@@ -90,10 +92,6 @@ ui_print " "
 ui_print "----------------------------------------------"
 ui_print "        APPLYING DEFAULT OPTIMIZATIONS        "
 ui_print "----------------------------------------------"
-sleep 0.5
-ui_print "  - DISABLING KERNEL DEGUGGING...             "
-sleep 0.8
-ui_print "   * DONE!                                    "
 sleep 0.5
 ui_print "  - APPLYING STORAGE OPTIMIZATIONS...         "
 sleep 1.1

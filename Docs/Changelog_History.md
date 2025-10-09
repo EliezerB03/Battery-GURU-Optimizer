@@ -2,11 +2,18 @@
 
 
 
+### v2.6
+
+* Added Support for Galaxy Note10 Lite (X-ROM)
+* Minor Changes and Fixes
+
+
+
 ### v2.5
 
 * Improvements in Light/Dark Themes
 * Improve Animations
-* Added Battery Protection Option (Limit from 85% to 95%)
+* Added Battery Protection Option (Limit from 80% to 95%)
 * Added Force Battery Optimizations on Apps Option (Labs)
 * Added Force Doze on Device Idle Option (Labs)
 * Voltage Settings have been changed to UV Settings
