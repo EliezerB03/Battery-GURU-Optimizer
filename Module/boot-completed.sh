@@ -3,7 +3,17 @@
 
 #!/sbin/sh
 
-# ============== ALL OPTIMIZATIONS  ============== #
+# ============== ALL OPTIMIZATIONS ============== #
+
+#---------------< BATTERY OPTIMIZATIONS ON APPS >---------------#
+# forceappsbattopt_on=1
+settings put global forced_app_standby_enabled 1
+
+#---------------< GMS OPTIMIZATIONS >---------------#
+# gmsoptimized_on=1
+pm disable com.google.android.gms/com.google.android.gms.auth.managed.admin.DeviceAdminReceiver
+pm disable com.google.android.gms/com.google.android.gms.mdm.receivers.MdmDeviceAdminReceiver
+dumpsys deviceidle whitelist -com.google.android.gms
 
 #---------------< CPU HOTPLUG OPTIMIZATIONS >---------------#
 # hotplugset_on=1
@@ -24,6 +34,10 @@ echo 2 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus; echo 4 > /sys/devices/s
 echo 80 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms; echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
 chmod 444 /sys/devices/system/cpu/cpu[0-7]/max_cpus
 pm disable com.google.android.gms/.chimera.GmsIntentOperationService
+
+#---------------< GPU PERFORMANCE BOOST >---------------#
+# gpuboost_on=0
+echo '1' > /sys/devices/platform/17500000.mali/dvfs_governor
 
 #---------------< SWAP OPTIMIZATIONS >---------------#
 # swapset_on=1
@@ -81,12 +95,12 @@ echo '-4' > /sys/power/percent_margin/iva_margin_percent
 # score_volt=-4
 echo '-4' > /sys/power/percent_margin/score_margin_percent
 
+#---------------< LIMIT BACKGROUND APP PROCESS (LABS) >---------------#
+# limitprocess_on=0
+if [ $(getprop ro.build.version.sdk) -eq 35 ]; then service call activity 51 i32 -1; elif [ $(getprop ro.build.version.sdk) -eq 34 ]; then service call activity 51 i32 -1; elif [ $(getprop ro.build.version.sdk) -eq 33 ]; then service call activity 44 i32 -1; fi
+
 #---------------< FORCE DOZE (LABS) >---------------#
 # forcedoze_on=0
 dumpsys deviceidle unforce
-
-#---------------< FORCE BATTERY OPTIMIZATIONS ON APPS (LABS) >---------------#
-# forceappsbattopt_on=0
-settings put global forced_app_standby_enabled 0
 
 # ======================================

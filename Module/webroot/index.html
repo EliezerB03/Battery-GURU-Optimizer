@@ -8,27 +8,71 @@
   <body>
     <!-- loading Animation -->
     <div class="oui-loading-mask"></div>
-    <div class="oui-loading-circle"></div>
-    <div class="oui-loading" role="status" aria-label="Loading">
-      <div class="arm" style="--angle:0deg"><i class="ball blue"></i></div>
-      <div class="arm" style="--angle:90deg"><i class="ball blue"></i></div>
-      <div class="arm" style="--angle:180deg"><i class="ball green"></i></div>
-      <div class="arm" style="--angle:270deg"><i class="ball blue"></i></div>
+    <div class="oui-dialog">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-loading-header">
+          <span class="oui-dialog-loading">
+            <div class="oui-loading" role="status" aria-label="Loading">
+              <div class="arm" style="--angle:0deg"><i class="ball green1"></i></div>
+              <div class="arm" style="--angle:90deg"><i class="ball blue1"></i></div>
+              <div class="arm" style="--angle:180deg"><i class="ball green2"></i></div>
+              <div class="arm" style="--angle:270deg"><i class="ball blue2"></i></div>
+            </div>
+          </span>
+          <span class="oui-dialog-loading-label">Loading...</span>
+        </div>
+        <div class="oui-dialog-description">
+          <br>Checking Settings...
+        </div>
+      </div>
     </div>
     <div class="scroll-container">
       <main>
         <!---------------- General Settings ---------------->
         <section id="general" class="container open-animation tab-section active">
-          <h1></h1>
+          <header class="oui-header">
+            <div class="oui-header-title">General Settings</div>
+            <p class="oui-overlay-bubble-info-header" data-dialog-target="general_info">
+              <svg class="oui-icon-info" width="40" height="40" viewBox="0 0 74 72">
+                <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+              </svg>
+            </p>
+          </header>
           <div class="oui-viewing">
-            <div class="oui-bubble-separator"></div>
-            <div class="oui-bubble-separator2"></div>
             <div class="oui-viewing-title">General Settings</div>
-            <div class="oui-bubble-separator2"></div>
-            <div class="oui-bubble-separator"></div>
           </div>
-          <h1></h1>
-          <div class="oui-interaction">  
+          <div class="oui-interaction"> 
+            <div class="info-header">
+              <p class="oui-overlay-bubble-item">
+                <svg class="oui-icon" width="32" height="32" viewBox="0 0 24 24">
+                  <path d="m20.178 14.3-1.4-1.4c-.2-.2-.3-.5-.3-.7v-.4c0-.2.1-.5.3-.7l1.4-1.4c.2-.2.2-.5.1-.8l-1.5-2.6c-.1-.2-.5-.4-.7-.3l-1.9.5c-.3.1-.6 0-.8-.1s-.7-.6-.8-.9l-.5-1.9c-.1-.3-.3-.5-.6-.5h-3c-.3 0-.6.2-.6.5l-.5 1.9c-.1.3-.3.6-.5.7s-.9.3-1.1.3l-1.9-.5c-.3-.1-.6.1-.7.3l-1.5 2.6c-.1.2-.1.6.1.8l1.4 1.4c.2.2.3.5.3.7v.4c0 .2-.1.5-.3.7l-1.4 1.4c-.2.2-.2.5-.1.8l1.5 2.6c.1.2.5.4.7.3l1.9-.5c.3-.1.6 0 .8.1s.7.6.8.9l.5 1.9c.1.3.3.5.6.5h3c.3 0 .6-.2.6-.5l.5-1.9c.1-.3.3-.6.5-.7s.9-.3 1.1-.3l1.9.5c.3.1.6-.1.7-.3l1.5-2.6c.2-.2.1-.6-.1-.8m-8.1.7c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.4 3-3 3"></path>
+                </svg>
+                System Settings
+              </p>
+              <p class="oui-overlay-bubble-info" data-dialog-target="general_info">
+                <svg class="oui-icon-info" width="40" height="40" viewBox="0 0 74 72">
+                  <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+                </svg>
+              </p>
+            </div>
+            <div class="oui-bubble">
+              <ul>
+                <label class="oui-container-toggle" for="forcebattapps_opt">
+                  <div class="oui-inner">
+                    <span class="oui-label">Battery optimizations on apps</span>
+                    <input id="forcebattapps_opt" type="checkbox" class="toggle">
+                    <span class="toggle-slider"></span>
+                  </div>
+                </label>
+                <label class="oui-container-toggle" for="gmsoptimize_opt">
+                  <div class="oui-inner">
+                    <span class="oui-label">GMS optimizations</span>
+                    <input id="gmsoptimize_opt" type="checkbox" class="toggle">
+                    <span class="toggle-slider"></span>
+                  </div>
+                </label>
+              </ul>
+            </div> 
             <div class="info-header">
               <p class="oui-overlay-bubble-item">
                 <svg class="oui-icon" width="32" height="32" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -36,11 +80,6 @@
                   <path d="M10.02 16.248h3.97c1.25 0 2.27-1.01 2.27-2.27v-3.97c0-1.25-1.01-2.27-2.27-2.27h-3.97c-1.25 0-2.27 1.01-2.27 2.27v3.97c0 1.26 1.01 2.27 2.27 2.27"></path>
                 </svg>
                 CPU Settings
-              </p>
-              <p class="oui-overlay-bubble-info" data-dialog-target="general_info">
-                <svg class="oui-icon-info" width="40" height="40" viewBox="0 0 74 72">
-                  <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
-                </svg>
               </p>
             </div>
             <div class="oui-bubble">
@@ -54,7 +93,7 @@
                 </label>
                 <label class="oui-container-toggle" for="power_eff">
                   <div class="oui-inner">
-                    <span class="oui-label">Power Efficient</span>
+                    <span class="oui-label">Power efficient</span>
                     <input id="power_eff" type="checkbox" class="toggle">
                     <span class="toggle-slider"></span>
                   </div>
@@ -63,6 +102,24 @@
                   <div class="oui-inner">
                     <span class="oui-label">Thermal optimizations</span>
                     <input id="thermal_opt" type="checkbox" class="toggle">
+                    <span class="toggle-slider"></span>
+                  </div>
+                </label>
+              </ul>
+            </div>
+            <p class="oui-overlay-bubble-item">
+              <svg class="oui-icon" width="32" height="32" viewBox="0 0 512 512">
+                <path d="m76 99.469 2.89-.012q3.017-.004 6.032.022c3.068.02 6.135 0 9.203-.026q2.938.004 5.875.016l2.766-.025c5.555.082 8.927.714 13.234 4.556 3.58 4.517 4.489 7.411 4.39 13.148-.005.658-.01 1.315-.017 1.993a449 449 0 0 1-.123 6.234q-.03 2.127-.055 4.254A927 927 0 0 1 120 140l1.884-.005a84838 84838 0 0 1 123.922-.215l2.673-.003c14.27-.017 28.54-.049 42.81-.086q21.975-.056 43.948-.067 13.553-.008 27.104-.056 9.301-.03 18.603-.022c3.574.003 7.148-.001 10.722-.023 3.885-.023 7.77-.015 11.654-.004l3.384-.035c13.308.1 24.928 4.81 34.773 13.77 11.502 11.983 14.825 24.475 14.814 40.569l.02 4.2c.017 3.79.022 7.58.024 11.37q.001 3.558.01 7.118.028 12.441.026 24.881c-.002 7.706.02 15.411.051 23.116q.038 9.954.036 19.907c0 3.954.005 7.908.026 11.862q.029 5.586.005 11.172c-.003 2 .014 3.998.03 5.997-.095 13.902-4.36 25.688-13.773 36.03-7.662 7.355-16.102 12.358-26.746 13.524l.063 2.136c.084 3.246.136 6.492.187 9.739l.102 3.36c.115 9.777-1.842 17.945-8.649 25.234-7.489 6.733-15.162 8.832-25.038 8.822l-2.791.02c-3.036.019-6.072.023-9.108.025l-6.36.02q-6.662.017-13.325.015c-5.674 0-11.347.027-17.02.061-4.379.022-8.758.026-13.136.025q-3.137.004-6.272.027c-2.934.02-5.867.014-8.8.002l-2.583.034c-8.611-.089-16.397-2.894-22.739-8.817-7.683-8.545-8.826-16.92-8.656-28.078L272 364h-24c.157 7.449.157 7.449.36 14.896.1 9.498-2.065 17.515-8.657 24.573-6.425 5.777-13.419 8.761-22.1 8.822l-3.784.038-4.053.007-4.207.02q-4.403.017-8.806.015c-3.737 0-7.472.027-11.209.061-2.896.023-5.793.026-8.69.025q-2.062.004-4.128.027c-10.843.111-20.026-1.151-28.195-8.78-7.685-8.548-8.827-16.911-8.656-28.079l.027-3.387c.024-2.746.06-5.492.098-8.238h-16l.14 6.352q.046 3.067.08 6.136.03 2.121.082 4.242c.049 2.04.071 4.08.089 6.122l.063 3.713c-.69 5.223-3.207 8.25-6.954 11.81-5.165 2.398-9.9 2.379-15.5 1.625-4.964-2.305-7.446-5.205-10-10-.57-3.559-.523-7.07-.481-10.668l-.01-3.258c-.007-3.602.015-7.204.037-10.806q.001-3.873-.002-7.746-.002-8.34.033-16.678c.033-8.037.043-16.075.048-24.112q.015-19.561.073-39.123.056-19 .082-38l.003-2.367.016-11.754c.041-32.496.112-64.992.201-97.488l-1.924.063c-2.9.084-5.8.136-8.701.187l-3.027.102c-6.16.081-9.664-.239-14.348-4.352-3.628-3.82-4.31-6.883-4.5-12 .19-5.117.872-8.18 4.5-12 5.264-4.429 9.423-4.59 16-4.531M305 212c-11.74 12.056-16.435 25.878-16.364 42.347.255 12.307 4.108 21.777 11.364 31.653l1.516 2.145c7.63 9.768 20.337 16.908 32.484 18.855 16.688 1.55 30.26-.984 44-11l1.922-1.328C390.137 286.893 396.264 274.258 399 262c1.415-16.662-.948-30.317-11-44l-1.516-2.145c-8.995-11.517-23.236-17.633-37.359-19.73C332.09 195.019 317.607 200.822 305 212m-157-1.937c-3.427 5.033-3.658 8.916-3 14.937 2.348 4.876 5.288 7.403 10 10 4.68 1.318 9.415 1.155 14.237 1.161l2.796.015q4.57.021 9.139.027l6.37.017q6.68.015 13.356.02c5.69.006 11.381.03 17.071.058 4.388.019 8.775.024 13.162.026q3.146.004 6.291.024c2.942.017 5.882.015 8.823.008l2.598.028c6.112-.042 13.031-.6 17.787-4.836 4.045-4.755 4.726-7.942 4.647-14.009-.41-3.764-1.76-5.757-4.277-8.539-6.53-5.14-12.275-5.15-20.237-5.161l-2.796-.015q-4.57-.021-9.139-.027l-6.37-.017q-6.68-.015-13.356-.02c-5.69-.006-11.381-.03-17.071-.058-4.388-.019-8.775-.024-13.162-.026q-3.146-.004-6.291-.024c-2.942-.017-5.882-.015-8.823-.008l-2.598-.028c-7.006.048-14.385.837-19.157 6.446m0 64c-3.427 5.033-3.658 8.916-3 14.937 2.348 4.876 5.288 7.403 10 10 4.68 1.318 9.415 1.155 14.237 1.161l2.796.015q4.57.021 9.139.027l6.37.017q6.68.015 13.356.02c5.69.006 11.381.03 17.071.058 4.388.019 8.775.024 13.162.026q3.146.004 6.291.024c2.942.017 5.882.015 8.823.008l2.598.028c6.112-.042 13.031-.6 17.787-4.836 4.045-4.755 4.726-7.942 4.647-14.009-.41-3.764-1.76-5.757-4.277-8.539-6.53-5.14-12.275-5.15-20.237-5.161l-2.796-.015q-4.57-.021-9.139-.027l-6.37-.017q-6.68-.015-13.356-.02c-5.69-.006-11.381-.03-17.071-.058-4.388-.019-8.775-.024-13.162-.026q-3.146-.004-6.291-.024c-2.942-.017-5.882-.015-8.823-.008l-2.598-.028c-7.006.048-14.385.837-19.157 6.447M168 364v16h48v-16zm136 0v16h24v-16zm56 0v16h24v-16z"></path>
+                <path d="M355.438 229.5c5.824 3.52 10.544 8.99 12.562 15.5.805 7.836 1.125 15.62-4 22-4.804 5.045-9.162 8.606-16.27 9.336-8.516.094-14.406-.218-20.695-6.207-6.382-6.904-7.515-12.33-7.34-21.684.696-7.862 4.353-11.995 10.207-17 7.065-4.867 17.692-5.421 25.536-1.945"></path>
+              </svg>
+              GPU Settings
+            </p>
+            <div class="oui-bubble">
+              <ul>
+                <label class="oui-container-toggle" for="gpuboost_opt">
+                  <div class="oui-inner">
+                    <span class="oui-label">GPU perfomance boost</span>
+                    <input id="gpuboost_opt" type="checkbox" class="toggle">
                     <span class="toggle-slider"></span>
                   </div>
                 </label>
@@ -129,21 +186,26 @@
                   </div>
                 </div>
               </ul>
-            </div>  
+            </div>
+            <div class="oui-bubble-separator"></div>
+            <div class="oui-bubble-separator"></div>
+            <div class="oui-bubble-separator"></div>  
             <div class="oui-bubble-separator2"></div>
           </div> 
         </section>
         <!---------------- Freqs Settings ---------------->
         <section id="freq" class="container open-animation tab-section">
-          <h1></h1>
+          <header class="oui-header">
+            <div class="oui-header-title">Freqs Settings</div>
+            <p class="oui-overlay-bubble-info-header" data-dialog-target="freq_dialog">
+              <svg class="oui-icon-info" width="40" height="40" viewBox="0 0 74 72">
+                <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+              </svg>
+            </p>
+          </header>
           <div class="oui-viewing">
-            <div class="oui-bubble-separator"></div>
-            <div class="oui-bubble-separator2"></div>
             <div class="oui-viewing-title">Freqs Settings</div>
-            <div class="oui-bubble-separator2"></div>
-            <div class="oui-bubble-separator"></div>
           </div>
-          <h1></h1>
           <div class="oui-interaction">
             <div class="info-header">
               <p class="oui-overlay-bubble-item">
@@ -176,18 +238,21 @@
               <ul>
                 <label id="frq_little" class="oui-bubble-item popup-trigger" data-options="[&quot;455 Mhz&quot;, &quot;598 Mhz&quot;, &quot;715 Mhz&quot;, &quot;832 Mhz&quot;, &quot;949 Mhz&quot;, &quot;1053 Mhz&quot;, &quot;1248 Mhz&quot;, &quot;1456 Mhz&quot;, &quot;1690 Mhz&quot;, &quot;1794 Mhz&quot;]" data-selected=""> 
                   <div class="oui-inner">
-                    <span class="popup-label">Max Little Frequency</span>
+                    <span class="popup-label">Max little frequency</span>
                     <span class="popup-value"></span>
                   </div>
                 </label>
                 <label id="frq_big" class="oui-bubble-item popup-trigger" data-options="[&quot;650 Mhz&quot;, &quot;741 Mhz&quot;, &quot;858 Mhz&quot;, &quot;962 Mhz&quot;, &quot;1066 Mhz&quot;, &quot;1170 Mhz&quot;, &quot;1261 Mhz&quot;, &quot;1469 Mhz&quot;, &quot;1586 Mhz&quot;, &quot;1690 Mhz&quot;, &quot;1794 Mhz&quot;, &quot;1924 Mhz&quot;]" data-selected=""> 
                   <div class="oui-inner">
-                    <span class="popup-label">Max Big Frequency</span>
+                    <span class="popup-label">Max big frequency</span>
                     <span class="popup-value"></span>
                   </div>
                 </label>
               </ul>
             </div>
+            <div class="oui-bubble-separator"></div>
+            <div class="oui-bubble-separator"></div>
+            <div class="oui-bubble-separator"></div>  
             <div class="oui-bubble-separator2"></div>
             <span id="popup-menu" class="popup">
               <span class="popup-content">
@@ -198,15 +263,17 @@
         </section>
         <!---------------- UnderVoltage Settings ---------------->
         <section id="voltage" class="container open-animation tab-section">
-          <h1></h1>
+          <header class="oui-header">
+            <div class="oui-header-title">UV Settings</div>
+            <p class="oui-overlay-bubble-info-header" data-dialog-target="voltage_dialog">
+              <svg class="oui-icon-info" width="40" height="40" viewBox="0 0 74 72">
+                <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+              </svg>
+            </p>
+          </header>
           <div class="oui-viewing">
-            <div class="oui-bubble-separator"></div>
-            <div class="oui-bubble-separator2"></div>
             <div class="oui-viewing-title">UV Settings</div>
-            <div class="oui-bubble-separator2"></div>
-            <div class="oui-bubble-separator"></div>
           </div>
-          <h1></h1>
           <div class="oui-interaction">
             <div class="info-header">
               <p class="oui-overlay-bubble-item">
@@ -376,19 +443,24 @@
               </ul>
             </div> 
           </div>
+          <div class="oui-bubble-separator"></div>
+          <div class="oui-bubble-separator"></div>
           <div class="oui-bubble-separator"></div>  
+          <div class="oui-bubble-separator2"></div> 
         </section>
         <!---------------- About GURU ---------------->
         <section id="about" class="container open-animation tab-section">
-          <h1></h1>
+          <header class="oui-header">
+            <div class="oui-header-title">About GURU</div>
+            <p class="oui-overlay-bubble-info-header" data-dialog-target="about_dialog">
+              <svg class="oui-icon-info" width="40" height="40" viewBox="0 0 74 72">
+                <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+              </svg>
+            </p>
+          </header>
           <div class="oui-viewing">
-            <div class="oui-bubble-separator"></div>
-            <div class="oui-bubble-separator2"></div>
             <div class="oui-viewing-title">About GURU</div>
-            <div class="oui-bubble-separator2"></div>
-            <div class="oui-bubble-separator"></div>
           </div>
-          <h1></h1>
           <div class="oui-interaction">
             <div class="info-header">
               <p class="oui-overlay-bubble-item">
@@ -406,8 +478,8 @@
             <div class="oui-bubble">
               <ul>
                 <li class="oui-bubble-item2">
-                  <span class="oui-label">Version</span>
-                  <div class="sub-text">2.6</div>
+                  <span class="oui-label">Module version</span>
+                  <div class="sub-text">3.0</div>
                 </li>
                 <li class="oui-bubble-item2">
                   <span class="oui-label">Developed by</span>
@@ -419,7 +491,7 @@
                       <svg class="oui-icon-option" width="28" height="28" viewBox="0 0 15 15">
                         <path d="M9.358 2.145a8.2 8.2 0 0 0-3.716 0c-.706-.433-1.245-.632-1.637-.716a2.2 2.2 0 0 0-.51-.053 1.3 1.3 0 0 0-.232.028l-.01.002-.004.002h-.003l.137.481-.137-.48a.5.5 0 0 0-.32.276 3.12 3.12 0 0 0-.159 2.101A3.35 3.35 0 0 0 2 5.93c0 1.553.458 2.597 1.239 3.268.547.47 1.211.72 1.877.863a2.3 2.3 0 0 0-.116.958v.598c-.407.085-.689.058-.89-.008-.251-.083-.444-.25-.629-.49a5 5 0 0 1-.27-.402l-.057-.093a9 9 0 0 0-.224-.354c-.19-.281-.472-.633-.928-.753l-.484-.127-.254.968.484.127c.08.02.184.095.355.346a7 7 0 0 1 .19.302l.068.11c.094.152.202.32.327.484.253.33.598.663 1.11.832.35.116.748.144 1.202.074V14.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-3.562c0-.316-.014-.605-.103-.874.663-.14 1.322-.39 1.866-.86.78-.676 1.237-1.73 1.237-3.292v-.001a3.35 3.35 0 0 0-.768-2.125 3.12 3.12 0 0 0-.159-2.1.5.5 0 0 0-.319-.277l-.137.48c.137-.48.136-.48.135-.48l-.002-.001-.004-.002-.009-.002-.075-.015a1 1 0 0 0-.158-.013 2.2 2.2 0 0 0-.51.053c-.391.084-.93.283-1.636.716"></path>
                       </svg>
-                      Github Source
+                      Github source
                     </span>
                   </div>
                 </li>
@@ -443,16 +515,16 @@
             </p>
             <div class="oui-bubble">
               <ul>
-                <label class="oui-container-toggle" for="forceappsbatt_opt">
+                <label class="oui-container-toggle" for="limitbackground_opt" data-dialog-target="notification_warn">
                   <div class="oui-inner">
-                    <span class="oui-label">Force Battery optimizations on Apps</span>
-                    <input id="forceappsbatt_opt" type="checkbox" class="toggle">
+                    <span class="oui-label">Background app process limit</span>
+                    <input id="limitbackground_opt" type="checkbox" class="toggle">
                     <span class="toggle-slider"></span>
                   </div>
                 </label>
-                <label class="oui-container-toggle" for="forcedoze_opt" data-dialog-target="forcedoze_warn">
+                <label class="oui-container-toggle" for="forcedoze_opt" data-dialog-target="notification_warn">
                   <div class="oui-inner">
-                    <span class="oui-label">Force Doze on Device idle</span>
+                    <span class="oui-label">Force Doze on device idle</span>
                     <input id="forcedoze_opt" type="checkbox" class="toggle">
                     <span class="toggle-slider"></span>
                   </div>
@@ -460,13 +532,16 @@
               </ul>
             </div>
             <div class="oui-bubble-separator"></div>
-            <div class="button-container" data-dialog-target="reset_all_dialog">
-              <span id="all_reset_button" class="oui-button oui-button--active">
+            <div class="button-container">
+              <span id="all_reset_button" class="oui-button oui-button--active" data-dialog-target="reset_all_dialog">
                 <div class="button-inner">
-                  <span class="oui-button-label">Reset all Settings to default</span>
+                  <span class="oui-button-label">Reset all settings to default</span>
                 </div>
               </span>
             </div> 
+            <div class="oui-bubble-separator"></div>
+            <div class="oui-bubble-separator"></div>
+            <div class="oui-bubble-separator"></div>  
             <div class="oui-bubble-separator2"></div>
           </div> 
         </section>
@@ -477,7 +552,10 @@
       <div class="oui-tab-options">
         <span class="oui-tab-link oui-tab-link--active oui-tab-inner" onclick="showTab('general', this)">
           <span class="oui-tab-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24">
+            <svg class="outline" style="display:none" width="26" height="26" viewBox="0 0 24 24">
+              <path d="M13.386 3.14c.472 0 .923.278 1.173.726l.063.127.047.142.443 1.726.04.033c.091.083.31.293.4.35-.01-.006 0-.007.018-.007h.096l.068-.013 1.71-.477c.456-.127.966.02 1.327.387l.094.106.082.122 1.388 2.413c.229.4.22.912-.028 1.352l-.082.13-.11.126-1.267 1.25c-.037.035-.078.109-.092.12l-.006-.005-.002.067-.002.412c0-.014.007-.008.015.005l.04.073.047.053 1.27 1.252c.328.326.456.827.33 1.321l-.042.134-.071.15-1.388 2.413c-.236.41-.702.662-1.217.653l-.14-.008-.146-.03-1.71-.477c.018.005-.424.126-.542.187.018-.01-.018.04-.041.08l-.014.026-.024.069-.444 1.729c-.119.457-.5.824-.997.954l-.139.029-.147.01h-2.772c-.473 0-.924-.278-1.173-.728l-.063-.127-.046-.14-.445-1.726c.004.016-.323-.31-.438-.383.01.006 0 .007-.019.007h-.095l-.07.013-1.709.476c-.456.128-.965-.02-1.326-.386l-.095-.105-.082-.124-1.385-2.41c-.232-.399-.224-.912.025-1.353l.081-.13.11-.127 1.268-1.249c.036-.035.077-.11.092-.123l.008-.06.002-.409c-.002.027-.024-.024-.043-.06l-.014-.021-.045-.053-1.27-1.25c-.329-.326-.456-.828-.33-1.322l.041-.135.072-.15 1.387-2.412c.236-.411.703-.663 1.218-.655l.141.01.145.03 1.707.476c-.017-.005.426-.127.548-.19-.01.005-.006-.005.003-.02l.05-.086.023-.066.444-1.726c.117-.459.5-.827.997-.957l.139-.029.147-.01zM10.69 4.562l-.437 1.698-.05.147c-.144.371-.414.723-.734.89-.378.197-1.008.38-1.448.326l-.14-.027-1.633-.459-1.315 2.28 1.248 1.232.103.118c.22.275.373.628.392.925v.51l-.01.153a1.84 1.84 0 0 1-.418.913l-.098.105-1.216 1.193 1.31 2.284 1.68-.467.153-.031c.393-.061.833-.001 1.14.194.362.234.839.696 1.007 1.106l.041.12.423 1.652 2.619.003.438-1.695.048-.148c.143-.37.414-.721.735-.892.379-.197 1.01-.38 1.449-.326l.138.027 1.634.459 1.315-2.28-1.248-1.231-.103-.118c-.22-.276-.373-.63-.392-.925l.001-.508.008-.153c.04-.314.2-.656.42-.914l.097-.105 1.217-1.196-1.312-2.283-1.681.468-.152.031c-.394.06-.834 0-1.136-.194-.36-.23-.84-.695-1.01-1.106l-.041-.122-.423-1.652zM12 8.686a3.309 3.309 0 1 1 0 6.618 3.309 3.309 0 0 1 0-6.618m0 1.425a1.884 1.884 0 1 0 .002 3.768A1.884 1.884 0 0 0 12 10.111"></path>
+            </svg>
+            <svg class="filled" style="display:auto" width="26" height="26" viewBox="0 0 24 24">
               <path d="m20.178 14.3-1.4-1.4c-.2-.2-.3-.5-.3-.7v-.4c0-.2.1-.5.3-.7l1.4-1.4c.2-.2.2-.5.1-.8l-1.5-2.6c-.1-.2-.5-.4-.7-.3l-1.9.5c-.3.1-.6 0-.8-.1s-.7-.6-.8-.9l-.5-1.9c-.1-.3-.3-.5-.6-.5h-3c-.3 0-.6.2-.6.5l-.5 1.9c-.1.3-.3.6-.5.7s-.9.3-1.1.3l-1.9-.5c-.3-.1-.6.1-.7.3l-1.5 2.6c-.1.2-.1.6.1.8l1.4 1.4c.2.2.3.5.3.7v.4c0 .2-.1.5-.3.7l-1.4 1.4c-.2.2-.2.5-.1.8l1.5 2.6c.1.2.5.4.7.3l1.9-.5c.3-.1.6 0 .8.1s.7.6.8.9l.5 1.9c.1.3.3.5.6.5h3c.3 0 .6-.2.6-.5l.5-1.9c.1-.3.3-.6.5-.7s.9-.3 1.1-.3l1.9.5c.3.1.6-.1.7-.3l1.5-2.6c.2-.2.1-.6-.1-.8m-8.1.7c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.4 3-3 3"></path>
             </svg>
           </span>
@@ -487,8 +565,12 @@
         </span>
         <span class="oui-tab-link oui-tab-inner" onclick="showTab('freq', this)">
           <span class="oui-tab-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24">
+            <svg class="outline" style="display:auto" width="26" height="26" viewBox="0 0 24 24">
               <path d="M5.542 7.218a9.11 9.11 0 0 1 9.886-2.004.75.75 0 0 1-.563 1.39 7.62 7.62 0 0 0-8.262 1.675c-2.675 2.675-2.976 6.965-.7 9.978a.75.75 0 1 1-1.198.904c-2.723-3.607-2.364-8.742.837-11.943m13.78 2.323a.75.75 0 0 1 .993.375 9.14 9.14 0 0 1-.933 9.115.749.749 0 1 1-1.213-.883 7.64 7.64 0 0 0 .778-7.614.75.75 0 0 1 .376-.993Zm-1.847-2.543a.75.75 0 1 1 1.06 1.061l-5.13 5.13q.088.237.09.504a1.5 1.5 0 1 1-1.24-1.475Z"></path>
+            </svg>
+            <svg class="filled" style="display:none" width="26" height="26" viewBox="0 0 24 24">
+              <circle cx="12" cy="13" r="10" fill="currentColor"></circle>
+              <path fill="var(--outline-icon-active)" d="M5.542 6.718a9.11 9.11 0 0 1 9.886-2.004.75.75 0 0 1-.563 1.39 7.62 7.62 0 0 0-8.262 1.675c-2.675 2.675-2.976 6.965-.7 9.978a.75.75 0 1 1-1.198.904c-2.723-3.607-2.364-8.742.837-11.943m13.78 2.323a.75.75 0 0 1 .993.375 9.14 9.14 0 0 1-.933 9.115.75.75 0 1 1-1.213-.883 7.64 7.64 0 0 0 .778-7.614.75.75 0 0 1 .376-.993Zm-1.847-2.543a.75.75 0 1 1 1.06 1.061l-5.13 5.13q.088.237.09.504a1.5 1.5 0 1 1-1.24-1.475Z"></path>
             </svg>
           </span>
           <span class="oui-tab-text">
@@ -497,8 +579,11 @@
         </span>
         <span class="oui-tab-link oui-tab-inner" onclick="showTab('voltage', this)">
           <span class="oui-tab-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24">
-              <path d="M16.327 10.631 9.112 20.938c-.252.359-.81.069-.66-.344l2.68-7.363a.375.375 0 0 0-.353-.503H8.29a.75.75 0 0 1-.705-1.007l3.032-8.327a.75.75 0 0 1 .705-.493h2.499a.75.75 0 0 1 .704 1.006L12.69 8.949a.375.375 0 0 0 .353.503h2.67a.75.75 0 0 1 .614 1.18"></path>
+            <svg class="outline" style="display:auto" width="26" height="26" viewBox="0 0 24 24">
+              <path stroke="currentColor" d="M17,10.1956L6.441,21.5L10.4126,12.5113L6,12.5114L8.8367,3.5L15.0281,3.5L11.598,10.195L17,10.1956Z" fill-opacity="0" stroke-linejoin="round" stroke-width="1.2"></path>
+            </svg>
+            <svg class="filled" style="display:none" width="26" height="26" viewBox="0 0 24 24">
+              <path stroke="currentColor" d="M17,10.1956L6.441,21.5L10.4126,12.5113L6,12.5114L8.8367,3.5L15.0281,3.5L11.598,10.195L17,10.1956Z" fill-opacity="1" stroke-linejoin="round" stroke-width="1.2"></path>
             </svg>
           </span>
           <span class="oui-tab-text">
@@ -507,8 +592,11 @@
         </span>
         <span class="oui-tab-link oui-tab-inner" onclick="showTab('about', this)">
           <span class="oui-tab-icon">
-            <svg width="26" height="26" viewBox="0 0 72 72">
-              <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+            <svg class="outline" style="display:auto" width="26" height="26" viewBox="0 0 72 72">
+              <path stroke="currentColor" stroke-opacity="1" fill="currentColor" fill-opacity="1" stroke-width="0" d="M36,8.25c15.327,0,27.75,12.425,27.75,27.753C63.75,51.328,51.327,63.75,36,63.75c-15.325,0-27.75-12.423-27.75-27.747C8.25,20.676,20.675,8.25,36,8.25z M36,12.75c-12.84,0-23.25,10.411-23.25,23.253C12.75,48.842,23.16,59.25,36,59.25c12.842,0,23.25-10.407,23.25-23.247C59.25,23.16,48.842,12.75,36,12.75z M39,30.41v20.616c0,1.243-1.008,2.25-2.25,2.25c-1.139,0-2.081-0.847-2.229-1.944L34.5,51.026V34.908l-3.504,0.002c-1.139,0-2.081-0.846-2.229-1.944l-0.021-0.306c0-1.139,0.846-2.08,1.945-2.229l0.305-0.021H39z M36.166,20.896c1.657,0,3,1.344,3,3c0,1.656-1.344,3-3,3c-1.656,0-3-1.344-3-3C33.166,22.24,34.51,20.896,36.166,20.896z"></path>
+            </svg>
+            <svg class="filled" style="display:none" width="26" height="26" viewBox="0 0 72 72">
+              <path stroke="currentColor" stroke-opacity="1" fill="currentColor" fill-opacity="1" stroke-width="1.5" d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
             </svg>
           </span>
           <span class="oui-tab-text">
@@ -531,9 +619,12 @@
         </div>
         <div class="oui-dialog-description">
           This section contains settings that provide basic optimization options.<br><br>
+          System Settings: This category offers system options that are normally hidden from the average user (These options don't negatively affect overall system performance, it is recommended to leave them enabled).<br><br>
           CPU Settings: This category offers CPU-related options, such as deep sleep efficiency or heat management (These options don't negatively affect overall system performance, it is recommended to leave them enabled).<br><br>
-          Memory Settings: This category offers options related to SWAP virtual memory optimization (this options slightly reduces Memory Management performance, disable it for better performance).<br><br>
-          Storage Settings: This category offers settings for improved UFS power efficiency (this options slightly reduces read and write speeds, disable it for better performance).
+          GPU Settings: This category offers GPU-related options, such as performance boost and etc. (These options may slightly affect battery consumption, disable it for better battery efficiency).<br><br>
+          Memory Settings: This category offers options related to SWAP virtual memory optimization (this options slightly reduces memory management performance, disable it for better memory management).<br><br>
+          Storage Settings: This category offers settings for improved UFS power efficiency (this options slightly reduces read and write speeds, disable it for better performance).<br><br>
+          Battery Settings: This category offers battery charging protection options, among others.
         </div>
       </div>
       <div class="oui-dialog-action">
@@ -603,8 +694,8 @@
           </span>About GURU Info
         </div>
         <div class="oui-dialog-description">
-          This section displays information about the Version, Project's GitHub Page, Reset Settings Option, and Experimental Features (Labs).<br><br>
-          Labs: Features that are still in testing but stable enough for the public.
+          This section displays information about the Module version, Project's GitHub Page, Reset Settings Option, and Experimental Features (Labs).<br><br>
+          Labs: Features that are still in testing but stable enough for the public (These options are disabled by default).
         </div>
       </div>
       <div class="oui-dialog-action">
@@ -626,8 +717,16 @@
           </span>Chagelog of this Version
         </div>
         <div class="oui-dialog-description">
-          ⦁	Added Support for Galaxy Note10 Lite (X-ROM)<br>
-          ⦁	Minor Changes and Fixes
+          ⦁	UI Theme updated to the One UI 8.5 design<br>
+          ⦁	Added GMS optimizations option<br>
+          ⦁	Added GPU performance option<br>
+          ⦁	Moved Force battery optimizations on apps option to General Settings<br>
+          ⦁	Added Background app process limit option to Labs<br>
+          ⦁	Improved Installer/Uninstaller logic<br>
+          ⦁	Module structure was adjusted<br>
+          ⦁	Updated various dialogs information<br>
+          ⦁	Various code optimizations<br>
+          ⦁	Various bug fixes
         </div>
       </div>
       <div class="oui-dialog-action">
@@ -651,7 +750,7 @@
         </div>
         <div class="oui-dialog-description">
           Make sure that Battery protection on the System is DISABLED to avoid conflicts/issues.<br>
-          You can check this in Device Care &gt; Battery protection.<br><br>
+          You can check this in Device care app &gt; Battery &gt; Battery protection.<br><br>
           You may need to unplug and replug the charger for the changes to take effect.
         </div>
       </div>
@@ -663,8 +762,8 @@
         </div>
       </div>
     </div>
-    <!-- Force Doze Warn -->
-    <div class="oui-dialog" id="forcedoze_warn">
+    <!-- Notification Block Warn -->
+    <div class="oui-dialog" id="notification_warn">
       <div class="oui-dialog-content">
         <div class="oui-dialog-header">
           <span class="oui-dialog-icon-reset">
@@ -675,7 +774,7 @@
           </span>Important!
         </div>
         <div class="oui-dialog-description">
-          This option may cause notifications to not arrive when the device is locked.<br>
+          Enabling this option may prevent you from receiving notifications.<br>
           If you have issues with this, DISABLE the option.
         </div>
       </div>
@@ -696,7 +795,7 @@
               <path d="M22.25 17.55 14.63 3.71a3 3 0 0 0-5.26 0L1.75 17.55A3 3 0 0 0 4.38 22h15.24a3 3 0 0 0 2.63-4.45" style="fill:red"></path>
               <path d="M11 13V9a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0m1 2.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5"></path>
             </svg>
-          </span>Reset all Settings to default
+          </span>Reset all settings to default
         </div>
         <div class="oui-dialog-description">
           This will restore all settings to default, if you're sure you want to continue, press 'Reset All Settings'.<br>
@@ -721,23 +820,27 @@
     <!-- Closing App Dialog --> 
     <div class="oui-dialog" id="closing_app_dialog">
       <div class="oui-dialog-content">
-        <div class="oui-dialog-header">
-          <span class="oui-dialog-icon-close">
-            <svg width="35" height="35" viewBox="0 0 24 24">
-              <path d="M18.923 19.75h-3.511a.484.484 0 0 1-.484-.484v-3.291m.28 3.271A7.94 7.94 0 0 0 19.866 12a7.93 7.93 0 0 0-5.217-7.474m-5.852.227A7.94 7.94 0 0 0 4.14 12a7.93 7.93 0 0 0 5.216 7.473M5.082 4.25h3.51c.268 0 .485.217.485.484v3.29" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" stroke-width="2" fill="none"></path>
-            </svg>
-          </span>Resetting to default...
+        <div class="oui-dialog-loading-header">
+          <span class="oui-dialog-loading">
+            <div class="oui-loading" role="status" aria-label="Loading">
+              <div class="arm" style="--angle:0deg"><i class="ball green1"></i></div>
+              <div class="arm" style="--angle:90deg"><i class="ball blue1"></i></div>
+              <div class="arm" style="--angle:180deg"><i class="ball green2"></i></div>
+              <div class="arm" style="--angle:270deg"><i class="ball blue2"></i></div>
+            </div>
+          </span>
+          <span class="oui-dialog-loading-label">Resetting to default...</span>
         </div>
         <div class="oui-dialog-description">
-          KernelSU/APatch Manager app will close in a few seconds...
+          <br>KernelSU/APatch Manager app will close in a few seconds...
         </div>
       </div>
-      <div class="oui-dialog-action"></div>
     </div>
     <!------------------ Glow Effect ------------------>
     <div class="top-glow"></div>
     <div class="bottom-glow"></div>
     <!---------------- Core Scripts ---------------->
+    <script>const mask=document.querySelector(".oui-loading-mask");mask.style.transition="none",mask.classList.add("active"),mask.offsetHeight,mask.style.transition="";</script>
     <script type="module" src="guru.js"></script>
   
 
