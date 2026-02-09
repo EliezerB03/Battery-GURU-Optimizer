@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <!-- Splash Screen Animation -->
-    <div class="splash-screen" id="splashScreen">
-      <img src="icon.svg" alt="Logo" class="splash-icon">
-    </div>
     <!-- loading Animation -->
     <div class="oui-loading-mask"></div>
     <div class="oui-dialog">
@@ -471,7 +467,7 @@
             <div class="oui-bubble">
               <ul>
                 <li class="oui-bubble-item2">
-                  <span class="oui-label">Module version</span>
+                  <span class="oui-label">App version</span>
                   <div class="sub-text">3.5</div>
                 </li>
                 <li class="oui-bubble-item2">
@@ -482,7 +478,7 @@
                   <span class="oui-label">Battery health</span>
                   <div id="battery_health" class="sub-text"></div>
                 </li>
-                <li class="oui-bubble-item" onclick="ksu.exec(`am start -a android.intent.action.VIEW -d https://github.com/EliezerB03/Battery-GURU-Optimizer?tab=readme-ov-file#%E3%85%A4`)">
+                <li class="oui-bubble-item" onclick="guru.openURL(`https://github.com/EliezerB03/Battery-GURU-Optimizer?tab=readme-ov-file#%E3%85%A4`)">
                   <div class="oui-inner">
                     <svg class="oui-icon-option" width="28" height="28" viewBox="0 0 15 15">
                       <path d="M9.358 2.145a8.2 8.2 0 0 0-3.716 0c-.706-.433-1.245-.632-1.637-.716a2.2 2.2 0 0 0-.51-.053 1.3 1.3 0 0 0-.232.028l-.01.002-.004.002h-.003l.137.481-.137-.48a.5.5 0 0 0-.32.276 3.12 3.12 0 0 0-.159 2.101A3.35 3.35 0 0 0 2 5.93c0 1.553.458 2.597 1.239 3.268.547.47 1.211.72 1.877.863a2.3 2.3 0 0 0-.116.958v.598c-.407.085-.689.058-.89-.008-.251-.083-.444-.25-.629-.49a5 5 0 0 1-.27-.402l-.057-.093a9 9 0 0 0-.224-.354c-.19-.281-.472-.633-.928-.753l-.484-.127-.254.968.484.127c.08.02.184.095.355.346a7 7 0 0 1 .19.302l.068.11c.094.152.202.32.327.484.253.33.598.663 1.11.832.35.116.748.144 1.202.074V14.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-3.562c0-.316-.014-.605-.103-.874.663-.14 1.322-.39 1.866-.86.78-.676 1.237-1.73 1.237-3.292v-.001a3.35 3.35 0 0 0-.768-2.125 3.12 3.12 0 0 0-.159-2.1.5.5 0 0 0-.319-.277l-.137.48c.137-.48.136-.48.135-.48l-.002-.001-.004-.002-.009-.002-.075-.015a1 1 0 0 0-.158-.013 2.2 2.2 0 0 0-.51.053c-.391.084-.93.283-1.636.716"></path>
@@ -491,6 +487,16 @@
                     </span>
                   </div>
                 </li>
+              </ul>
+            </div>  
+            <p class="oui-overlay-bubble-item">
+              <svg class="oui-icon" width="32" height="32" viewBox="0 0 24 24">
+                <path d="M18.923 19.75h-3.511a.484.484 0 0 1-.484-.484v-3.291m.28 3.271A7.94 7.94 0 0 0 19.866 12a7.93 7.93 0 0 0-5.217-7.474m-5.852.227A7.94 7.94 0 0 0 4.14 12a7.93 7.93 0 0 0 5.216 7.473M5.082 4.25h3.51c.268 0 .485.217.485.484v3.29" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" stroke-width="2" fill="none"></path>
+              </svg>
+              Updates
+            </p>
+            <div class="oui-bubble">
+              <ul>
                 <li class="oui-bubble-item" data-dialog-target="changelog_dialog">
                   <div class="oui-inner">
                     <svg class="oui-icon-option" width="29" height="29" viewBox="0 0 24 23">
@@ -500,8 +506,19 @@
                     </span>
                   </div>
                 </li>
+                <li class="oui-bubble-item" id="check_update">  
+                  <div class="oui-inner">
+                    <span class="oui-label">
+                      <svg class="oui-icon-option" width="28" height="28" viewBox="0 0 24 24">
+                        <path d="M18.923 19.75h-3.511a.484.484 0 0 1-.484-.484v-3.291m.28 3.271A7.94 7.94 0 0 0 19.866 12a7.93 7.93 0 0 0-5.217-7.474m-5.852.227A7.94 7.94 0 0 0 4.14 12a7.93 7.93 0 0 0 5.216 7.473M5.082 4.25h3.51c.268 0 .485.217.485.484v3.29" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" stroke-width="2" fill="none"></path>
+                      </svg>
+                      <span class="oui-label">Check for app update
+                      </span>
+                    </span>
+                  </div>
+                </li>
               </ul>
-            </div>  
+            </div>
             <p class="oui-overlay-bubble-item">
               <svg class="oui-icon" width="32" height="32" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M10.317 10.412V5.297h3.366v5.115l1.647 2.887H8.67zm-5.686 6.943a2.09 2.09 0 0 0 .11 2.034 2.09 2.09 0 0 0 1.781.986h10.956a2.09 2.09 0 0 0 1.781-.986 2.09 2.09 0 0 0 .11-2.034l-4.186-7.341V5.125h.75a.75.75 0 0 0 0-1.5H8.066a.75.75 0 0 0 0 1.5h.751v4.889l-4.162 7.297z" fill-rule="evenodd"></path>
@@ -748,14 +765,7 @@
         </div>
         <div class="oui-dialog-description-wrapper">
           <div class="oui-dialog-description">
-            ⦁ Light/Dark theme updated<br>
-            ⦁ Splash Screen was added for page loading<br>
-            ⦁ Added Battery Health on About GURU<br>
-            ⦁ Font updated (using OneUI Sans now)<br>
-            ⦁ Remove GMS Optimizations due instability<br>
-            ⦁ CPU Freqs was adjusted<br>
-            ⦁ Various code optimizations<br>
-            ⦁ Various bugs fixes<br>
+            ⦁	Initial Release
           </div>
           <span class="dialog-scrollbar">
             <span class="dialog-scrollbar-thumb"></span>
@@ -844,7 +854,7 @@
           <div class="oui-dialog-description">
             This will restore all settings to default, if you're sure you want to continue, press 'Reset All Settings'.<br>
             This action is IRREVERSIBLE!<br><br>
-            NOTE: KernelSU/Apatch will close after the reset.
+            NOTE: App will close after the reset.
           </div>
           <span class="dialog-scrollbar">
             <span class="dialog-scrollbar-thumb"></span>
@@ -881,7 +891,8 @@
         </div>
         <div class="oui-dialog-description-wrapper">
           <div class="oui-dialog-description">
-            KernelSU/Apatch will close in a few seconds...
+            App will close in a few seconds...<br>
+            DON'T close the App during the reset!
           </div>
           <span class="dialog-scrollbar">
             <span class="dialog-scrollbar-thumb"></span>
@@ -889,8 +900,260 @@
         </div>
       </div>
     </div>
+    <!-- ROOT Warning -->
+    <div class="oui-dialog" id="root_warn">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon-check">
+            <svg width="35" height="35" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" fill="white"></circle> 
+              <path d="M11.999 17.257a.999.999 0 1 1 0-2 1 1 0 1 1 0 2M11.25 7.55a.75.75 0 1 1 1.5 0v5.089a.75.75 0 0 1-1.5 0zM12 3.625c-4.618 0-8.375 3.757-8.375 8.375S7.382 20.375 12 20.375s8.375-3.757 8.375-8.375S16.618 3.625 12 3.625" fill="red"></path>
+            </svg>
+          </span>ROOT not detected
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            App requires ROOT access to work!
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button closeapp-dialog-btn">
+            <span class="close-dialog-text">Close App</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Device Warning -->
+    <div class="oui-dialog" id="device_warn">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon-check">
+            <svg width="35" height="35" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" fill="white"></circle> 
+              <path d="M11.999 17.257a.999.999 0 1 1 0-2 1 1 0 1 1 0 2M11.25 7.55a.75.75 0 1 1 1.5 0v5.089a.75.75 0 0 1-1.5 0zM12 3.625c-4.618 0-8.375 3.757-8.375 8.375S7.382 20.375 12 20.375s8.375-3.757 8.375-8.375S16.618 3.625 12 3.625" fill="red"></path>
+            </svg>
+          </span>Unsupported device
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            This device is not compatible with the App!
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button closeapp-dialog-btn">
+            <span class="close-dialog-text">Close App</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- ROOT Lost Warning -->
+    <div class="oui-dialog" id="rootlost_warn">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon-check">
+            <svg width="35" height="35" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8.375" fill="white"></circle> 
+              <path d="M11.999 17.257a.999.999 0 1 1 0-2 1 1 0 1 1 0 2M11.25 7.55a.75.75 0 1 1 1.5 0v5.089a.75.75 0 0 1-1.5 0zM12 3.625c-4.618 0-8.375 3.757-8.375 8.375S7.382 20.375 12 20.375s8.375-3.757 8.375-8.375S16.618 3.625 12 3.625" fill="red"></path>
+            </svg>
+          </span>ROOT access Lost
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            ROOT Access was lost!<br>
+            App requires ROOT access to work!
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button closeapp-dialog-btn">
+            <span class="close-dialog-text">Close App</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Check Update (Checking) -->
+    <div class="oui-dialog" id="update_checking">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-loading-header">
+          <span class="oui-dialog-loading">
+            <div class="oui-loading" role="status" aria-label="Loading">
+              <div class="arm" style="--angle:0deg"><i class="ball green1"></i></div>
+              <div class="arm" style="--angle:90deg"><i class="ball blue1"></i></div>
+              <div class="arm" style="--angle:180deg"><i class="ball green2"></i></div>
+              <div class="arm" style="--angle:270deg"><i class="ball blue2"></i></div>
+            </div>
+          </span>
+          <span class="oui-dialog-loading-label">Checking update...</span>
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            Checking for available update...
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Check Update (Network Error) -->
+    <div class="oui-dialog" id="update_connectionerror">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon-reset">
+            <svg width="35" height="35" viewBox="0 0 24 24">
+              <path d="M22.25 17.55 14.63 3.71a3 3 0 0 0-5.26 0L1.75 17.55A3 3 0 0 0 4.38 22h15.24a3 3 0 0 0 2.63-4.45" style="fill:currentColor"></path>
+              <path d="M11 13V9a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0m1 2.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5" style="fill:var(--background)"></path>
+            </svg>
+          </span>Connection error!
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            Unable to connect to the server!<br>
+            Please check your internet connection.
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button close-dialog-btn">
+            <span class="close-dialog-text">Close</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Check Update (Updated) -->
+    <div class="oui-dialog" id="update_uptodate">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon">
+            <svg width="35" height="35" viewBox="0 0 72 75">
+              <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+            </svg>
+          </span>Up to date!
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            You are now on the latest version.
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button close-dialog-btn">
+            <span class="close-dialog-text">Close</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Check Update (Update Available) -->
+    <div class="oui-dialog" id="update_available">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon">
+            <svg width="35" height="35" viewBox="0 0 72 75">
+              <path d="M40.419 50.478a2.253 2.253 0 0 1-2.697 2.208c-1.068-.207-1.803-1.203-1.803-2.292V36.711h-2.751c-1.089 0-2.088-.735-2.292-1.806a2.252 2.252 0 0 1 2.208-2.694h5.835c.828 0 1.5.669 1.5 1.5zm-3.294-29.124a3 3 0 1 1 .002 5.998 3 3 0 0 1-.002-5.998m0-9.354C23.271 12 12 23.271 12 37.125S23.271 62.25 37.125 62.25c13.857 0 25.125-11.271 25.125-25.125S50.982 12 37.125 12"></path>
+            </svg>
+          </span>Update available!
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            An update is available!<br>
+            press on "Install now" to install the update.
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button close-dialog-btn">
+            <span class="close-dialog-text">Close</span>
+          </span>
+        </div>
+        <span class="oui-dialog-divider"></span>
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button installupdate-dialog-btn">
+            <span class="close-dialog-text">Install now</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Check Update (Install Update) -->
+    <div class="oui-dialog" id="update_install">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-loading-header">
+          <span class="oui-dialog-loading">
+            <div class="oui-loading" role="status" aria-label="Loading">
+              <div class="arm" style="--angle:0deg"><i class="ball green1"></i></div>
+              <div class="arm" style="--angle:90deg"><i class="ball blue1"></i></div>
+              <div class="arm" style="--angle:180deg"><i class="ball green2"></i></div>
+              <div class="arm" style="--angle:270deg"><i class="ball blue2"></i></div>
+            </div>
+          </span>
+          <span class="oui-dialog-loading-label">Installing update...</span>
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            Don't close the app during the update.<br>
+            The app will close after the update.
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- Check Update (Install Update Error) -->
+    <div class="oui-dialog" id="update_installerror">
+      <div class="oui-dialog-content">
+        <div class="oui-dialog-header">
+          <span class="oui-dialog-icon-reset">
+            <svg width="35" height="35" viewBox="0 0 24 24">
+              <path d="M22.25 17.55 14.63 3.71a3 3 0 0 0-5.26 0L1.75 17.55A3 3 0 0 0 4.38 22h15.24a3 3 0 0 0 2.63-4.45" style="fill:currentColor"></path>
+              <path d="M11 13V9a1 1 0 0 1 2 0v4a1 1 0 0 1-2 0m1 2.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5" style="fill:var(--background)"></path>
+            </svg>
+          </span>Installation error!
+        </div>
+        <div class="oui-dialog-description-wrapper">
+          <div class="oui-dialog-description">
+            The update couldn't be installed, please try again.
+          </div>
+          <span class="dialog-scrollbar">
+            <span class="dialog-scrollbar-thumb"></span>
+          </span>
+        </div>
+      </div>
+      <div class="oui-dialog-action">
+        <div class="oui-dialog-button-wrapper">
+          <span class="oui-dialog-action-button close-dialog-btn">
+            <span class="close-dialog-text">Close</span>
+          </span>
+        </div>
+      </div>
+    </div>
     <!---------------- Core Scripts ---------------->
-    <script>const mask=document.querySelector(".oui-loading-mask");mask.style.transition="none",mask.classList.add("active"),mask.offsetHeight,mask.style.transition="";const splashScreen=document.getElementById("splashScreen");setTimeout(()=>{splashScreen.classList.add("show")},100),function(){let e=document.querySelectorAll(".container"),t=document.querySelectorAll(".open-animation, .oui-tab");e.forEach(e=>{e.style.opacity="0"}),t.forEach(e=>{e.style.opacity="0",e.classList.remove("open-animation")}),setTimeout(()=>{e.forEach(e=>{e.style.opacity="1"}),t.forEach(e=>{e.classList.add("open-animation"),e.style.opacity="1"})},30)}();</script>
+    <script>const mask=document.querySelector(".oui-loading-mask");mask.style.transition="none",mask.classList.add("active"),mask.offsetHeight,mask.style.transition="",setSystemInsets=(t,e,o,s)=>{document.documentElement.style.setProperty("--inset-top",`${t}px`),document.documentElement.style.setProperty("--inset-bottom",`${e}px`),document.documentElement.style.setProperty("--inset-left",`${o}px`),document.documentElement.style.setProperty("--inset-right",`${s}px`)},function(){let t=document.querySelectorAll(".container"),e=document.querySelectorAll(".open-animation, .oui-tab");t.forEach(t=>{t.style.opacity="0"}),e.forEach(t=>{t.style.opacity="0",t.classList.remove("open-animation")}),setTimeout(()=>{t.forEach(t=>{t.style.opacity="1"}),e.forEach(t=>{t.classList.add("open-animation"),t.style.opacity="1"})},30)}();</script>
     <script type="module" src="guru.js"></script>
   
 </body></html>

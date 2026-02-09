@@ -9,12 +9,6 @@
 # forceappsbattopt_on=1
 settings put global forced_app_standby_enabled 1
 
-#---------------< GMS OPTIMIZATIONS >---------------#
-# gmsoptimized_on=1
-pm disable com.google.android.gms/com.google.android.gms.auth.managed.admin.DeviceAdminReceiver
-pm disable com.google.android.gms/com.google.android.gms.mdm.receivers.MdmDeviceAdminReceiver
-dumpsys deviceidle whitelist -com.google.android.gms
-
 #---------------< CPU HOTPLUG OPTIMIZATIONS >---------------#
 # hotplugset_on=1
 echo '0' > /sys/power/cpuhotplug/governor/user_mode
@@ -63,8 +57,8 @@ echo '100' > /sys/class/power_supply/battery/batt_full_capacity
 # frqset_on=1
 # lit=1690 Mhz
 echo '1690000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-# big=1794 Mhz
-echo '1794000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
+# big=1690 Mhz
+echo '1690000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
 
 #---------------< VOLTAGE SETTINGS >---------------#
 # voltset_on=1

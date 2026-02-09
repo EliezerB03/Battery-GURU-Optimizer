@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Battery GURU Optimizer</string>
+    <string name="title_activity_main">Battery GURU Optimizer</string>
+    <string name="package_name">com.guru.batteryoptimizer</string>
+    <string name="custom_url_scheme">com.guru.batteryoptimizer</string>
+</resources>

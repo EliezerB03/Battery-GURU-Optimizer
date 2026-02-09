@@ -84,7 +84,7 @@ ui_print "  WEBUI APP INSTALLER (ONLY FOR KSU/APATCH) "
 ui_print "--------------------------------------------"
 sleep 0.5
 ui_print "- INSTALLING WEBUI APP...                   "
-sleep 2.3
+sleep 2.7
 ui_print " * DONE!                                    "
 ui_print "--------------------------------------------"
 sleep 0.5
@@ -96,18 +96,10 @@ ui_print " "
 ui_print "--------------------------------------------"
 ui_print "           APPLYING OPTIMIZATIONS           "
 ui_print "--------------------------------------------"
-rm -f $MODPATH/service.sh
 sleep 0.5
 
 ui_print "- APPLYING SYSTEM SETTINGS...               "
-mkdir -p $MODPATH/system/product/etc/sysconfig/
-sleep 0.5
-cp /system/product/etc/sysconfig/google.xml $MODPATH/system/product/etc/sysconfig/google.xml
-sleep 0.5
-sed -i '/allow-in-power-save.*com.google.android.gms/d' $MODPATH/system/product/etc/sysconfig/google.xml
-sleep 0.5
-sed -i '/allow-in-data-usage-save.*com.google.android.gms/d' $MODPATH/system/product/etc/sysconfig/google.xml
-sleep 0.1
+sleep 1.2
 ui_print " * DONE!                                    "
 sleep 0.5
 
