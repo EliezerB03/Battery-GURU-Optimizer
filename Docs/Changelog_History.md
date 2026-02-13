@@ -1,6 +1,12 @@
 # 📝 Changelog History
 
+### v3.6
 
+* Added some checks to avoid conflicts between Module and App
+* Fixed an issue preventing scrolling sometimes
+* Fixed an issue where settings were not being applied correctly
+* Code optimizations
+* Other minor bugs fixed
 
 ### v3.5
 
@@ -12,8 +18,6 @@
 * CPU Freqs was adjusted
 * Various code optimizations
 * Various bugs fixes
-
-
 
 ### v3.0
 
@@ -28,14 +32,10 @@
 * Various code optimizations
 * Various bug fixes
 
-
-
 ### v2.6
 
 * Added Support for Galaxy Note10 Lite (X-ROM)
 * Minor Changes and Fixes
-
-
 
 ### v2.5
 
@@ -48,8 +48,6 @@
 * Removed Kernel Debugging Option from Labs
 * Other Many Improvements and Fixes
 
-
-
 ### v2.2
 
 * Fixed Thermal optimizations that were not being work correctly
@@ -57,14 +55,10 @@
 * Minor improvements to Dialog windows
 * Other Minor Fixes
 
-
-
 ### v2.1.1
 
 * Fixed App Crashes and Freezes due to SWAP optimizations
 * Other Minor Improvements and Fixes
-
-
 
 ### v2.1
 
@@ -76,15 +70,11 @@
 * Minor Improvements to Dialog Windows
 * Other Misc. Improvements and Fixes
 
-
-
 ### v2.0.1
 
 * Improved Behavior when pressing Buttons, Toggles, etc.
 * The Pop-Up opening animation has been Improved
 * Fixed a Visual Bug with some Dialog Windows
-
-
 
 ### v2.0
 
@@ -96,19 +86,13 @@
 * Improve Uninstaller Logic
 * Many Improvements and Fixes
 
-
-
 ### v1.1.2
 
 * Removed GMS Optimizer due to stability issues/bootloops
 
-
-
 ### v1.1.1
 
 * Fixed Booploop in GMS Optimizer code
-
-
 
 ### v1.1
 
@@ -117,8 +101,6 @@
 * CPU Hotplug Optimizations Adjusted
 * Script Updated
 * Misc. Fixes
-
-
 
 ### v1.0
 

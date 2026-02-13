@@ -32,6 +32,7 @@ public class BootService extends Service {
                 String script = "/data/data/com.guru.batteryoptimizer/guru.sh";
                 if (shell != null && shell.isRoot() && new File(script).exists()) {
                     Shell.cmd("chmod 755 " + script, script).exec();
+                    Shell.cmd("rm -f /data/adb/modules/battery-guru-optimizer-9810/boot-completed.sh").exec();
                     if (shell != null && shell.isAlive()) {
                         shell.close();
                     }

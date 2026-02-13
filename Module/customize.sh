@@ -76,6 +76,9 @@ elif [ "$(which magisk)" ]; then
         ui_print " * MAGISK DETECTED! (PASSED)                "
         ui_print "--------------------------------------------"
 fi
+if pm list packages | grep -q "com.guru.batteryoptimizer"; then
+        rm -f $MODPATH/boot-completed.sh
+fi
 sleep 0.5
 
 ui_print " "

@@ -3,6 +3,8 @@
 
 #!/sbin/sh
 
+# changelog=1
+if ! pm list packages | grep -q "com.guru.batteryoptimizer"; then
 # ============== ALL OPTIMIZATIONS ============== #
 
 #---------------< BATTERY OPTIMIZATIONS ON APPS >---------------#
@@ -55,9 +57,9 @@ echo '100' > /sys/class/power_supply/battery/batt_full_capacity
 
 #---------------< FREQS SETTINGS >---------------#
 # frqset_on=1
-# lit=1690 Mhz
+# lit=1690
 echo '1690000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-# big=1690 Mhz
+# big=1690
 echo '1690000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
 
 #---------------< VOLTAGE SETTINGS >---------------#
@@ -98,3 +100,4 @@ if [ $(getprop ro.build.version.sdk) -eq 35 ]; then service call activity 51 i32
 dumpsys deviceidle unforce
 
 # ======================================
+fi

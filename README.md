@@ -38,6 +38,8 @@ Application/module to improve battery efficiency and resource usage on Samsung d
 * Reboot your device to apply changes
 * Enjoy!
 
+#### NOTE: Use just App or Module, NOT BOTH!
+
 ## 🙏 Thanks/Credits
 * [**[SchweGELBin]**](https://github.com/SchweGELBin) for KSU Module Template
 * [**[SamsungInternet]**](https://github.com/SamsungInternet) for his Amazing One UI Web Design

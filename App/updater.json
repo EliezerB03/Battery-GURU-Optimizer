@@ -1,6 +1,6 @@
 { 
-  "versionName": "3.5",
-  "versionCode": 350,
+  "versionName": "3.6",
+  "versionCode": 360,
   "downloadUrl": "https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.apk",
-  "changelog": "- Initial Release"
+  "changelog": "- Fixed an issue preventing scrolling sometimes\n- Fixed an issue where settings were not being applied correctly\n- Code optimizations\n- Other minor bugs fixed"
 }

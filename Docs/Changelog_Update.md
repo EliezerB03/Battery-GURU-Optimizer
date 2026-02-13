@@ -1,10 +1,7 @@
-### 🔋 v3.5
+### 🔋 v3.6
 
-* Light/Dark theme updated
-* Splash Screen was added for page loading
-* Added Battery Health on About GURU
-* Font updated (using OneUI Sans now)
-* Remove GMS Optimizations due instability
-* CPU Freqs was adjusted
-* Various code optimizations
-* Various bugs fixes
+* Added some checks to avoid conflicts between Module and App
+* Fixed an issue preventing scrolling sometimes
+* Fixed an issue where settings were not being applied correctly
+* Code optimizations
+* Other minor bugs fixed
