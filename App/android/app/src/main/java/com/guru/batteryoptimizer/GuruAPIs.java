@@ -1,11 +1,11 @@
 package com.guru.batteryoptimizer;
 
 import android.app.Activity;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.VibratorManager;
-import android.os.Build;
 import android.webkit.JavascriptInterface;
+import android.view.View;
+import android.view.HapticFeedbackConstants;
 import android.content.Intent;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -32,12 +32,8 @@ public class GuruAPIs {
     }
     // Haptic Vibrator Helper
     private Vibrator getHapticVibrator(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            VibratorManager vm = context.getSystemService(VibratorManager.class);
-            return vm != null ? vm.getDefaultVibrator() : null;
-        } else {
-            return context.getSystemService(Vibrator.class);
-        }
+        VibratorManager vm = context.getSystemService(VibratorManager.class);
+        return vm != null ? vm.getDefaultVibrator() : null;
     }
     // App Updater Helper
     private void downloadFile(String urlStr, File outFile) throws Exception {
@@ -115,15 +111,17 @@ public class GuruAPIs {
     public void hapticToggle() {
         activity.runOnUiThread(() -> {
             try {
-                Vibrator vibrator = getHapticVibrator(activity);
-                if (vibrator != null && vibrator.hasVibrator()) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        VibrationEffect effect = VibrationEffect.createWaveform(
-                            new long[] { 0, 45, 45, 50, 50, 10 },
-                            new int[]  { 0, 2, 3, 4, 7, 60 }, -1
-                        );
-                        vibrator.vibrate(effect);
+                View rootView = activity.getWindow().getDecorView().getRootView();
+                if (rootView != null) {
+                    int hapticType;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        hapticType = HapticFeedbackConstants.TOGGLE_ON;
+                    } else {
+                        hapticType = HapticFeedbackConstants.CONFIRM;
                     }
+                    rootView.performHapticFeedback(
+                        hapticType, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
+                    );
                 }
             } catch (Exception ignored) {}
         });
@@ -133,12 +131,11 @@ public class GuruAPIs {
     public void hapticSlider() {
         activity.runOnUiThread(() -> {
             try {
-                Vibrator vibrator = getHapticVibrator(activity);
-                if (vibrator != null && vibrator.hasVibrator()) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        VibrationEffect effect = VibrationEffect.createOneShot(7, 60);
-                        vibrator.vibrate(effect);
-                    }
+                View rootView = activity.getWindow().getDecorView().getRootView();
+                if (rootView != null) {
+                    rootView.performHapticFeedback(
+                        HapticFeedbackConstants.CLOCK_TICK, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
+                    );
                 }
             } catch (Exception ignored) {}
         });

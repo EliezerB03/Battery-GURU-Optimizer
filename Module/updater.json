@@ -1,6 +1,6 @@
 {
-  "version": "3.6",
-  "versionCode": 360,
+  "version": "3.6.1",
+  "versionCode": 361,
   "zipUrl": "https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.zip",
   "changelog": "https://raw.githubusercontent.com/EliezerB03/Battery-GURU-Optimizer/master/Docs/Changelog_Update.md"
 }

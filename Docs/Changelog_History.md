@@ -1,5 +1,9 @@
 # 📝 Changelog History
 
+### v3.6.1
+
+* Minor bug fix
+
 ### v3.6
 
 * Added some checks to avoid conflicts between Module and App
