@@ -6,8 +6,8 @@ android {
         applicationId "com.guru.batteryoptimizer"
         minSdkVersion 33
         targetSdkVersion 35
-        versionName "3.6.1"
-        versionCode 361
+        versionName "3.7"
+        versionCode 370
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_25

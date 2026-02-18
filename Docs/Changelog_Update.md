@@ -1,3 +1,5 @@
-### 🔋 v3.6.1
+### 🔋 v3.7
 
-* Minor bug fix
+* CPU frequency tweaked
+* Updated some dialog window
+* Minor bug fixes
