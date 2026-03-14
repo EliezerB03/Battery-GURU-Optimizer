@@ -1,5 +1,10 @@
 # 📝 Changelog History
 
+### v3.7.1
+
+* Minor code changes
+* Minor bug fix
+
 ### v3.7
 
 * CPU frequency tweaked
