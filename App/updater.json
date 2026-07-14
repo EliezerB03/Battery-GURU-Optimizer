@@ -1,6 +1,6 @@
-{ 
-  "versionName": "3.7.1",
-  "versionCode": 37100,
+{
+  "versionName": "4.0",
+  "versionCode": 40000,
   "downloadUrl": "https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.apk",
-  "changelog": "- Minor code changes\n- Minor bug fix"
+  "changelog": "⦁ App rebuilt from scratch (fully native)\n⦁ Added color palette support\n⦁ Added support for multiple languages\n&nbsp;&nbsp;&nbsp;&nbsp;- Spanish\n&nbsp;&nbsp;&nbsp;&nbsp;- Portuguese\n&nbsp;&nbsp;&nbsp;&nbsp;- French\n&nbsp;&nbsp;&nbsp;&nbsp;- Japanese\n&nbsp;&nbsp;&nbsp;&nbsp;- Arabic\n&nbsp;&nbsp;&nbsp;&nbsp;- Indonesian\n&nbsp;&nbsp;&nbsp;&nbsp;- Turkish\n&nbsp;&nbsp;&nbsp;&nbsp;- Romanian\n⦁ Added new 'Device status' section to monitor your device usage\n⦁ Added 'Search' function to all sections\n⦁ Merged 'Freqs/UV settings' into to new 'Advanced settings' section\n⦁ Added function to import/export settings\n⦁ Added 'Optimize all apps' option\n⦁ Added 'Freeze cached apps' option\n⦁ Added 'CPU efficiency boost' option\n⦁ Added 'GPU efficiency boost' option\n⦁ Added 'Disable network service discovery' option (Experimental)\n⦁ Removed 'GPU boost performance' option\n⦁ App performance improvements\n⦁ App update improvements\n⦁ Other many improvements"
 }
