@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="AppCompatResource,HardcodedText,AlwaysShowAction">
+    <item
+        android:id="@+id/search_fragment"
+        android:icon="@drawable/ic_header_search_btn"
+        android:title="@string/search_btn"
+        app:iconTint="?actionMenuTextColor"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/info_fragment"
+        android:icon="@drawable/ic_header_info_btn"
+        android:title="@string/info_btn"
+        app:iconTint="?actionMenuTextColor"
+        app:showAsAction="always"/>
+</menu>

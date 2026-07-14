@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <!-- ====== About Battery GURU  ====== -->
+            <dev.oneuiproject.oneui.widget.Separator
+                android:id="@+id/sep_about_battery_guru"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_sep_about_battery_guru"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_battery_guru"/>
+            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:orientation="vertical">
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/app_version"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:fullWidthDivider="true"
+                    app:title="@string/about_appversion" 
+                    app:summary="4.0"/>
+            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+            <!-- ====== Developer ====== -->
+            <dev.oneuiproject.oneui.widget.Separator
+                android:id="@+id/sep_devinfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_sep_devinfo"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_devinfo"/>
+            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:orientation="vertical">
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/developer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_developer" 
+                    app:summary="EliezerB03"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/github"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_github"
+                    app:summary="@string/about_githubsummary"/>
+            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+            <!-- ====== Updates ====== -->
+            <dev.oneuiproject.oneui.widget.Separator
+                android:id="@+id/sep_updates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_sep_updates"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_updates"/>
+            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:orientation="vertical">
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/changelog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_changelog"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/check_update"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_check_update"/>
+            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+            <!-- ====== Import/Export ====== -->
+            <dev.oneuiproject.oneui.widget.Separator
+                android:id="@+id/sep_importexport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_sep_importexport"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_importexport"/>
+            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:orientation="vertical">
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/import_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_import"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
+                <dev.oneuiproject.oneui.widget.CardItemView
+                    android:id="@+id/export_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_export"/>
+            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            
+            <!-- ====== Labs (Experimental) ====== -->
+            <dev.oneuiproject.oneui.widget.Separator
+                android:id="@+id/sep_labs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_sep_labs"
+                android:drawablePadding="8dp"
+                android:drawableStart="@drawable/ic_labs"/>
+            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:colorBackground"
+                android:orientation="vertical">
+                <dev.oneuiproject.oneui.widget.SwitchItemView
+                    android:id="@+id/limitbackground_opt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_limitbackground"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
+                <dev.oneuiproject.oneui.widget.SwitchItemView
+                    android:id="@+id/forcedoze_opt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_forcedoze"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
+                <dev.oneuiproject.oneui.widget.SwitchItemView
+                    android:id="@+id/nsd_opt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:showTopDivider="false"
+                    app:showBottomDivider="false"
+                    app:title="@string/about_option_nsd"/>
+            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+            <dev.oneuiproject.oneui.widget.Separator
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/reset_settings"
+                style="@style/OneUI.ContainedButton"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/about_button_reset_settings"
+                android:theme="@style/OneUI.ContainedPrimaryColorButtonTheme"/>
+
+            <dev.oneuiproject.oneui.widget.Separator
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

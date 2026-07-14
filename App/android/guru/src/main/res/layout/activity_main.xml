@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <dev.oneuiproject.oneui.layout.ToolbarLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:expandable="true"
+        app:expanded="false">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_location="main_content" />
+        <dev.oneuiproject.oneui.widget.BottomTabLayout
+            android:id="@+id/bottom_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_location="footer"
+            app:menu="@menu/navbar_bottom" />
+    </dev.oneuiproject.oneui.layout.ToolbarLayout>
+    <View
+        android:id="@+id/theme_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/oui_des_round_and_bgcolor"
+        android:visibility="gone" />
+</FrameLayout>

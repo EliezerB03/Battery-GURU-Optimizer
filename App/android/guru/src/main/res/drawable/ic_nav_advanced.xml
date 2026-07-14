@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <vector xmlns:android="http://schemas.android.com/apk/res/android"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:fillColor="#000000"
+                android:fillType="evenOdd"
+                android:pathData="M19.938,6.346L16.578,9.706C16.537,9.748 16.469,9.748 16.428,9.706L14.517,7.797C14.476,7.755 14.476,7.688 14.517,7.647L17.878,4.287C17.929,4.235 17.916,4.144 17.851,4.111C15.833,3.053 13.280,3.368 11.583,5.066C10.099,6.547 9.673,8.681 10.291,10.543L4.273,16.562C3.385,17.450 3.215,18.896 4.009,19.867C4.922,20.981 6.572,21.043 7.564,20.048L13.680,13.934C15.543,14.551 17.676,14.124 19.159,12.642C20.856,10.944 21.172,8.394 20.113,6.373C20.080,6.309 19.989,6.295 19.938,6.346Z"
+                android:strokeWidth="0.5" 
+                android:strokeColor="#000000"/>
+        </vector>
+    </item>
+    <item android:state_selected="false">
+        <vector xmlns:android="http://schemas.android.com/apk/res/android"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24">
+            <path
+                android:fillColor="#00000000"
+                android:fillType="evenOdd"
+                android:pathData="M19.4711,6.679L16.3091,9.841C16.2701,9.88 16.2061,9.88 16.1671,9.841L14.3691,8.044C14.3301,8.005 14.3301,7.942 14.3691,7.903L17.5321,4.741C17.5801,4.692 17.5681,4.606 17.5071,4.575C15.6071,3.579 13.2051,3.876 11.6071,5.474C10.2111,6.868 9.8101,8.876 10.3911,10.629L4.7271,16.294C3.8921,17.129 3.7321,18.49 4.4791,19.404C5.3381,20.453 6.8911,20.511 7.8251,19.575L13.5811,13.82C15.3341,14.401 17.3421,13.999 18.7381,12.604C20.3351,11.006 20.6321,8.606 19.6361,6.704C19.6051,6.644 19.5191,6.631 19.4711,6.679Z"
+                android:strokeWidth="1.5"
+                android:strokeColor="#000000"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"/>
+        </vector>
+    </item>
+</selector>

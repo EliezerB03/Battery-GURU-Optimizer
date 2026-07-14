@@ -1,0 +1,6 @@
+-dontobfuscate
+-dontoptimize
+-dontshrink
+-dontstrip
+-keepattributes SourceFile,LineNumberTable,LocalVariableTable
+-keepattributes *Annotation*
