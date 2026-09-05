@@ -247,30 +247,7 @@ class AboutGuru : Fragment(R.layout.about_guru_lay), SearchableFragment {
         val titleText   = titleView.findViewById<TextView>(R.id.dialog_title).apply { text = getString(R.string.about_changelogtitle) }
         val messageView = layoutInflater.cloneInContext(builder.context).inflate(R.xml.dialog_message, null)
         messageView.findViewById<TextView>(R.id.dialog_message).text = """
-            ⦁ App rebuilt from scratch (fully native)
-            ⦁ Added color palette support
-            ⦁ Added support for multiple languages
-                - Spanish
-                - Portuguese
-                - French
-                - Japanese
-                - Arabic
-                - Indonesian
-                - Turkish
-                - Romanian
-            ⦁ Added new 'Device status' section to monitor your device usage
-            ⦁ Added 'Search' function to all sections
-            ⦁ Merged 'Freqs/UV settings' into to new 'Advanced settings' section
-            ⦁ Added function to import/export settings
-            ⦁ Added 'Optimize all apps' option
-            ⦁ Added 'Freeze cached apps' option
-            ⦁ Added 'CPU efficiency boost' option
-            ⦁ Added 'GPU efficiency boost' option
-            ⦁ Added 'Disable network service discovery' option (Experimental)
-            ⦁ Removed 'GPU boost performance' option
-            ⦁ App performance improvements
-            ⦁ App update improvements
-            ⦁ Other many improvements
+            ⦁ Updated libraries for stability
         """.trimIndent()
         applyDialogIcon(titleText, R.drawable.ic_dialog_changelog)
         val scrollView  = setupScrollIndicators(messageView)

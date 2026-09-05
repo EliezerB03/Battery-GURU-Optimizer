@@ -783,21 +783,7 @@ class UpdaterHelper(private val activity: AppCompatActivity, private val guru: G
         val messageView = activity.layoutInflater.cloneInContext(builder.context).inflate(R.xml.dialog_message, null)
         messageView.findViewById<TextView>(R.id.dialog_message).text =
             context.getString(R.string.updater_whatsnewhighlighted) + "\n" + """
-                ⦁ App rebuilt from scratch (fully native)
-                ⦁ Added color palette support
-                ⦁ Added support for multiple languages
-                    - Spanish
-                    - Portuguese
-                    - French
-                    - Japanese
-                    - Arabic
-                    - Indonesian
-                    - Turkish
-                    - Romanian
-                ⦁ Added new 'Device status' section to monitor your device usage
-                ⦁ Added 'Search' function to all sections
-                ⦁ Merged 'Freqs/UV settings' into to new 'Advanced settings' section
-                ⦁ And more to discover!
+                ⦁ Updated libraries for stability
             """.trimIndent() + "\n\n" + context.getString(R.string.updater_whatsnewfooter)
         applyDialogIcon(titleText, R.drawable.ic_dialog_changelog)
         val scrollView = setupScrollIndicators(messageView)

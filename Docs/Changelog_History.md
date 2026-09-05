@@ -1,5 +1,36 @@
 # 📝 Changelog History
 
+### v4.0.1
+
+* Updated libraries for stability
+
+### v4.0
+
+* App rebuilt from scratch (fully native)
+* Added color palette support
+* Added support for multiple languages
+    - Spanish
+    - Portuguese
+    - French
+    - Japanese
+    - Arabic
+    - Indonesian
+    - Turkish
+    - Romanian
+* Added new 'Device status' section to monitor your device usage
+* Added 'Search' function to all sections
+* Merged 'Freqs/UV settings' into to new 'Advanced settings' section
+* Added function to import/export settings
+* Added 'Optimize all apps' option
+* Added 'Freeze cached apps' option
+* Added 'CPU efficiency boost' option
+* Added 'GPU efficiency boost' option
+* Added 'Disable network service discovery' option (Experimental)
+* Removed 'GPU boost performance' option
+* App performance improvements
+* App update improvements
+* Other many improvements
+
 ### v3.7.1
 
 * Minor code changes

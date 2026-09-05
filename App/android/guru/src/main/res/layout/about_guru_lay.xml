@@ -38,7 +38,7 @@
                     app:showBottomDivider="false"
                     app:fullWidthDivider="true"
                     app:title="@string/about_appversion" 
-                    app:summary="4.0"/>
+                    app:summary="4.0.1"/>
             </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
 
             <!-- ====== Developer ====== -->

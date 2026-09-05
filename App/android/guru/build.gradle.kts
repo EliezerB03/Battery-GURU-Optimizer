@@ -3,13 +3,17 @@ plugins {
 }
 android {
     namespace = "com.guru.batteryoptimizer"
-    compileSdk = 36
+    compileSdk {
+        version = release(37) {
+            minorApiLevel = 1
+        }
+    }
     defaultConfig {
         applicationId = "com.guru.batteryoptimizer"
         minSdk = 33
         targetSdk = 35
-        versionName = "4.0"
-        versionCode = 40000
+        versionName = "4.0.1"
+        versionCode = 40100
         ndk {
             abiFilters += "arm64-v8a"
         }
@@ -54,9 +58,9 @@ android {
                 storePassword = System.getenv("KEYSTORE_PASSWORD")
                 keyAlias = System.getenv("KEY_ALIAS")
                 keyPassword = System.getenv("KEY_PASSWORD")
-                println("✔️ KEYSTORE has been set up for this build.")
+                println("✔️ APP will be signed for this BUILD!")
             } else {
-                println("❌ KEYSTORE is not set up for THIS build.")
+                println("❌ APP will NOT be signed for this BUILD!")
             }
         }
     }
@@ -81,7 +85,7 @@ configurations.all {
     exclude(group = "sesl.androidx.picker", module = "picker-color")
 }
 dependencies {
-    implementation("io.github.tribalfs:oneui-design:0.9.13+oneui8")
+    implementation("io.github.tribalfs:oneui-design:0.9.19+oneui8")
     implementation("com.github.topjohnwu.libsu:core:6.0.0")
     implementation("androidx.core:core-splashscreen:1.2.0") {
         exclude(group = "androidx.core", module = "core")

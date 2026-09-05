@@ -1,6 +1,6 @@
 { 
-  "versionName": "3.7.1",
-  "versionCode": 37100,
+  "versionName": "4.0.1",
+  "versionCode": 40100,
   "downloadUrl": "https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.apk",
-  "changelog": "- Minor code changes\n- Minor bug fix"
+  "changelog": "⦁ Updated libraries for stability"
 }
