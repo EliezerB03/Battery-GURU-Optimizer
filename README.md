@@ -1,6 +1,6 @@
 ###### ㅤ
 
-<img width="630" height="238" alt="banner" src="https://github.com/user-attachments/assets/5d2c0cf4-9d54-46a3-adca-20efecb89cf9"/>
+<img width="630" height="238" alt="banner" src="https://github.com/user-attachments/assets/c8bd7d80-1729-4d65-ac70-60b0ed354951"/>
 
 Application to improve battery efficiency on Samsung devices running One UI software and DS-ACK/Apollo-based kernels (Exynos 9810)
 
