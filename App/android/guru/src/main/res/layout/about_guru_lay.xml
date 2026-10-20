@@ -16,107 +16,122 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingHorizontal="10dp">
-
+        
             <!-- ====== About Battery GURU  ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
-                android:id="@+id/sep_about_battery_guru"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/about_sep_about_battery_guru"
-                android:drawablePadding="8dp"
-                android:drawableStart="@drawable/ic_battery_guru"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:colorBackground"
+                android:layout_marginTop="@dimen/sesl_action_bar_height_with_padding"
+                android:gravity="center"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.CardItemView
-                    android:id="@+id/app_version"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/about_app_icon_header"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:showTopDivider="false"
-                    app:showBottomDivider="false"
-                    app:fullWidthDivider="true"
-                    app:title="@string/about_appversion" 
-                    app:summary="4.0.1"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
-
-            <!-- ====== Developer ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
-                android:id="@+id/sep_devinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about_sep_devinfo"
-                android:drawablePadding="8dp"
-                android:drawableStart="@drawable/ic_devinfo"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:colorBackground"
-                android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.CardItemView
-                    android:id="@+id/developer"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/app_name"
+                    android:textSize="30sp"
+                    android:textColor="@color/app_label_text_color"
+                    app:fontFamily="@font/samsungsharpsans_bold"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/about_app_version_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:showTopDivider="false"
-                    app:showBottomDivider="false"
-                    app:title="@string/about_developer" 
-                    app:summary="EliezerB03"/>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <dev.oneuiproject.oneui.widget.CardItemView
-                    android:id="@+id/github"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/about_appversion"
+                    android:textSize="14sp"
+                    android:textColor="@color/sesl_list_subheader_text_color"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/about_app_developer_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:showTopDivider="false"
-                    app:showBottomDivider="false"
-                    app:title="@string/about_github"
-                    app:summary="@string/about_githubsummary"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/about_developer"
+                    android:textSize="14sp"
+                    android:textColor="@color/sesl_list_subheader_text_color"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/github"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginEnd="8dp"
+                        android:tint="?actionMenuTextColor"
+                        android:background="?attr/actionBarItemBackground"
+                        app:srcCompat="@drawable/ic_githubsource"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/developer"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:tint="?actionMenuTextColor"
+                        android:background="?attr/actionBarItemBackground"
+                        app:srcCompat="@drawable/ic_devcontact"/>
+                </LinearLayout>
+            </LinearLayout>
 
             <!-- ====== Updates ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_updates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_sep_updates"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_updates"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
+                app:seslLayoutRoundedCorner="corner_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.CardItemView
+                <com.guru.batteryoptimizer.widgets.UpdatableWidget
+                    android:id="@+id/check_update_widget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:widgetMarginEnd="10dp"
+                    app:showWidget="false">
+                    <com.guru.batteryoptimizer.widgets.CardItemView
+                        android:id="@+id/check_update"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:showTopDivider="false"
+                        app:showBottomDivider="false"
+                        app:title="@string/about_option_check_update"/>
+                </com.guru.batteryoptimizer.widgets.UpdatableWidget>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
+                <com.guru.batteryoptimizer.widgets.CardItemView
                     android:id="@+id/changelog"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:showTopDivider="false"
                     app:showBottomDivider="false"
                     app:title="@string/about_option_changelog"/>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <dev.oneuiproject.oneui.widget.CardItemView
-                    android:id="@+id/check_update"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:showTopDivider="false"
-                    app:showBottomDivider="false"
-                    app:title="@string/about_option_check_update"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
 
             <!-- ====== Import/Export ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_importexport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_sep_importexport"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_importexport"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
+                app:seslLayoutRoundedCorner="corner_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.CardItemView
+                <com.guru.batteryoptimizer.widgets.CardItemView
                     android:id="@+id/import_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,29 +139,30 @@
                     app:showBottomDivider="false"
                     app:title="@string/about_option_import"/>
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <dev.oneuiproject.oneui.widget.CardItemView
+                <com.guru.batteryoptimizer.widgets.CardItemView
                     android:id="@+id/export_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:showTopDivider="false"
                     app:showBottomDivider="false"
                     app:title="@string/about_option_export"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
             
             <!-- ====== Labs (Experimental) ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_labs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/about_sep_labs"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_labs"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
+                app:seslLayoutRoundedCorner="corner_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.SwitchItemView
+                <com.guru.batteryoptimizer.widgets.SwitchItemView
                     android:id="@+id/limitbackground_opt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -154,7 +170,7 @@
                     app:showBottomDivider="false"
                     app:title="@string/about_option_limitbackground"/>
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <dev.oneuiproject.oneui.widget.SwitchItemView
+                <com.guru.batteryoptimizer.widgets.SwitchItemView
                     android:id="@+id/forcedoze_opt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,33 +178,27 @@
                     app:showBottomDivider="false"
                     app:title="@string/about_option_forcedoze"/>
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <dev.oneuiproject.oneui.widget.SwitchItemView
+                <com.guru.batteryoptimizer.widgets.SwitchItemView
                     android:id="@+id/nsd_opt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:showTopDivider="false"
                     app:showBottomDivider="false"
                     app:title="@string/about_option_nsd"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
-
-            <dev.oneuiproject.oneui.widget.Separator
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-            <Button
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/reset_settings"
                 style="@style/OneUI.ContainedButton"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_marginTop="30dp"
                 android:text="@string/about_button_reset_settings"
                 android:theme="@style/OneUI.ContainedPrimaryColorButtonTheme"/>
-
-            <dev.oneuiproject.oneui.widget.Separator
+            <!-- ====== SpaceBottom Reserved ====== -->
+            <View
+                android:id="@+id/fragment_tail_space"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="120dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>

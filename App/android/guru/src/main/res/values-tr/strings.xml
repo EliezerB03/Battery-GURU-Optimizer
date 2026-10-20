@@ -6,6 +6,7 @@
     <string name="search_hint">Seçenekleri ara</string>
     <string name="search_type_to_search">Arama yapmak için bir şey yazın</string>
     <string name="search_no_results">Sonuç bulunamadı</string>
+    <string name="search_sep_results">Sonuçlar</string>
     <string name="dialog_progress">İlerleme:</string>
     <string name="dialog_btn_ok">Tamam</string>
     <string name="dialog_btn_close">Kapat</string>
@@ -25,8 +26,11 @@
     <string name="checks_fatalrootlostmsg">ROOT erişimi kaybedildi!\nUygulamanın çalışması için ROOT erişimi gerekiyor!</string>
     <string name="checks_closeapp">Uygulamayı kapat</string>
     <!-- Updater Helper -->
-    <string name="updater_checkingupdatetitle">Güncelleme kontrol ediliyor...</string>
-    <string name="updater_checkingupdatemsg">Mevcut güncelleme kontrol ediliyor...</string>
+    <string name="updater_widget_checkingupdate">Mevcut güncelleme kontrol ediliyor...</string>
+    <string name="updater_widget_uptodate">Şu anda en son sürümdesiniz.</string>
+    <string name="updater_widget_updateavailable">Güncelleme mevcut!\nDaha fazla ayrıntı için dokunun.</string>
+    <string name="updater_widget_installupdate">Güncelleme yüklenmeye hazır!\nDaha fazla ayrıntı için dokunun.</string>
+    <string name="updater_widget_connectionerror">Sunucuya bağlanılamıyor!\nLütfen internet bağlantınızı kontrol edin.</string>
     <string name="updater_updateavailabletitle">Güncelleme mevcut!</string>
     <string name="updater_updateavailablemsg">%1$s sürümü mevcut!\nMevcut sürüm: %2$s\n\n%3$sGüncellemeyi indirmek için \'Şimdi güncelle\'ye basın.</string>
     <string name="updater_updateavailablechangelog">Değişiklik günlüğü:\n%1$s\n\n</string>
@@ -38,10 +42,6 @@
     <string name="updater_pendinginstallupdatemsg">Güncelleme hazır!\nŞimdi yüklemek istiyor musunuz?\n\nNot: daha sonra GURU Hakkında &gt; Uygulama güncellemesini kontrol et bölümünden yükleyebilirsiniz.</string>
     <string name="updater_installingtitle">Güncelleme yükleniyor...</string>
     <string name="updater_installingmsg">Güncelleme sırasında uygulamayı KAPATMAYIN.\nGüncellemeden sonra uygulama kapanacaktır.</string>
-    <string name="updater_uptodatetitle">Güncel!</string>
-    <string name="updater_uptodatemsg">Şu anda en son sürümdesiniz.</string>
-    <string name="updater_connectionerrortitle">Bağlantı hatası!</string>
-    <string name="updater_connectionerrormsg">Sunucuya bağlanılamıyor!\nLütfen internet bağlantınızı kontrol edin.</string>
     <string name="updater_downloaderrortitle">İndirme hatası!</string>
     <string name="updater_downloaderrormsg">Güncelleme indirilemedi, lütfen tekrar deneyin.</string>
     <string name="updater_installerrortitle">Güncelleme hatası!</string>
@@ -81,13 +81,15 @@
     <string name="device_batterycycles">Döngüler</string>
     <string name="device_batteryunknown">Bilinmeyen</string>
     <string name="device_infotitle">Cihaz durumu bilgisi</string>
-    <string name="device_infomsg">Bu bölümde cihazınızın durumunu izleyebilir ve görüntüleyebilirsiniz.\n\nCPU kullanımı: burada her çekirdek için işlemci kullanımını gerçek zamanlı olarak görüntüleyebilirsiniz, mevcut frekans veya mevcut kullanım yüzdesi gibi.\n\nGPU kullanımı: burada grafik işlemcisinin kullanımını gerçek zamanlı olarak görüntüleyebilirsiniz, mevcut frekans veya mevcut kullanım yüzdesi gibi.\n\nBellek kullanımı: burada RAM ve ZRAM (sanal) bellek kullanımını gerçek zamanlı olarak kontrol edebilirsiniz, mevcut frekans veya mevcut kullanım yüzdesi gibi.\n\nIsıl durum: burada CPU, GPU ve pilin sıcaklığını görüntüleyebilirsiniz.\n\nPil durumu: burada pilin kapasitesini veya sağlığını görüntüleyebilirsiniz.</string>
+    <string name="device_infomsg">"Bu sayfada cihazınızın durumunu izleyebilir ve görüntüleyebilirsiniz.\n\nCPU kullanımı: burada her çekirdek için işlemci kullanımını gerçek zamanlı olarak görüntüleyebilirsiniz, mevcut frekans veya mevcut kullanım yüzdesi gibi.\n\nGPU kullanımı: burada grafik işlemcisinin kullanımını gerçek zamanlı olarak görüntüleyebilirsiniz, mevcut frekans veya mevcut kullanım yüzdesi gibi.\n\nBellek kullanımı: burada RAM ve ZRAM (sanal bellek) kullanımını gerçek zamanlı olarak görüntüleyebilirsiniz, RAM için mevcut frekans veya mevcut kullanım yüzdesi, ZRAM (sanal bellek) için ise kullanım yüzdesi ve kullanılan sıkıştırma algoritması gösterilir.\n    - Belleği göster: kullanımı veya kullanılabilir RAM ya da ZRAM belleğini göstermeyi seçmenizi sağlar.\n\nIsıl durum: burada CPU, GPU ve pilin sıcaklıklarını Celsius veya Fahrenheit cinsinden görüntüleyebilirsiniz.\n    - Fahrenheit birimi kullan: sıcaklıklar için birimi Fahrenheit veya Celsius olarak göstermeyi seçmenizi sağlar.\n\nPil durumu: burada pilin kapasitesini veya sağlığını görüntüleyebilirsiniz."</string>
     <!-- General settings -->
     <string name="general_toolbartitle">Genel ayarlar</string>
     <string name="general_sep_system">Sistem ayarları</string>
     <string name="general_option_optimizeapps">Tüm uygulamaları optimize et</string>
     <string name="general_option_battapps">Uygulamalarda pil optimizasyonları</string>
     <string name="general_option_cachedapps">Önbelleğe alınmış uygulamaları dondur</string>
+    <string name="general_sep_kernel">Kernel ayarları</string>
+    <string name="general_option_wakelockblock">Wakelock blocker optimizasyonları</string>
     <string name="general_sep_cpu">CPU ayarları</string>
     <string name="general_option_cpuhotplug">CPU hotplug optimizasyonları</string>
     <string name="general_option_powereffi">Güç tasarrufu</string>
@@ -103,7 +105,7 @@
     <string name="general_option_batteryprotect">Pil şarj koruması</string>
     <string name="general_seekbar_battlimittitle">Pil şarj sınırı</string>
     <string name="general_infotitle">Genel ayarlar bilgisi</string>
-    <string name="general_infomsg">Bu bölüm, temel optimizasyon seçenekleri sağlayan ayarlar içerir.\n\nSistem ayarları: bu kategori normalde kullanıcıdan gizlenen seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n\nCPU ayarları: bu kategori verimlilik veya ısı yönetimi gibi seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n\nGPU ayarları: bu kategori verimlilik artışı vb. gibi seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n\nBellek ayarları: bu kategori (ZRAM) sanal bellek optimizasyonlarıyla ilgili seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n\nDepolama ayarları: bu kategori UFS enerji verimliliğini artırmaya yönelik ayarlar sunar (Varsayılan ayarları bırakmanız önerilir).\n\nPil ayarları: bu kategori diğerlerinin yanı sıra pil şarj koruması seçenekleri sunar.</string>
+    <string name="general_infomsg">"Bu sayfa, temel optimizasyon seçenekleri sağlayan ayarlar içerir.\n\nSistem ayarları: bu bölüm normalde kullanıcıdan gizlenen seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n    - Tüm uygulamaları optimize et: hem sistem hem de yüklü tüm uygulamaları ART ile gerçek kullanım profiline göre yeniden derler, böylece açılırken daha az CPU kullanırlar ve performans ile pil iyileşir.\n    - Uygulamalarda pil optimizasyonları: uygulamaların arka plandaki işlemlerini kısıtlar.\n    - Önbelleğe alınmış uygulamaları dondur: arka plandaki uygulamaları dondurur, CPU kullanmayarak pili iyileştirir.\n\nKernel ayarları: bu bölüm kernel düzeyinde çalışan seçenekler sunar, bu nedenle kullanılan kernel\'e bağlı olarak düzgün çalışabilir veya çalışmayabilir (Varsayılan ayarları bırakmanız önerilir).\n    - Wakelock blocker optimizasyonları: süreçlerin veya olayların telefonu dahili görevler (kontrol, ağ arama, olaylar vb.) için uyanık tutmasını engeller, boştayken pil tüketimini iyileştirir (bildirimleri veya ağ yeniden bağlantılarını hafifçe geciktirebilir).\n\nCPU ayarları: bu bölüm verimlilik veya ısı yönetimi gibi seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n    - CPU hotplug optimizasyonları: CPU çekirdeklerini kapatıp açarken verimliliği artırır ve performans kararlılığını iyileştirir, böylece cihaz boştayken pil tüketimi iyileşir.\n    - Güç tasarrufu: görevleri zaten etkin olan çekirdeklerde çalıştırarak ve boştaki diğer çekirdeklerin etkinleştirilmesini önleyerek CPU güç tüketimini iyileştirir, zaman içinde pili iyileştirir.\n    - Termal optimizasyonlar: kernel düzeyinde hafif ısıl ve AC akım sınırlamaları uygulayarak CPU sıcaklığını düşürür, böylece cihazın ürettiği ısıyı azaltır, ancak sistem performansını biraz düşürebilir.\n    - CPU verimlilik artışı: CPU kullanımındaki yüksek tepe noktalarını azaltır, böylece zaman içinde pil tüketimini iyileştirir.\n\nGPU ayarları: bu bölüm verimlilik artışı vb. gibi seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n    - GPU verimlilik artışı: GPU kullanımındaki yüksek tepe noktalarını azaltır, grafik yükünü hafifçe azaltır ve düşük güç profili uygular, böylece zaman içinde pili iyileştirir.\n\nBellek ayarları: bu bölüm (ZRAM) sanal bellek optimizasyonlarıyla ilgili seçenekler sunar (Varsayılan ayarları bırakmanız önerilir).\n    - ZRAM optimizasyonları: kernel\'in uygulamaları RAM\'den depolamaya ve tersine taşıma aralıklarını azaltır, ayrıca ZRAM (sanal bellek) sıkıştırma aralıklarını azaltır ve önbelleğini daha uzun süre korur, CPU kullanımını azaltarak pil tüketimini iyileştirir.\n\nDepolama ayarları: bu bölüm UFS enerji verimliliğini artırmaya yönelik ayarlar sunar (Varsayılan ayarları bırakmanız önerilir).\n    - Depolama optimizasyonları: kernel\'i her depolama işleminde yapılan işi azaltacak şekilde ayarlar, I/O entropisi olmadan ve daha hafif I/O tamamlama ile çalışır, böylece CPU kullanımını azaltır, ancak okuma ve yazma performansını hafifçe düşürebilir.\n\nPil ayarları: bu bölüm diğerlerinin yanı sıra pil şarj koruması seçenekleri sunar.\n    - Pil şarj koruması: pili korumak ve sağlığını uzatmak için maksimum şarj yüzdesini sınırlar."</string>
     <string name="general_battprotectwarningtitle">Önemli!</string>
     <string name="general_battprotectwarningmsg">Çakışmaları/sorunları önlemek için sistemdeki pil korumasının devre dışı bırakıldığından emin olun.\nBunu Ayarlar uygulaması &gt; Pil &gt; Pil koruması bölümünden kontrol edebilirsiniz.\n\nDeğişikliklerin etkili olması için şarj cihazını yeniden takmanız gerekebilir.</string>
     <string name="general_optimizeappstitle">Uygulama optimizasyon bildirimi!</string>
@@ -138,14 +140,12 @@
     <string name="advanced_uv_seekbar_iva">IVA marjı</string>
     <string name="advanced_uv_seekbar_score">SCORE marjı</string>
     <string name="advanced_infotitle">Gelişmiş ayarlar bilgisi</string>
-    <string name="advanced_infomsg">Bu bölüm, frekans seçenekleri veya düşük voltaj seçenekleri gibi gelişmiş seçenekler içermektedir.\n\nFrekans ayarları: bu bölüm, küçük (verimlilik) ve büyük (performans) çekirdekler için işlem hızını kontrol etmenizi sağlayan frekansla ilgili ayarlar içermektedir. (Varsayılan ayarların bırakılması önerilir).\n\nDüşük voltaj ayarları: bu bölüm, her cihaz bileşeni için voltaj yoğunluğuyla ilgili seçenekler içermekte olup yüzde marjlarına dayanmaktadır. Her kaydırma çubuğu CPU, GPU, RAM, ekran, ses vb. bileşenler için düşük voltaj değerleri sunar. (Varsayılan ayarların bırakılması önerilir).\n\nNot: frekansı/hızı artırmak cihaz tarafından üretilen ısıyı artıracak ve bu ayarlar, kullandığınız frekans ve/veya düşük voltaj ayarlarına bağlı olarak cihazınızı KARARSIZ hale getirebilir veya DONMALARA neden olabilir.</string>
+    <string name="advanced_infomsg">"Bu sayfa, CPU çekirdek frekans seçenekleri ve her bileşen için düşük voltaj seçenekleri gibi gelişmiş seçenekler içermektedir.\n\nFrekans ayarları: bu bölüm, küçük (verimlilik) ve büyük (performans) çekirdekler için işlem hızını kontrol etmenizi sağlayan frekansla ilgili ayarlar içermektedir (Varsayılan ayarları bırakmanız önerilir).\n    - Maksimum küçük çekirdek frekansı: CPU\'nun küçük çekirdeklerinin (verimlilik çekirdekleri) ulaşabileceği maksimum frekansı sınırlar.\n    - Maksimum büyük çekirdek frekansı: CPU\'nun büyük çekirdeklerinin (performans çekirdekleri) ulaşabileceği maksimum frekansı sınırlar.\n\nDüşük voltaj ayarları: bu bölüm, her cihaz bileşeni için voltaj yoğunluğuyla ilgili seçenekler içermekte olup yüzde marjlarına dayanmaktadır. Her kaydırma çubuğu CPU, GPU, RAM, ekran, ses vb. bileşenler için düşük voltaj değerleri sunar (Varsayılan ayarları bırakmanız önerilir).\n    - Küçük çekirdekler marjı: CPU\'nun küçük çekirdeklerinin (verimlilik çekirdekleri) voltajının yüzde marjını azaltmanızı sağlar.\n    - Büyük çekirdekler marjı: CPU\'nun büyük çekirdeklerinin (performans çekirdekleri) voltajının yüzde marjını azaltmanızı sağlar.\n    - GPU marjı: GPU\'nun voltajının yüzde marjını azaltmanızı sağlar.\n    - RAM marjı: RAM belleğinin voltajının yüzde marjını azaltmanızı sağlar.\n    - AUDIO marjı: cihaz sesinin (hoparlörler) voltajının yüzde marjını azaltmanızı sağlar.\n    - CAMERA marjı: kamera modüllerinin (kamera sensörleri) voltajının yüzde marjını azaltmanızı sağlar.\n    - CP marjı: iletişim birimlerinin (mobil ağlar, Wi-Fi, Bluetooth vb.) voltajının yüzde marjını azaltmanızı sağlar.\n    - DISPLAY marjı: cihaz ekranının voltajının yüzde marjını azaltmanızı sağlar.\n    - FSYS marjı: cihaz depolamasının, çıkarılabilir belleğin (SD kart) ve USB ile bağlı depolamanın voltajının yüzde marjını azaltmanızı sağlar.\n    - INT marjı: cihaz yonga setinin (chipset) veri yollarının voltajının yüzde marjını azaltmanızı sağlar.\n    - INTCAMERA marjı: kamera ISP\'sinin (görüntü işleme sensörü) voltajının yüzde marjını azaltmanızı sağlar.\n    - IVA marjı: video codec bileşenlerinin voltajının yüzde marjını azaltmanızı sağlar.\n    - SCORE marjı: görüntü ve video görüş yardımcı işlemcisinin voltajının yüzde marjını azaltmanızı sağlar.\n\nNot: frekansı/hızı artırmak cihaz tarafından üretilen ısıyı artıracak ve bu ayarlar, kullandığınız frekans ve/veya düşük voltaj ayarlarına bağlı olarak cihazınızı KARARSIZ hale getirebilir veya DONMALARA neden olabilir."</string>
     <!-- About GURU -->
     <string name="about_toolbartitle">GURU hakkında</string>
-    <string name="about_sep_about_battery_guru">Battery GURU hakkında</string>
-    <string name="about_appversion">Uygulama sürümü</string>
-    <string name="about_sep_devinfo">Geliştirici bilgisi</string>
-    <string name="about_developer">Geliştiren</string>
-    <string name="about_github">Kaynak</string>
+    <string name="about_appversion">Sürüm: %1$s</string>
+    <string name="about_developer">Geliştiren: %1$s</string>
+    <string name="about_developersummary">Geliştirici profili</string>
     <string name="about_githubsummary">GitHub deposu</string>
     <string name="about_sep_updates">Güncellemeler</string>
     <string name="about_option_changelog">Değişiklik günlüğü</string>
@@ -159,8 +159,11 @@
     <string name="about_option_nsd">Ağ hizmeti keşfini devre dışı bırak</string>
     <string name="about_button_reset_settings">Ayarları varsayılana sıfırla</string>
     <string name="about_infotitle">GURU hakkında bilgisi</string>
-    <string name="about_infomsg">Bu bölüm uygulama sürümü, geliştirici bilgisi, deneysel özellikler vb. hakkında bilgi gösterir.\n\nDeneysel: hala test aşamasında olan ancak genel kullanım için yeterince kararlı özellikler (Bu seçenekler varsayılan olarak devre dışıdır).</string>
+    <string name="about_infomsg">"Bu sayfa uygulama sürümü, güncellemeler, deneysel özellikler vb. hakkında bilgi gösterir.\n\nİçe/Dışa Aktar: uygulamanın ayarlarını bir dosyadan yükleyin veya bir dosyaya kaydedin.\n    - Ayarları içe aktar: uygulamanın ayarlarını yüklemenizi sağlar.\n    - Ayarları dışa aktar: uygulamanın ayarlarını kaydetmenizi sağlar.\n\nDeneysel: hala test aşamasında olan ancak genel kullanım için yeterince kararlı özellikler (Bu seçenekler varsayılan olarak devre dışıdır).\n    - Arka plan uygulama işlem sınırı: arka planda açık kalabilecek uygulamaları sınırlar.\n    - Cihaz boştayken Doze modunu zorla: cihaz ekranı kilitlendikten hemen sonra cihazı derin uykuya girmeye zorlar.\n    - Ağ hizmeti keşfini devre dışı bırak: arka plandaki trafiği azaltmak için yerel ağ hizmetlerinin otomatik aranmasını devre dışı bırakır, ancak uygulamalar Chromecast, yazıcılar veya yakındaki diğer cihazları bulamaz (pil tüketimini hafifçe azaltır)."</string>
     <string name="about_changelogtitle">Son değişiklik günlüğü</string>
+    <string name="about_import_warningtitle">Ayarları içe aktarma bildirimi!</string>
+    <string name="about_import_warningmsg">Bu işlem mevcut ayarlarınızı kaybetmenize neden olacaktır, devam etmek istediğinizden eminseniz \'Ayarları içe aktar\' üzerine basın.\nBu işlem GERİ ALINAMAZ!\n\nNot: ayarlar içe aktarıldıktan sonra uygulamanın yeniden başlatılması gerekir.</string>
+    <string name="about_import_warning_btn_import">Ayarları içe aktar</string>
     <string name="about_import_errortitle">Ayarları içe aktarma hatası!</string>
     <string name="about_import_errormsg">Seçilen dosya geçersiz veya bozuk.</string>
     <string name="about_import_successtitle">Ayarlar içe aktarıldı!</string>

@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- App theme -->
+    <style name="OneUITheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:listChoiceBackgroundIndicator">?attr/listChoiceBackgroundIndicator</item>
+        <item name="android:statusBarColor">@color/round_and_bgcolor</item>
+        <item name="android:navigationBarColor">@color/round_and_bgcolor</item>
+        <item name="android:windowBackground">@color/round_and_bgcolor</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/round_and_bgcolor</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@color/round_and_bgcolor</item>
+        <item name="spinnerStyle">@style/OneUI.Spinner</item>
+        <item name="alertDialogTheme">@style/OneUI.AlertDialog</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
+        <item name="editTextStyle">@style/Widget.AppCompat.EditText</item>
+    </style>
+    <!-- Bottom TabLayout -->
+    <style name="OneUI.BottomBar.TabLayout" parent="Widget.Design.TabLayout.Main.IconText"></style>
+    <!-- Spinner -->
+    <style name="OneUI.Spinner" parent="Widget.AppCompat.Spinner">
+        <item name="android:popupBackground">@drawable/sesl_menu_popup_background_dark</item>
+    </style>
+    <!-- Dialog -->
+    <style name="OneUI.AlertDialog" parent="@style/Theme.AppCompat.Dialog.Alert">
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
     <!-- Splash -->
     <style name="OneUITheme.NoActionBar.Launch" parent="Theme.SplashScreen">
         <item name="windowSplashScreenAnimatedIcon">@drawable/splash</item>
-        <item name="windowSplashScreenBackground">@color/oui_des_round_and_bgcolor</item>
+        <item name="windowSplashScreenBackground">@color/round_and_bgcolor</item>
         <item name="postSplashScreenTheme">@style/OneUITheme</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@color/oui_des_round_and_bgcolor</item>
-        <item name="android:navigationBarColor">@color/oui_des_round_and_bgcolor</item>
+        <item name="android:statusBarColor">@color/round_and_bgcolor</item>
+        <item name="android:navigationBarColor">@color/round_and_bgcolor</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
+    </style>
+        <!-- Separator text appearance -->
+    <style name="OneUI_Separator">
+        <item name="android:textSize">@dimen/sesl_list_subheader_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_sub_text_color</item>
+    </style>
+    <!-- Dialog NoEnterAnimation (For Recreation) -->
+    <style name="DialogAnimationNoEnter" parent="@style/Animation.AppCompat.Dialog">
+        <item name="android:windowEnterAnimation">@null</item>
     </style>
 </resources>

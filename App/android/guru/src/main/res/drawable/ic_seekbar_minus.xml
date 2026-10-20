@@ -4,7 +4,7 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24"
-    android:tint="@color/oui_des_functional_red_color">
+    android:tint="@color/sesl_functional_red_light">
     <path
         android:fillColor="#000000"
         android:fillType="nonZero"

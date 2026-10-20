@@ -1,4 +1,9 @@
 <resources>
     <color name="Theme_Color">#F1F1F3</color>
-    <color name="Color_Warning">#B1AD00</color>
+    <color name="Color_ICWarning">#CC6900</color>
+    <color name="Color_TextWarning">#B1AD00</color>
+    <color name="btn_contained_primary_text">#fffafafa</color>
+    <color name="round_and_bgcolor">@color/sesl_round_and_bgcolor_light</color>
+    <color name="app_label_text_color">@color/sesl_action_bar_text_color_title_light</color>
+    <color name="app_sub_text_color">@color/sesl_list_subheader_text_color</color>
 </resources>

@@ -1,5 +1,20 @@
 # 📝 Changelog History
 
+### 4.1
+
+* UI theme updated to One UI 9 design
+* Added Bulgarian language
+* Added 'Wakelock blocker optimizations' option
+* Revamped 'About GURU' section
+* Refactored 'Check for app update' option
+* Re-adjusted 'ZRAM optimizations' option
+* Minor tweak on 'Thermal optimizations' option
+* Improved Import/Export option logic
+* Improved several descriptions across all app pages for all languages
+* Improved app performance
+* Various code optimizations
+* Improved logic and various bug fixes
+
 ### v4.0.1
 
 * Updated libraries for stability

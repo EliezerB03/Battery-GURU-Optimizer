@@ -31,28 +31,28 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_marginStart="12dp">
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_name_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RAM"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_usedfree_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N/A"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_freq_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N/A"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_percent_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,28 +85,28 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_marginStart="12dp">
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_name_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ZRAM"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_usedfree_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N/A"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_algorithm_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N/A"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/memory_percent_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

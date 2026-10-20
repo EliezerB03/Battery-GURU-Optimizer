@@ -6,6 +6,7 @@
     <string name="search_hint">オプションを検索</string>
     <string name="search_type_to_search">検索したい内容を入力してください</string>
     <string name="search_no_results">結果が見つかりませんでした</string>
+    <string name="search_sep_results">結果</string>
     <string name="dialog_progress">進行状況:</string>
     <string name="dialog_btn_ok">了解</string>
     <string name="dialog_btn_close">閉じる</string>
@@ -25,8 +26,11 @@
     <string name="checks_fatalrootlostmsg">ROOTアクセスが失われました！\nアプリの動作にはROOTアクセスが必要です！</string>
     <string name="checks_closeapp">アプリを閉じる</string>
     <!-- Updater Helper -->
-    <string name="updater_checkingupdatetitle">アップデートを確認中…</string>
-    <string name="updater_checkingupdatemsg">利用可能なアップデートを確認しています…</string>
+    <string name="updater_widget_checkingupdate">利用可能なアップデートを確認しています…</string>
+    <string name="updater_widget_uptodate">現在、最新バージョンをご利用中です。</string>
+    <string name="updater_widget_updateavailable">アップデートが利用可能です！\nタップして詳細を確認してください。</string>
+    <string name="updater_widget_installupdate">アップデートのインストール準備が完了しました！\nタップして詳細を確認してください。</string>
+    <string name="updater_widget_connectionerror">サーバーに接続できません！\nインターネット接続をご確認ください。</string>
     <string name="updater_updateavailabletitle">アップデートが利用可能です！</string>
     <string name="updater_updateavailablemsg">バージョン %1$s が利用可能です！\n現在のバージョン: %2$s\n\n%3$s\'今すぐアップデート\'を押してアップデートをダウンロードしてください。</string>
     <string name="updater_updateavailablechangelog">変更履歴:\n%1$s\n\n</string>
@@ -38,10 +42,6 @@
     <string name="updater_pendinginstallupdatemsg">アップデートの準備ができました！\n今すぐインストールしますか？\n\n注: GURUについて &gt; アプリのアップデートを確認 から後でインストールすることもできます。</string>
     <string name="updater_installingtitle">アップデートをインストール中…</string>
     <string name="updater_installingmsg">アップデート中はアプリを閉じないでください。\nアップデート後にアプリは終了します。</string>
-    <string name="updater_uptodatetitle">最新の状態です！</string>
-    <string name="updater_uptodatemsg">現在、最新バージョンをご利用中です。</string>
-    <string name="updater_connectionerrortitle">接続エラー！</string>
-    <string name="updater_connectionerrormsg">サーバーに接続できません！\nインターネット接続をご確認ください。</string>
     <string name="updater_downloaderrortitle">ダウンロードエラー！</string>
     <string name="updater_downloaderrormsg">アップデートをダウンロードできませんでした。もう一度お試しください。</string>
     <string name="updater_installerrortitle">アップデートエラー！</string>
@@ -81,13 +81,15 @@
     <string name="device_batterycycles">サイクル数</string>
     <string name="device_batteryunknown">不明</string>
     <string name="device_infotitle">デバイス状態の情報</string>
-    <string name="device_infomsg">このセクションでは、デバイスの状態を監視および確認できます。\n\nCPU使用率：各コアのプロセッサ使用状況をリアルタイムで確認できます。現在の周波数や使用率などが表示されます。\n\nGPU使用率：グラフィックプロセッサの使用状況をリアルタイムで確認できます。現在の周波数や使用率などが表示されます。\n\nメモリ使用状況：RAMおよびZRAM（仮想）メモリの使用状況をリアルタイムで確認できます。現在の周波数や使用率などが表示されます。\n\n温度状態：CPU、GPU、バッテリーの温度を確認できます。\n\nバッテリー状態：バッテリーの容量または状態を確認できます。</string>
+    <string name="device_infomsg">"このページでは、デバイスの状態を監視および確認できます。\n\nCPU使用率：各コアのプロセッサ使用状況をリアルタイムで確認できます。現在の周波数や使用率などが表示されます。\n\nGPU使用率：グラフィックプロセッサの使用状況をリアルタイムで確認できます。現在の周波数や使用率などが表示されます。\n\nメモリ使用状況：RAMおよびZRAM（仮想メモリ）の使用状況をリアルタイムで確認できます。RAMでは現在の周波数や使用率が、ZRAM（仮想メモリ）では使用率と使用中の圧縮アルゴリズムが表示されます。\n    - メモリを表示：使用状況、または利用可能なRAMもしくはZRAMメモリのどちらを表示するかを選択できます。\n\n温度状態：CPU、GPU、バッテリーの温度を摂氏または華氏で確認できます。\n    - 華氏単位を使用：温度の表示単位として華氏と摂氏のどちらを使用するかを選択できます。\n\nバッテリー状態：バッテリーの容量または状態を確認できます。"</string>
     <!-- General settings -->
     <string name="general_toolbartitle">一般設定</string>
     <string name="general_sep_system">システム設定</string>
     <string name="general_option_optimizeapps">すべてのアプリを最適化</string>
     <string name="general_option_battapps">アプリのバッテリー最適化</string>
     <string name="general_option_cachedapps">キャッシュされたアプリを凍結</string>
+    <string name="general_sep_kernel">カーネル設定</string>
+    <string name="general_option_wakelockblock">Wakelock blocker最適化</string>
     <string name="general_sep_cpu">CPU設定</string>
     <string name="general_option_cpuhotplug">CPU hotplug最適化</string>
     <string name="general_option_powereffi">電力効率</string>
@@ -103,11 +105,11 @@
     <string name="general_option_batteryprotect">バッテリー充電保護</string>
     <string name="general_seekbar_battlimittitle">バッテリー充電制限</string>
     <string name="general_infotitle">一般設定情報</string>
-    <string name="general_infomsg">このセクションには、基本的な最適化オプションを提供する設定が含まれています。\n\nシステム設定: このカテゴリは通常ユーザーには表示されないオプションを提供します (デフォルト設定のままにすることを推奨)。\n\nCPU設定: このカテゴリは効率や熱管理などのオプションを提供します (デフォルト設定のままにすることを推奨)。\n\nGPU設定: このカテゴリは効率ブーストなどのオプションを提供します (デフォルト設定のままにすることを推奨)。\n\nメモリ設定: このカテゴリは仮想メモリ(ZRAM)最適化に関連するオプションを提供します (デフォルト設定のままにすることを推奨)。\n\nストレージ設定: このカテゴリはUFSエネルギー効率を改善するための設定を提供します (デフォルト設定のままにすることを推奨)。\n\nバッテリー設定: このカテゴリはバッテリー充電保護オプションなどを提供します。</string>
+    <string name="general_infomsg">"このページには、基本的な最適化オプションを提供する設定が含まれています。\n\nシステム設定：このセクションは通常ユーザーには表示されないオプションを提供します (デフォルト設定のままにすることを推奨)。\n    - すべてのアプリを最適化：ARTですべてのアプリ（システムアプリとインストール済みアプリの両方）を再コンパイルし、実際の使用プロファイルに基づいて起動時のCPU使用を減らすことで、パフォーマンスとバッテリーを向上させます。\n    - アプリのバッテリー最適化：バックグラウンドでのアプリのプロセスを制限します。\n    - キャッシュされたアプリを凍結：バックグラウンドのアプリを凍結し、CPUを使用しないことでバッテリーを向上させます。\n\nカーネル設定：このセクションはカーネルレベルで動作するオプションを提供するため、使用しているカーネルによっては正しく動作する場合としない場合があります (デフォルト設定のままにすることを推奨)。\n    - Wakelock blocker最適化：内部タスク（監視、ネットワーク検索、イベントなど）のためにプロセスやイベントがスマートフォンを起動状態に保つのを防ぎ、アイドル時のバッテリー消費を改善します（通知やネットワーク再接続がわずかに遅れる場合があります）。\n\nCPU設定：このセクションは効率や熱管理などのオプションを提供します (デフォルト設定のままにすることを推奨)。\n    - CPU hotplug最適化：CPUがコアをオフ/オンにする際の効率を向上させ、パフォーマンスの安定性も向上させることで、デバイスのアイドル時のバッテリー消費を改善します。\n    - 電力効率：すでにアクティブなコアでタスクを実行し、アイドル状態にある他のコアを起動しないようにすることで、CPUの消費電力を改善し、長期的にバッテリーを向上させます。\n    - 熱最適化：カーネルレベルで軽い熱制限とAC電流の制限を適用してCPU温度を下げ、デバイスの発熱を抑えますが、システムのパフォーマンスがわずかに低下する場合があります。\n    - CPU効率ブースト：CPUの高使用率のピークを抑え、バッテリー消費を長期的に改善します。\n\nGPU設定：このセクションは効率ブーストなどのオプションを提供します (デフォルト設定のままにすることを推奨)。\n    - GPU効率ブースト：GPUの高使用率のピークを抑え、グラフィック負荷をわずかに減らし、低消費電力プロファイルを適用して、バッテリーを長期的に向上させます。\n\nメモリ設定：このセクションは仮想メモリ(ZRAM)最適化に関連するオプションを提供します (デフォルト設定のままにすることを推奨)。\n    - ZRAM最適化：カーネルがアプリをRAMからストレージへ、またその逆に移動する頻度を減らし、ZRAM（仮想メモリ）の圧縮頻度も減らしてそのキャッシュをより長く保持することで、CPU使用率を抑えてバッテリー消費を改善します。\n\nストレージ設定：このセクションはUFSエネルギー効率を改善するための設定を提供します (デフォルト設定のままにすることを推奨)。\n    - ストレージ最適化：カーネルを調整して各ストレージ操作での処理を減らし、I/Oエントロピーなし・より軽量なI/O完了処理とすることでCPU使用率を抑えますが、読み書き性能がわずかに低下する場合があります。\n\nバッテリー設定：このセクションはバッテリー充電保護オプションなどを提供します。\n    - バッテリー充電保護：最大充電率を制限してバッテリーを保護し、その健全性を長く保ちます。"</string>
     <string name="general_battprotectwarningtitle">重要！</string>
     <string name="general_battprotectwarningmsg">競合や問題を避けるために、システムのバッテリー保護が無効になっていることを確認してください。\nこれは設定アプリ &gt; バッテリー &gt; バッテリー保護 で確認できます。\n\n変更を有効にするには、充電器を再接続する必要がある場合があります。</string>
     <string name="general_optimizeappstitle">アプリ最適化のお知らせ！</string>
-    <string name="general_optimizeappsmsg">アプリケーションの最適化は2週間ごと、またはメジャーシステムアップデート後に実行することをお勧めします。これはデバイスのパフォーマンスとバッテリー効率の両方を向上させるのに役立ちます。\n\n注: 最適化中はデバイスが熱くなることがあり、プロセスには数分かかる場合があります。</string>
+    <string name="general_optimizeappsmsg">アプリの最適化は2週間ごと、またはメジャーシステムアップデート後に実行することをお勧めします。これはデバイスのパフォーマンスとバッテリー効率の両方を向上させるのに役立ちます。\n\n注: 最適化中はデバイスが熱くなることがあり、プロセスには数分かかる場合があります。</string>
     <string name="general_optimizingtitle">すべてのアプリを最適化中…</string>
     <string name="general_optimizingmsg">最適化中はアプリを閉じないでください！\nこのプロセスには数分かかることがあります…</string>
     <string name="general_optimizingcanceledtitle">アプリの最適化がキャンセルされました！</string>
@@ -138,14 +140,12 @@
     <string name="advanced_uv_seekbar_iva">IVAマージン</string>
     <string name="advanced_uv_seekbar_score">SCOREマージン</string>
     <string name="advanced_infotitle">詳細設定の情報</string>
-    <string name="advanced_infomsg">このセクションには、周波数オプションやアンダーボルトオプションなどの詳細オプションが含まれています。\n\n周波数設定: 小コア（効率）と大コア（パフォーマンス）の処理速度を制御できる周波数関連の設定が含まれています (デフォルト設定のままにすることを推奨)。\n\nアンダーボルト設定: 各デバイスコンポーネントの電圧強度に関するオプションが含まれており、パーセンテージマージンに基づいています。各スライダーはCPU、GPU、RAM、ディスプレイ、オーディオなどのアンダーボルト値を提供します (デフォルト設定のままにすることを推奨)。\n\n注意: 周波数/速度を上げるとデバイスの発熱が増加し、使用している周波数やアンダーボルト設定によってはデバイスが不安定になったりフリーズしたりする可能性があります。</string>
+    <string name="advanced_infomsg">"このページには、CPUコアの周波数オプションや各コンポーネントのアンダーボルトオプションなどの詳細オプションが含まれています。\n\n周波数設定：小コア（効率）と大コア（パフォーマンス）の処理速度を制御できる周波数関連の設定が含まれています (デフォルト設定のままにすることを推奨)。\n    - 小コアの最大周波数：CPUの小コア（効率コア）が到達できる最大周波数を制限します。\n    - 大コアの最大周波数：CPUの大コア（パフォーマンスコア）が到達できる最大周波数を制限します。\n\nアンダーボルト設定：各デバイスコンポーネントの電圧強度に関するオプションが含まれており、パーセンテージマージンに基づいています。各スライダーはCPU、GPU、RAM、ディスプレイ、オーディオなどのアンダーボルト値を提供します (デフォルト設定のままにすることを推奨)。\n    - 小コアのマージン：CPUの小コア（効率コア）の電圧のパーセンテージマージンを減らすことができます。\n    - 大コアのマージン：CPUの大コア（パフォーマンスコア）の電圧のパーセンテージマージンを減らすことができます。\n    - GPUマージン：GPUの電圧のパーセンテージマージンを減らすことができます。\n    - RAMマージン：RAMメモリの電圧のパーセンテージマージンを減らすことができます。\n    - AUDIOマージン：デバイスのオーディオ（スピーカー）の電圧のパーセンテージマージンを減らすことができます。\n    - CAMERAマージン：カメラモジュール（カメラセンサー）の電圧のパーセンテージマージンを減らすことができます。\n    - CPマージン：通信（モバイルネットワーク、Wi-Fi、Bluetoothなど）の電圧のパーセンテージマージンを減らすことができます。\n    - DISPLAYマージン：デバイスのディスプレイの電圧のパーセンテージマージンを減らすことができます。\n    - FSYSマージン：デバイスのストレージ、リムーバブルメモリ（SDカード）、USB接続ストレージの電圧のパーセンテージマージンを減らすことができます。\n    - INTマージン：デバイスのチップセットバスの電圧のパーセンテージマージンを減らすことができます。\n    - INTCAMERAマージン：カメラISP（画像処理センサー）の電圧のパーセンテージマージンを減らすことができます。\n    - IVAマージン：ビデオコーデックの電圧のパーセンテージマージンを減らすことができます。\n    - SCOREマージン：画像・動画ビジョンコプロセッサの電圧のパーセンテージマージンを減らすことができます。\n\n注意：周波数/速度を上げるとデバイスの発熱が増加し、使用している周波数やアンダーボルト設定によってはデバイスが不安定になったりフリーズしたりする可能性があります。"</string>
     <!-- About GURU -->
     <string name="about_toolbartitle">GURUについて</string>
-    <string name="about_sep_about_battery_guru">Battery GURUについて</string>
-    <string name="about_appversion">アプリバージョン</string>
-    <string name="about_sep_devinfo">開発者情報</string>
-    <string name="about_developer">開発者</string>
-    <string name="about_github">ソース</string>
+    <string name="about_appversion">バージョン: %1$s</string>
+    <string name="about_developer">開発者: %1$s</string>
+    <string name="about_developersummary">開発者プロフィール</string>
     <string name="about_githubsummary">GitHubリポジトリ</string>
     <string name="about_sep_updates">アップデート</string>
     <string name="about_option_changelog">変更履歴</string>
@@ -159,8 +159,11 @@
     <string name="about_option_nsd">ネットワークサービス検出を無効にする</string>
     <string name="about_button_reset_settings">設定をデフォルトにリセット</string>
     <string name="about_infotitle">GURUについての情報</string>
-    <string name="about_infomsg">このセクションでは、アプリバージョン、開発者情報、実験的機能などに関する情報を表示します。\n\n実験的機能: テスト中ですが一般公開できるほど安定している機能 (これらのオプションはデフォルトで無効になっています)。</string>
+    <string name="about_infomsg">"このページでは、アプリのバージョン、アップデート、実験的機能などの情報を表示します。\n\nインポート/エクスポート：アプリの設定をファイルから読み込んだり、ファイルに保存したりします。\n    - 設定をインポート：アプリの設定を読み込むことができます。\n    - 設定をエクスポート：アプリの設定を保存することができます。\n\n実験的機能：テスト中ですが一般公開できるほど安定している機能 (これらのオプションはデフォルトで無効になっています)。\n    - バックグラウンドアプリプロセス制限：バックグラウンドで開いたままにできるアプリを制限します。\n    - デバイスアイドル時にDozeを強制：画面ロック直後にデバイスを強制的にディープスリープ状態にします。\n    - ネットワークサービス検出を無効にする：ローカルネットワークサービスの自動検索を無効にしてバックグラウンドの通信を減らしますが、アプリがChromecast、プリンターなど近くのデバイスを見つけられなくなります（バッテリー消費がわずかに減少します）。"</string>
     <string name="about_changelogtitle">最新の変更履歴</string>
+    <string name="about_import_warningtitle">設定のインポートに関する注意!</string>
+    <string name="about_import_warningmsg">この操作を行うと、現在の設定が失われます。続行してもよろしければ、「設定をインポート」を押してください。\nこの操作は元に戻せません!\n\n注: 設定をインポートした後、アプリの再起動が必要です。</string>
+    <string name="about_import_warning_btn_import">設定をインポート</string>
     <string name="about_import_errortitle">設定のインポートエラー！</string>
     <string name="about_import_errormsg">選択されたファイルは無効か破損しています。</string>
     <string name="about_import_successtitle">設定がインポートされました！</string>

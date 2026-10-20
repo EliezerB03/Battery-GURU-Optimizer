@@ -18,19 +18,19 @@
             android:paddingHorizontal="10dp">
 
             <!-- ====== CPU usage ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_cpu_usage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/device_sep_cpu_usage"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_cpu"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/device_cpu_ecores"
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"/>
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/device_cpu_pcores"
@@ -61,17 +61,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
 
             <!-- ====== GPU usage ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_gpu_usage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/device_sep_gpu_usage"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_gpu"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
@@ -84,15 +84,14 @@
                     android:paddingTop="12dp"
                     android:paddingBottom="8dp"
                     android:orientation="horizontal">
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/device_gpu_core"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="14sp"
-                        android:gravity="start"/>
-                    <TextView
+                        android:textSize="14sp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/gpu_freq"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -101,7 +100,7 @@
                         android:textColor="?android:attr/textColorSecondary"
                         android:textSize="14sp"
                         android:gravity="center"/>
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/gpu_percent"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -122,17 +121,17 @@
                     android:layout_marginBottom="12dp"
                     android:max="100"
                     android:progress="0"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
 
             <!-- ====== Memory usage ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_memory_usage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/device_sep_memory_usage"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_memory"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
@@ -140,7 +139,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <dev.oneuiproject.oneui.widget.CardItemView
+                    <com.guru.batteryoptimizer.widgets.CardItemView
                         android:id="@+id/show_memory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -159,22 +158,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
 
             <!-- ====== Thermal ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_thermal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/device_sep_thermal_status"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_thermal"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.SwitchItemView
+                <com.guru.batteryoptimizer.widgets.SwitchItemView
                     android:id="@+id/switch_fahrenheit_unit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -189,22 +188,19 @@
                     android:paddingStart="17dp"
                     android:paddingEnd="17dp"
                     android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    app:showBottomDivider="true">
-                    <TextView
+                    android:paddingBottom="15dp">
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/device_cputemp"
-                        android:gravity="start"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="14sp"/>
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_cpu_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="N/A"
-                        android:gravity="end"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
@@ -215,22 +211,19 @@
                     android:orientation="horizontal"
                     android:paddingStart="17dp"
                     android:paddingEnd="17dp"
-                    android:paddingBottom="15dp"
-                    app:showBottomDivider="true">
-                    <TextView
+                    android:paddingBottom="15dp">
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/device_gputemp"
-                        android:gravity="start"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="14sp"/>
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_gpu_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="N/A"
-                        android:gravity="end"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
@@ -241,62 +234,63 @@
                     android:orientation="horizontal"
                     android:paddingStart="17dp"
                     android:paddingEnd="17dp"
-                    android:paddingBottom="15dp"
-                    app:showBottomDivider="false">
-                    <TextView
+                    android:paddingBottom="15dp">
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/device_batterytemp"
-                        android:gravity="start"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="14sp"/>
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_battery_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="N/A"
-                        android:gravity="end"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
 
             <!-- ====== Battery info ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_battery_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/device_sep_battery_status"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_battery_info"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.CardItemView
+                <com.guru.batteryoptimizer.widgets.CardItemView
                     android:id="@+id/battery_cap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:showTopDivider="false"
                     app:showBottomDivider="false"
-                    app:title="@string/device_batterycap"/>
+                    app:title="@string/device_batterycap"
+                    android:clickable="false"
+                    android:focusable="false"/>
                 <View android:layout_width="match_parent" android:layout_height="1dp" android:background="?android:attr/listDivider"/>
-                <dev.oneuiproject.oneui.widget.CardItemView
+                <com.guru.batteryoptimizer.widgets.CardItemView
                     android:id="@+id/battery_health"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:showTopDivider="false"
                     app:showBottomDivider="false"
-                    app:title="@string/device_batteryhealth"/>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
-
-            <!-- ====== Separator ====== -->
-            <dev.oneuiproject.oneui.widget.Separator
+                    app:title="@string/device_batteryhealth"
+                    android:clickable="false"
+                    android:focusable="false"/>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
+            <!-- ====== SpaceBottom Reserved ====== -->
+            <View
+                android:id="@+id/fragment_tail_space"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="120dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>

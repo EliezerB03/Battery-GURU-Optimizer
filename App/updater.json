@@ -1,6 +1,6 @@
-{ 
-  "versionName": "4.0.1",
-  "versionCode": 40100,
+{
+  "versionName": "4.1",
+  "versionCode": 41000,
   "downloadUrl": "https://github.com/EliezerB03/Battery-GURU-Optimizer/releases/latest/download/Battery-GURU-Optimizer.apk",
-  "changelog": "⦁ Updated libraries for stability"
+  "changelog": "⦁ UI theme updated to One UI 9 design\n⦁ Added Bulgarian language\n⦁ Added 'Wakelock blocker optimizations' option\n⦁ Revamped 'About GURU' section\n⦁ Refactored 'Check for app update' option\n⦁ Re-adjusted 'ZRAM optimizations' option\n⦁ Minor tweak on 'Thermal optimizations' option\n⦁ Improved Import/Export option logic\n⦁ Improved several descriptions across all app pages for all languages\n⦁ Improved app performance\n⦁ Various code optimizations\n⦁ Improved logic and various bug fixes"
 }

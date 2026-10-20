@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.guru.batteryoptimizer.widgets.SectionSeparator
+        android:id="@+id/sep_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search_sep_results"
+        android:drawablePadding="8dp"
+        android:drawableStart="@drawable/ic_search_results"/>
+    <androidx.appcompat.widget.SeslLinearLayoutCompat
+        android:id="@+id/search_rounded_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:seslLayoutRoundedCorner="corner_all"/>
+</LinearLayout>

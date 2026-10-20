@@ -9,8 +9,11 @@ import com.guru.batteryoptimizer.utils.SearchableFragment
 import com.guru.batteryoptimizer.utils.SearchItem
 import com.guru.batteryoptimizer.utils.SearchManager
 import com.guru.batteryoptimizer.utils.navigateToSearchResult
+import com.guru.batteryoptimizer.widgets.CardItemView
+import com.guru.batteryoptimizer.widgets.SwitchItemView
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -20,57 +23,30 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SeslProgressBar
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import dev.oneuiproject.oneui.widget.CardItemView
-import dev.oneuiproject.oneui.widget.SwitchItemView
 import kotlinx.coroutines.*
 
 class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
-    private lateinit var scrollView:        NestedScrollView
-    private lateinit var eCoreContainer:    LinearLayout
-    private lateinit var pCoreContainer:    LinearLayout
-    private lateinit var gpuFreq:           TextView
-    private lateinit var gpuPercent:        TextView
-    private lateinit var gpuProgress:       SeslProgressBar
-    private lateinit var showMemory:        CardItemView
-    private lateinit var spinnerMemory:     AppCompatSpinner
-    private lateinit var memoryContainer:   LinearLayout
-    private lateinit var tvCpuTemp:         TextView
-    private lateinit var tvGpuTemp:         TextView
-    private lateinit var tvBatteryTemp:     TextView
-    private lateinit var switchFahrenheit:  SwitchItemView
-    private lateinit var batteryCapacity:   CardItemView
-    private lateinit var batteryHealth:     CardItemView
-    private lateinit var prefs:             android.content.SharedPreferences
-    private lateinit var memoryEntries:     Array<String>
-    private var dialog:             AlertDialog? = null
-    private var dialogScrollView:   NestedScrollView? = null
-    private var showMemoryUsed:     Boolean = true
-    private var lastMemLines:       List<String> = emptyList()
-    private var lastRamFreqMHz:     Int = 0
-    private var useFahrenheit:      Boolean = false
-    private var currentCpuTempC:    Float = 0f
-    private var currentGpuTempC:    Float = 0f
+    private var dialog:              AlertDialog? = null
+    private var dialogScrollView:    NestedScrollView? = null
+    private var showMemoryUsed:      Boolean = true
+    private var lastMemLines:        List<String> = emptyList()
+    private var lastRamFreqMHz:      Int = 0
+    private var useFahrenheit:       Boolean = false
+    private var currentCpuTempC:     Float = 0f
+    private var currentGpuTempC:     Float = 0f
     private var currentBatteryTempC: Float = 0f
-    private var monitoringJob:      Job? = null
-    private var searchContainerView: android.view.View? = null
-    private var searchEmptyView:    android.widget.TextView? = null
-    private val corePairs         = mutableListOf<Pair<CoreViewHolder, CoreViewHolder>>()
-    private val memoryPairs       = mutableListOf<Pair<MemoryViewHolder, MemoryViewHolder>>()
-    private val viewScope get()   = viewLifecycleOwner.lifecycleScope
-    private val appState  get()   = (requireActivity() as MainActivity).appState
-    private val guru      get()   = (requireActivity() as MainActivity).guru
-    private val prevCpuTimes      = Array(8) { LongArray(2) }
-    private val prevCoreFreq      = IntArray(8) { -1 }
-    private val prevCoreUsage     = IntArray(8) { -1 }
+    private var monitoringJob:       Job? = null
+    private var searchContainerView: View? = null
+    private var searchEmptyView:     AppCompatTextView? = null
     private var prevGpuFreq       = -1
     private var prevGpuUsage      = -1
     private var prevCpuTempC      = Float.MIN_VALUE
@@ -81,17 +57,43 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     private var prevSwapUsed      = -1L
     private var prevSwapTotal     = -1L
     private var prevRamFreqMHz    = -1
+    private val corePairs         = mutableListOf<Pair<CoreViewHolder, CoreViewHolder>>()
+    private val memoryPairs       = mutableListOf<Pair<MemoryViewHolder, MemoryViewHolder>>()
+    private val viewScope get()   = viewLifecycleOwner.lifecycleScope
+    private val appState  get()   = (requireActivity() as MainActivity).appState
+    private val guru      get()   = (requireActivity() as MainActivity).guru
+    private val prevCpuTimes      = Array(8) { LongArray(2) }
+    private val prevCoreFreq      = IntArray(8) { -1 }
+    private val prevCoreUsage     = IntArray(8) { -1 }
+    private lateinit var scrollView:        NestedScrollView
+    private lateinit var eCoreContainer:    LinearLayout
+    private lateinit var pCoreContainer:    LinearLayout
+    private lateinit var gpuFreq:           AppCompatTextView
+    private lateinit var gpuPercent:        AppCompatTextView
+    private lateinit var gpuProgress:       SeslProgressBar
+    private lateinit var showMemory:        CardItemView
+    private lateinit var spinnerMemory:     AppCompatSpinner
+    private lateinit var memoryContainer:   LinearLayout
+    private lateinit var tvCpuTemp:         AppCompatTextView
+    private lateinit var tvGpuTemp:         AppCompatTextView
+    private lateinit var tvBatteryTemp:     AppCompatTextView
+    private lateinit var switchFahrenheit:  SwitchItemView
+    private lateinit var batteryCapacity:   CardItemView
+    private lateinit var batteryHealth:     CardItemView
+    private lateinit var prefs:             SharedPreferences
+    private lateinit var memoryEntries:     Array<String>
     data class CoreViewHolder(
         val coreProgressBar: SeslProgressBar,
-        val coreNameView: TextView, val freqCoreView: TextView, val percentCoreView: TextView
+        val coreNameView: AppCompatTextView, val freqCoreView: AppCompatTextView, val percentCoreView: AppCompatTextView
     )
     data class MemoryViewHolder(
         val memoryProgressBar: SeslProgressBar,
-        val memoryNameView: TextView, val memoryView: TextView, val memoryFreqView: TextView, val percentMemoryView: TextView
+        val memoryNameView: AppCompatTextView, val memoryView: AppCompatTextView, val memoryFreqView: AppCompatTextView, val percentMemoryView: AppCompatTextView
     )
     companion object {
         private val ZRAM_ALG_REGEX  = "\\[(.*?)]".toRegex()
         private val WHITESPACE_REGEX = "\\s+".toRegex()
+        private const val PROGRESS_MODE_STANDARD = 0
     }
 
     // ======= Lifecycle =======
@@ -126,11 +128,7 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
                 showMemoryUsed = (position == 0)
                 showMemory.summary = memoryEntries[position]
                 prefs.edit().putBoolean("show_memory", showMemoryUsed).apply()
-                prevMemUsed    = -1L
-                prevMemTotal   = -1L
-                prevSwapUsed   = -1L
-                prevSwapTotal  = -1L
-                prevRamFreqMHz = -1
+                resetMemoryCache()
                 updateMemoryData(lastMemLines, lastRamFreqMHz)
             }
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -145,26 +143,25 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         }
         buildCorePairs()
         buildMemoryPairs()
+        applyProgressMode(gpuProgress, circle = false)
         setupViews()
         fixSeparatorIcons(view)
         restoreDialogIfNeeded()
         appState.onMonitoringReady    = { startMonitoring() }
         appState.onMonitoringError    = { showMonitorLostValues() }
-        appState.onBatteryCapacityReady = { batteryCapacity.summary = appState.batteryCapacityMah?.let { "${it.fmt()} mAh" } ?: "Unknown" }
-        appState.batteryCapacityMah?.let { batteryCapacity.summary = "${it.fmt()} mAh" } ?: run { batteryCapacity.summary = "Unknown" }
-        appState.onBatteryHealthReady = { batteryHealth.summary = (requireActivity() as MainActivity).checks.batteryHealthText }
-        batteryHealth.summary = (requireActivity() as MainActivity).checks.batteryHealthText
+        fun showCapacity() { batteryCapacity.summary = appState.batteryCapacityMah?.let { "${it.fmt()} mAh" } ?: "Unknown" }
+        fun showHealth()   { batteryHealth.summary = (requireActivity() as MainActivity).checks.batteryHealthText }
+        appState.onBatteryCapacityReady = { showCapacity() }
+        appState.onBatteryHealthReady   = { showHealth() }
+        showCapacity()
+        showHealth()
     }
     override fun onStart() {
         super.onStart()
         appState.restoreScroll("device_info")
         val step = appState.currentCheckStep
-        if (appState.checksPassed || step.ordinal >= AppState.CheckStep.CHECKING_SETTINGS.ordinal || appState.monitoringReadyFlag) {
-            startMonitoring()
-        }
-        if (appState.lostRootDetected) {
-            appState.onMonitoringError?.invoke()
-        }
+        if (appState.checksPassed || step.ordinal >= AppState.CheckStep.CHECKING_SETTINGS.ordinal || appState.monitoringReadyFlag) {startMonitoring()}
+        if (appState.lostRootDetected) { appState.onMonitoringError?.invoke() }
     }
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
@@ -178,11 +175,8 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
             val mainActivity = activity as? MainActivity ?: return
             if (mainActivity.appState.isSearchModeActive) {
                 val query = mainActivity.appState.searchQuery
-                if (query.isBlank()) {
-                    showSearchResults(emptyList(), isInitialState = true)
-                } else {
-                    showSearchResults(SearchManager.search(query))
-                }
+                if (query.isBlank()) { showSearchResults(emptyList(), isInitialState = true) }
+                else { showSearchResults(SearchManager.search(query)) }
             }
         }
     }
@@ -207,14 +201,20 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         appState.onBatteryHealthReady   = null
         appState.fragmentDialogScrollY  = dialogScrollView?.scrollY ?: appState.fragmentDialogScrollY
         appState.detachScroll("device_info", activity?.isChangingConfigurations == true)
-        if (dialog?.isShowing != true && activity?.isChangingConfigurations != true) {
-            if (appState.fragmentDialog == AppState.FragmentDialog.DEVICE_INFO) {
-                appState.fragmentDialog        = AppState.FragmentDialog.NONE
-                appState.fragmentDialogScrollY = 0
-            }
-        }
+        if (dialog?.isShowing != true && activity?.isChangingConfigurations != true) clearInfoDialogState()
         dialog            = null
         dialogScrollView  = null
+    }
+    // ======= Progress Mode =======
+    private fun isMonetActive(): Boolean = !android.provider.Settings.Secure.getString(requireContext().contentResolver, "theme_customization_overlay_packages").isNullOrEmpty()
+    private fun applyProgressMode(bar: SeslProgressBar, circle: Boolean) {
+        val monet = isMonetActive()
+        bar.setMode(when {
+            circle && monet -> SeslProgressBar.MODE_CIRCLE
+            circle          -> SeslProgressBar.MODE_GRADIENT_CIRCLE
+            monet           -> PROGRESS_MODE_STANDARD
+            else            -> SeslProgressBar.MODE_GRADIENT_HORIZONTAL
+        })
     }
 
     // ======= Monitoring =======
@@ -234,6 +234,25 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         monitoringJob?.cancel()
         monitoringJob = null
     }
+    private fun resetMemoryCache() {
+        prevMemUsed    = -1L
+        prevMemTotal   = -1L
+        prevSwapUsed   = -1L
+        prevSwapTotal  = -1L
+        prevRamFreqMHz = -1
+    }
+    private fun CoreViewHolder.showLost() {
+        freqCoreView.text        = "N/A"
+        percentCoreView.text     = "---%"
+        coreProgressBar.progress = 0
+    }
+    private fun MemoryViewHolder.showLost(name: String) {
+        memoryNameView.text        = name
+        memoryView.text            = "N/A"
+        memoryFreqView.text        = "N/A"
+        percentMemoryView.text     = "---%"
+        memoryProgressBar.progress = 0
+    }
     private fun showMonitorLostValues() {
         stopMonitoring()
         prevCoreFreq.fill(-1)
@@ -243,31 +262,9 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         prevCpuTempC   = Float.MIN_VALUE
         prevGpuTempC   = Float.MIN_VALUE
         prevBattTempC  = Float.MIN_VALUE
-        prevMemUsed    = -1L
-        prevMemTotal   = -1L
-        prevSwapUsed   = -1L
-        prevSwapTotal  = -1L
-        prevRamFreqMHz = -1
-        for (pair in corePairs) {
-            pair.first.freqCoreView.text            = "N/A"
-            pair.first.percentCoreView.text         = "---%"
-            pair.first.coreProgressBar.progress     = 0
-            pair.second.freqCoreView.text           = "N/A"
-            pair.second.percentCoreView.text        = "---%"
-            pair.second.coreProgressBar.progress    = 0
-        }
-        for (pair in memoryPairs) {
-            pair.first.memoryNameView.text          = "RAM"
-            pair.first.memoryView.text              = "N/A"
-            pair.first.memoryFreqView.text          = "N/A"
-            pair.first.percentMemoryView.text       = "---%"
-            pair.first.memoryProgressBar.progress   = 0
-            pair.second.memoryNameView.text         = "ZRAM"
-            pair.second.memoryView.text             = "N/A"
-            pair.second.memoryFreqView.text         = "N/A"
-            pair.second.percentMemoryView.text      = "---%"
-            pair.second.memoryProgressBar.progress  = 0
-        }
+        resetMemoryCache()
+        for ((left, right) in corePairs) { left.showLost(); right.showLost() }
+        for ((ram, zram) in memoryPairs) { ram.showLost("RAM"); zram.showLost("ZRAM") }
         gpuFreq.text          = "N/A"
         gpuPercent.text       = "---%"
         gpuProgress.progress  = 0
@@ -310,18 +307,14 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
                 for f in /sys/class/devfreq/*mif*/cur_freq; do read -r v < "${'$'}f" 2>/dev/null && echo "${'$'}v" && break; done || echo 0
             """.trimIndent())
             val lines        = raw.lines()
-            val freqIdx      = lines.indexOfFirst { it.trim() == "__FREQ__" }
-            val gpuIdx       = lines.indexOfFirst { it.trim() == "__GPU__" }
-            val tempIdx      = lines.indexOfFirst { it.trim() == "__TEMP__" }
-            val statIdx      = lines.indexOfFirst { it.trim() == "__STAT__" }
-            val memIdx       = lines.indexOfFirst { it.trim() == "__MEM__" }
-            val memFreqIdx   = lines.indexOfFirst { it.trim() == "__MEMFREQ__" }
-            if (freqIdx < 0 || gpuIdx < 0 || tempIdx < 0 || statIdx < 0 || memIdx < 0 || memFreqIdx < 0) return@withContext null
-            val freqLines    = lines.subList(freqIdx  + 1, gpuIdx)
-            val gpuLines     = lines.subList(gpuIdx   + 1, tempIdx)
-            val tempLines    = lines.subList(tempIdx  + 1, statIdx)
-            val statLines    = lines.subList(statIdx  + 1, memIdx)
-            val memLines     = lines.subList(memIdx   + 1, memFreqIdx)
+            val idx          = listOf("__FREQ__", "__GPU__", "__TEMP__", "__STAT__", "__MEM__", "__MEMFREQ__").map {marker -> lines.indexOfFirst {it.trim() == marker}}
+            if (idx.any { it < 0 }) return@withContext null
+            val memFreqIdx   = idx[5]
+            val freqLines    = lines.subList(idx[0] + 1, idx[1])
+            val gpuLines     = lines.subList(idx[1] + 1, idx[2])
+            val tempLines    = lines.subList(idx[2] + 1, idx[3])
+            val statLines    = lines.subList(idx[3] + 1, idx[4])
+            val memLines     = lines.subList(idx[4] + 1, memFreqIdx)
             val cpuFreqs     = (0..7).map { freqLines.getOrNull(it)?.trim()?.toLongOrNull()?.div(1000)?.toInt() ?: 0 }
             val gpuUtil      = gpuLines.getOrNull(0)?.trim()?.toIntOrNull() ?: 0
             val gpuClockMhz  = gpuLines.getOrNull(1)?.trim()?.toLongOrNull()?.div(1000)?.toInt() ?: 0
@@ -333,7 +326,7 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
             ParsedData(cpuFreqs, statLines, gpuUtil, gpuClockMhz, cpuTempC, gpuTempC, batteryTempC, memLines, ramFreqMHz)
         } ?: return
         yield()
-        val cpuUsages = parseProcStat(parsed.statLines, updatePrev = true)
+        val cpuUsages = parseProcStat(parsed.statLines)
         for (i in 0..7) updateCoreData(i, parsed.cpuFreqs[i], cpuUsages[i])
         updateGpuData(parsed.gpuClockMhz, parsed.gpuUtil)
         updateMemoryData(parsed.memLines, parsed.ramFreqMHz)
@@ -341,9 +334,9 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     }
     private suspend fun readProcStat() {
         val raw = withContext(Dispatchers.IO) { guru.exec("grep \"^cpu[0-7] \" /proc/stat") }
-        parseProcStat(raw.lines(), updatePrev = true)
+        parseProcStat(raw.lines())
     }
-    private fun parseProcStat(lines: List<String>, updatePrev: Boolean): IntArray {
+    private fun parseProcStat(lines: List<String>): IntArray {
         val cpuUsages = IntArray(8)
         for (i in 0..7) {
             val line  = lines.firstOrNull { it.startsWith("cpu$i ") } ?: continue
@@ -358,10 +351,8 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
             val dTotal    = total - prevTotal
             val dIdle     = idle  - prevIdle
             cpuUsages[i]  = if (dTotal > 0) ((dTotal - dIdle) * 100 / dTotal).toInt().coerceIn(0, 100) else 0
-            if (updatePrev) {
-                prevCpuTimes[i][0] = total
-                prevCpuTimes[i][1] = idle
-            }
+            prevCpuTimes[i][0] = total
+            prevCpuTimes[i][1] = idle
         }
         return cpuUsages
     }
@@ -369,32 +360,30 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     // ======= Restore Dialog =======
     private fun restoreDialogIfNeeded() {
         if (dialog?.isShowing == true) return
-        val scrollY = appState.fragmentDialogScrollY
-        when (appState.fragmentDialog) {
-            AppState.FragmentDialog.DEVICE_INFO -> showInfoDialog(restoreScrollY = scrollY, isRestore = true)
-            else -> {}
-        }
+        if (appState.fragmentDialog == AppState.FragmentDialog.DEVICE_INFO) showInfoDialog(restoreScrollY = appState.fragmentDialogScrollY, isRestore = true)
     }
+    private fun clearDialogState() {
+        appState.fragmentDialog        = AppState.FragmentDialog.NONE
+        appState.fragmentDialogScrollY = 0
+    }
+    private fun clearInfoDialogState() {if (appState.fragmentDialog == AppState.FragmentDialog.DEVICE_INFO) clearDialogState()}
 
     // ======= Dismiss Dialog (for Root Checker) =======
     fun dismissActiveDialog(onDismissed: (() -> Unit)? = null): Boolean {
         val wasShowing = dialog?.isShowing == true
         if (wasShowing && onDismissed != null) {
             dialog?.setOnDismissListener {
-                appState.fragmentDialog        = AppState.FragmentDialog.NONE
-                appState.fragmentDialogScrollY = 0
+                clearDialogState()
                 onDismissed()
             }
-            dialog?.dismiss()
-        } else {
-            dialog?.dismiss()
         }
+        dialog?.dismiss()
         dialog           = null
         dialogScrollView = null
         return wasShowing
     }
 
-    // ======= Info Dialog =======
+    // ======= Menu Helper =======
     private val menuProvider = object : MenuProvider {
         override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) { menuInflater.inflate(R.menu.header_buttons, menu) }
         override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -413,37 +402,32 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
             }
         }
     }
+    // ======= Info Dialog =======
     private fun showInfoDialog(restoreScrollY: Int = 0, isRestore: Boolean = false) {
         if ((requireActivity() as MainActivity).checks.lostRootDetected) return
         appState.fragmentDialog = AppState.FragmentDialog.DEVICE_INFO
         val builder     = AlertDialog.Builder(requireContext())
         val titleView   = layoutInflater.cloneInContext(builder.context).inflate(R.xml.dialog_icon_title, null)
-        val titleText   = titleView.findViewById<TextView>(R.id.dialog_title).apply { text = getString(R.string.device_infotitle) }
+        val titleText   = titleView.findViewById<AppCompatTextView>(R.id.dialog_title).apply { text = getString(R.string.device_infotitle) }
         val messageView = layoutInflater.cloneInContext(builder.context).inflate(R.xml.dialog_message, null)
-        messageView.findViewById<TextView>(R.id.dialog_message).text = getString(R.string.device_infomsg)
+        messageView.findViewById<AppCompatTextView>(R.id.dialog_message).text = getString(R.string.device_infomsg)
         applyDialogIcon(titleText, R.drawable.ic_dialog_info)
         val scrollView  = setupScrollIndicators(messageView)
-        dialog = builder
+        val info = builder
             .setCustomTitle(titleView)
             .setView(messageView)
             .setPositiveButton(getString(R.string.dialog_btn_ok)) { d, _ ->
-                appState.fragmentDialog        = AppState.FragmentDialog.NONE
-                appState.fragmentDialogScrollY = 0
+                clearDialogState()
                 d.dismiss()
             }
             .create()
-        dialog?.seslSetBackgroundBlurEnabled(true)
-        dialog?.window?.setBackgroundDrawableResource(androidx.appcompat.R.drawable.sesl_dialog_inset_background)
-        dialog?.setOnDismissListener {
-            if (!isAdded) return@setOnDismissListener
-            if (appState.fragmentDialog        == AppState.FragmentDialog.DEVICE_INFO) {
-                appState.fragmentDialog        = AppState.FragmentDialog.NONE
-                appState.fragmentDialogScrollY = 0
-            }
-        }
-        dialog?.show()
-        if (isRestore) dialog?.window?.setWindowAnimations(R.style.DialogAnimationNoEnter)
-        (requireActivity() as MainActivity).checks.attachFocusCheck(dialog!!)
+        dialog = info
+        info.seslSetBackgroundBlurEnabled(true)
+        info.window?.setBackgroundDrawableResource(androidx.appcompat.R.drawable.sesl_dialog_inset_background)
+        info.setOnDismissListener { if (isAdded) clearInfoDialogState() }
+        info.show()
+        if (isRestore) info.window?.setWindowAnimations(R.style.DialogAnimationNoEnter)
+        (requireActivity() as MainActivity).checks.attachFocusCheck(info)
         if (restoreScrollY > 0) scrollView?.post { scrollView.scrollTo(0, restoreScrollY) }
         dialogScrollView = scrollView
     }
@@ -463,65 +447,49 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     // ======= Temperature Conversion =======
     private fun celsiusToFahrenheit(celsius: Float): Float = (celsius * 9 / 5) + 32
     private fun updateTempDisplay() {
-        if (useFahrenheit) {
-            tvCpuTemp.text     = "${celsiusToFahrenheit(currentCpuTempC).fmt()} °F"
-            tvGpuTemp.text     = "${celsiusToFahrenheit(currentGpuTempC).fmt()} °F"
-            tvBatteryTemp.text = "${celsiusToFahrenheit(currentBatteryTempC).fmt()} °F"
-        } else {
-            tvCpuTemp.text     = "${currentCpuTempC.fmt()} °C"
-            tvGpuTemp.text     = "${currentGpuTempC.fmt()} °C"
-            tvBatteryTemp.text = "${currentBatteryTempC.fmt()} °C"
-        }
+        fun temp(celsius: Float) = if (useFahrenheit) "${celsiusToFahrenheit(celsius).fmt()} °F" else "${celsius.fmt()} °C"
+        tvCpuTemp.text     = temp(currentCpuTempC)
+        tvGpuTemp.text     = temp(currentGpuTempC)
+        tvBatteryTemp.text = temp(currentBatteryTempC)
     }
 
     // ======= CPU Usage UI Building =======
     private fun buildCorePairs() {
+        val coreLabel = getString(R.string.device_cpu_cores)
         for (pairCpuIndex in 0 until 4) {
-            val cpuView             = LayoutInflater.from(context).inflate(R.xml.cpu_cores_info, eCoreContainer, false)
-            val leftCoreProgress    = cpuView.findViewById<SeslProgressBar>(R.id.core_progress_left)
-            val leftCoreName        = cpuView.findViewById<TextView>(R.id.core_name_left)
-            val leftCoreFreq        = cpuView.findViewById<TextView>(R.id.core_freq_left)
-            val leftCorePercent     = cpuView.findViewById<TextView>(R.id.core_percent_left)
-            val rightCoreProgress   = cpuView.findViewById<SeslProgressBar>(R.id.core_progress_right)
-            val rightCoreName       = cpuView.findViewById<TextView>(R.id.core_name_right)
-            val rightCoreFreq       = cpuView.findViewById<TextView>(R.id.core_freq_right)
-            val rightCorePercent    = cpuView.findViewById<TextView>(R.id.core_percent_right)
-            leftCoreProgress.setMode(SeslProgressBar.MODE_CIRCLE)
-            rightCoreProgress.setMode(SeslProgressBar.MODE_CIRCLE)
-            val leftCoreIndex       = pairCpuIndex * 2
-            val rightCoreIndex      = pairCpuIndex * 2 + 1
-            leftCoreName.text       = "${getString(R.string.device_cpu_cores)} ${(leftCoreIndex  + 1).fmt()}"
-            rightCoreName.text      = "${getString(R.string.device_cpu_cores)} ${(rightCoreIndex + 1).fmt()}"
-            val leftCoreHolder      = CoreViewHolder(leftCoreProgress,  leftCoreName,  leftCoreFreq,  leftCorePercent)
-            val rightCoreHolder     = CoreViewHolder(rightCoreProgress, rightCoreName, rightCoreFreq, rightCorePercent)
+            val cpuView = LayoutInflater.from(context).inflate(R.xml.cpu_cores_info, eCoreContainer, false)
+            fun holder(progressId: Int, nameId: Int, freqId: Int, percentId: Int, coreIndex: Int) = CoreViewHolder(
+                cpuView.findViewById<SeslProgressBar>(progressId).also { applyProgressMode(it, circle = true) },
+                cpuView.findViewById<AppCompatTextView>(nameId).also { it.text = "$coreLabel ${(coreIndex + 1).fmt()}" },
+                cpuView.findViewById(freqId),
+                cpuView.findViewById(percentId)
+            )
+            val leftCoreIndex = pairCpuIndex * 2
+            val left  = holder(R.id.core_progress_left,  R.id.core_name_left,  R.id.core_freq_left,  R.id.core_percent_left,  leftCoreIndex)
+            val right = holder(R.id.core_progress_right, R.id.core_name_right, R.id.core_freq_right, R.id.core_percent_right, leftCoreIndex + 1)
             if (leftCoreIndex < 4) eCoreContainer.addView(cpuView) else pCoreContainer.addView(cpuView)
-            corePairs.add(Pair(leftCoreHolder, rightCoreHolder))
+            corePairs.add(Pair(left, right))
         }
     }
 
     // ======= Memory Usage UI Building =======
     private fun buildMemoryPairs() {
-        val memoryView           = LayoutInflater.from(context).inflate(R.xml.memory_info, memoryContainer, false)
-        val leftMemoryProgress   = memoryView.findViewById<SeslProgressBar>(R.id.memory_progress_left)
-        val leftMemoryName       = memoryView.findViewById<TextView>(R.id.memory_name_left)
-        val leftMemoryUsedFree   = memoryView.findViewById<TextView>(R.id.memory_usedfree_left)
-        val leftMemoryFreq       = memoryView.findViewById<TextView>(R.id.memory_freq_left)
-        val leftMemoryPercent    = memoryView.findViewById<TextView>(R.id.memory_percent_left)
-        val rightMemoryProgress  = memoryView.findViewById<SeslProgressBar>(R.id.memory_progress_right)
-        val rightMemoryName      = memoryView.findViewById<TextView>(R.id.memory_name_right)
-        val rightMemoryUsedFree  = memoryView.findViewById<TextView>(R.id.memory_usedfree_right)
-        val rightMemoryAlgorithm = memoryView.findViewById<TextView>(R.id.memory_algorithm_right)
-        val rightMemoryPercent   = memoryView.findViewById<TextView>(R.id.memory_percent_right)
-        leftMemoryProgress.setMode(SeslProgressBar.MODE_CIRCLE)
-        rightMemoryProgress.setMode(SeslProgressBar.MODE_CIRCLE)
-        val leftHolder           = MemoryViewHolder(leftMemoryProgress,  leftMemoryName,  leftMemoryUsedFree,  leftMemoryFreq,        leftMemoryPercent)
-        val rightHolder          = MemoryViewHolder(rightMemoryProgress, rightMemoryName, rightMemoryUsedFree, rightMemoryAlgorithm,  rightMemoryPercent)
+        val memoryView = LayoutInflater.from(context).inflate(R.xml.memory_info, memoryContainer, false)
+        fun holder(progressId: Int, nameId: Int, usedFreeId: Int, freqId: Int, percentId: Int) = MemoryViewHolder(
+            memoryView.findViewById<SeslProgressBar>(progressId).also { applyProgressMode(it, circle = true) },
+            memoryView.findViewById(nameId),
+            memoryView.findViewById(usedFreeId),
+            memoryView.findViewById(freqId),
+            memoryView.findViewById(percentId)
+        )
+        val left  = holder(R.id.memory_progress_left,  R.id.memory_name_left,  R.id.memory_usedfree_left,  R.id.memory_freq_left,       R.id.memory_percent_left)
+        val right = holder(R.id.memory_progress_right, R.id.memory_name_right, R.id.memory_usedfree_right, R.id.memory_algorithm_right, R.id.memory_percent_right)
         memoryContainer.addView(memoryView)
-        memoryPairs.add(Pair(leftHolder, rightHolder))
+        memoryPairs.add(Pair(left, right))
     }
 
     // ======= Separator Icons =======
-    private fun TextView.fitDrawableToText(extraDp: Float = 0f) {
+    private fun AppCompatTextView.fitDrawableToText(extraDp: Float = 0f) {
         val extraPx = (extraDp * resources.displayMetrics.density).toInt()
         val sizePx  = textSize.toInt() + extraPx
         compoundDrawablesRelative[0]?.let { drawable ->
@@ -532,10 +500,18 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     }
     private fun fixSeparatorIcons(view: View) {
         listOf(R.id.sep_cpu_usage, R.id.sep_gpu_usage, R.id.sep_memory_usage, R.id.sep_thermal, R.id.sep_battery_info)
-            .forEach { id -> view.findViewById<TextView>(id)?.fitDrawableToText(extraDp = 8f) }
+            .forEach { id -> view.findViewById<AppCompatTextView>(id)?.fitDrawableToText(extraDp = 8f) }
     }
 
     // ======= Update Data Methods =======
+    private fun mhzText(mhz: Int): String = if (mhz == 0) getString(R.string.device_soc_idle_mhz) else "${mhz.fmt()} MHz"
+    private fun MemoryViewHolder.bind(name: String, text: String, freq: String, percent: Int) {
+        memoryNameView.text        = name
+        memoryView.text            = text
+        memoryFreqView.text        = freq
+        percentMemoryView.text     = "${percent.fmt()}%"
+        memoryProgressBar.progress = percent
+    }
     private fun kbVal(key: String, lines: List<String>): Long = lines.firstOrNull { it.startsWith(key) }
         ?.trim()?.split(WHITESPACE_REGEX)?.getOrNull(1)?.toLongOrNull() ?: 0L
     fun updateCoreData(coreIndex: Int, coreFrequencyMHz: Int, cpuUsagePercent: Int) {
@@ -548,7 +524,7 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         val isCoreLeft   = (coreIndex % 2 == 0)
         if (pairCpuIndex in corePairs.indices) {
             val cpuHolder = if (isCoreLeft) corePairs[pairCpuIndex].first else corePairs[pairCpuIndex].second
-            if (freqChanged)  cpuHolder.freqCoreView.text = if (coreFrequencyMHz == 0) getString(R.string.device_soc_idle_mhz) else "${coreFrequencyMHz.fmt()} MHz"
+            if (freqChanged)  cpuHolder.freqCoreView.text = mhzText(coreFrequencyMHz)
             if (usageChanged) {
                 cpuHolder.percentCoreView.text     = "${cpuUsagePercent.fmt()}%"
                 cpuHolder.coreProgressBar.progress = cpuUsagePercent
@@ -561,7 +537,7 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         if (!freqChanged && !usageChanged) return
         prevGpuFreq  = gpuFrequencyMHz
         prevGpuUsage = gpuUsagePercent
-        if (freqChanged)  gpuFreq.text = if (gpuFrequencyMHz == 0) getString(R.string.device_soc_idle_mhz) else "${gpuFrequencyMHz.fmt()} MHz"
+        if (freqChanged)  gpuFreq.text = mhzText(gpuFrequencyMHz)
         if (usageChanged) {
             gpuPercent.text      = "${gpuUsagePercent.fmt()}%"
             gpuProgress.progress = gpuUsagePercent
@@ -586,41 +562,17 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
         prevRamFreqMHz   = ramFreqMHz
         val memPct       = if (memTotal  > 0) ((memUsed  * 100) / memTotal ).toInt().coerceIn(0, 100) else 0
         val swapPct      = if (swapTotal > 0) ((swapUsed * 100) / swapTotal).toInt().coerceIn(0, 100) else 0
-        val freqText     = if (ramFreqMHz == 0) getString(R.string.device_soc_idle_mhz) else "${ramFreqMHz.fmt()} MHz"
-        val zramAlg      = appState.zramAlgorithm
+        val freqText     = mhzText(ramFreqMHz)
         fun gbText(kb: Long) = (kb / 1048576f).fmt(decimals = 2)
         if (memoryPairs.isEmpty()) return
-        val row = memoryPairs[0]
+        val (ram, swap) = memoryPairs[0]
+        val swapAlgorithm = getString(R.string.device_swapalgorithm_name, appState.zramAlgorithm)
         if (showMemoryUsed) {
-            row.first.apply {
-                memoryNameView.text        = getString(R.string.device_ramused_name)
-                memoryView.text            = "${gbText(memUsed)} / ${gbText(memTotal)} GB"
-                memoryFreqView.text        = freqText
-                percentMemoryView.text     = "${memPct.fmt()}%"
-                memoryProgressBar.progress = memPct
-            }
-            row.second.apply {
-                memoryNameView.text        = getString(R.string.device_swapused_name)
-                memoryView.text            = "${gbText(swapUsed)} / ${gbText(swapTotal)} GB"
-                memoryFreqView.text        = getString(R.string.device_swapalgorithm_name, zramAlg)
-                percentMemoryView.text     = "${swapPct.fmt()}%"
-                memoryProgressBar.progress = swapPct
-            }
+            ram.bind(getString(R.string.device_ramused_name), "${gbText(memUsed)} / ${gbText(memTotal)} GB", freqText, memPct)
+            swap.bind(getString(R.string.device_swapused_name), "${gbText(swapUsed)} / ${gbText(swapTotal)} GB", swapAlgorithm, swapPct)
         } else {
-            row.first.apply {
-                memoryNameView.text        = getString(R.string.device_ramfree_name)
-                memoryView.text            = "${gbText(memAvailable)} / ${gbText(memTotal)} GB"
-                memoryFreqView.text        = freqText
-                percentMemoryView.text     = "${(100 - memPct).fmt()}%"
-                memoryProgressBar.progress = 100 - memPct
-            }
-            row.second.apply {
-                memoryNameView.text        = getString(R.string.device_swapfree_name)
-                memoryView.text            = "${gbText(swapFree)} / ${gbText(swapTotal)} GB"
-                memoryFreqView.text        = getString(R.string.device_swapalgorithm_name, zramAlg)
-                percentMemoryView.text     = "${(100 - swapPct).fmt()}%"
-                memoryProgressBar.progress = 100 - swapPct
-            }
+            ram.bind(getString(R.string.device_ramfree_name), "${gbText(memAvailable)} / ${gbText(memTotal)} GB", freqText, 100 - memPct)
+            swap.bind(getString(R.string.device_swapfree_name), "${gbText(swapFree)} / ${gbText(swapTotal)} GB", swapAlgorithm, 100 - swapPct)
         }
     }
     fun updateTemperatures(cpuTempC: Float, gpuTempC: Float, batteryTempC: Float) {
@@ -635,7 +587,7 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     }
 
     // ======= Dialog Helpers =======
-    private fun applyDialogIcon(titleText: TextView, drawableRes: Int, paddingDp: Float = 8f) {
+    private fun applyDialogIcon(titleText: AppCompatTextView, drawableRes: Int, paddingDp: Float = 8f) {
         ContextCompat.getDrawable(requireContext(), drawableRes)?.let { drawable ->
             val fm       = titleText.paint.fontMetricsInt
             val baseSize = (-fm.ascent + fm.descent) + fm.leading
@@ -665,24 +617,13 @@ class DeviceStatus : Fragment(R.layout.device_status_lay), SearchableFragment {
     // ======= Search Results Function =======
     override fun showSearchResults(results: List<SearchItem>, isInitialState: Boolean) {
         if (!isAdded) return
-        val root = requireView() as android.view.ViewGroup
-        val result = showSearchResultsInView(
-            query = (requireActivity() as MainActivity).appState.searchQuery,
-            root = root, results = results, currentContainer = searchContainerView, currentEmpty = searchEmptyView, isInitialState = isInitialState,
-            onItemClick = { item ->
-                (requireActivity() as MainActivity).run {
-                    toolbarLayout.endSearchMode()
-                    navigateToSearchResult(item)
-                }
-            }
-        )
+        val result = showSearchResultsInView(results, searchContainerView, searchEmptyView, isInitialState)
         searchContainerView = result.first
         searchEmptyView     = result.second
     }
     override fun hideSearchResults() {
         if (!isAdded) return
-        val root = requireView() as android.view.ViewGroup
-        hideSearchResultsFromView(root, searchContainerView, searchEmptyView)
+        hideSearchResultsFromView(searchContainerView, searchEmptyView)
         searchContainerView = null
         searchEmptyView     = null
     }

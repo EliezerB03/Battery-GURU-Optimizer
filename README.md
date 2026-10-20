@@ -1,6 +1,6 @@
 ###### ㅤ
 
-<img width="630" height="238" alt="banner" src="https://github.com/user-attachments/assets/c8bd7d80-1729-4d65-ac70-60b0ed354951"/>
+<img width="630" height="238" alt="banner" src="https://github.com/user-attachments/assets/5d2c0cf4-9d54-46a3-adca-20efecb89cf9"/>
 
 Application to improve battery efficiency on Samsung devices running One UI software and DS-ACK/Apollo-based kernels (Exynos 9810)
 
@@ -23,6 +23,31 @@ Application to improve battery efficiency on Samsung devices running One UI soft
 * ZRAM optimizations
 * More tweaks/optimizations
 
+## 🖼️ Screenshots
+<fieldset>
+<legend><b>Light Theme</b></legend>
+<table>
+    <tr>
+        <td><img width="250" alt="Screenshot_1_light" src="https://github.com/user-attachments/assets/17b6b72e-663d-49e8-8cb6-9e57ef3d06dc"/></td>
+        <td><img width="250" alt="Screenshot_2_light" src="https://github.com/user-attachments/assets/73376078-bec2-46fc-b3c6-e9d6957651b3"/></td>
+        <td><img width="250" alt="Screenshot_3_light" src="https://github.com/user-attachments/assets/3a4426bd-d41e-4c75-bcf6-717c88068eee"/></td>
+        <td><img width="250" alt="Screenshot_4_light" src="https://github.com/user-attachments/assets/f1c6ac01-6126-4ea2-b838-fea90481c384"/></td>
+    </tr>
+</table>
+</fieldset>
+
+<fieldset>
+<legend><b>Dark Theme</b></legend>
+<table>
+    <tr>
+        <td><img width="250" alt="Screenshot_1_dark" src="https://github.com/user-attachments/assets/2d37ea41-6841-49c6-8bb7-d88bd97dc4f8"/></td>
+        <td><img width="250" alt="Screenshot_2_dark" src="https://github.com/user-attachments/assets/96a034a8-3f09-4ca7-a79f-edbef9a34b6c"/></td>
+        <td><img width="250" alt="Screenshot_3_dark" src="https://github.com/user-attachments/assets/5ec46d89-e530-45e3-99c7-9ba3b6828d27"/></td>
+        <td><img width="250" alt="Screenshot_4_dark" src="https://github.com/user-attachments/assets/03331284-1388-4edb-9530-ae03df19938f"/></td>
+    </tr>
+</table>
+</fieldset>
+
 ## 📝 Changelog
 * [**[Changelog history]**](https://github.com/EliezerB03/Battery-GURU-Optimizer/blob/master/Docs/Changelog_History.md)
 
@@ -38,7 +63,7 @@ Stay up to date on the latest news and updates by joining our Telegram channel�
 )](https://t.me/batterygurunews)
 
 ## 🙏 Thanks/Credits
-* [**[tribalfs]**](https://github.com/tribalfs/oneui-design) for his amazing One UI design libraries
+* [**[tribalfs]**](https://github.com/tribalfs) for his amazing sesl-androidx and sesl-material-components-android libraries
 * [**[SamsungInternet]**](https://github.com/SamsungInternet) for his Amazing One UI Web Design
 * [**[OneUIProject]**](https://github.com/OneUIProject) for his One UI system Icons
-* [**[topjohnwu]**](https://github.com/topjohnwu/libsu) for libsu libraries
+* [**[topjohnwu]**](https://github.com/topjohnwu) for libsu libraries

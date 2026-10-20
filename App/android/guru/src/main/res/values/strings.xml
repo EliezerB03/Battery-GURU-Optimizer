@@ -11,6 +11,7 @@
     <string name="search_hint">Search options</string>
     <string name="search_type_to_search">Type something to search</string>
     <string name="search_no_results">No results found</string>
+    <string name="search_sep_results">Results</string>
     <string name="dialog_progress">Progress:</string>
     <string name="dialog_btn_ok">Ok</string>
     <string name="dialog_btn_close">Close</string>
@@ -30,8 +31,11 @@
     <string name="checks_fatalrootlostmsg">ROOT Access was lost!\nApp requires ROOT access to work!</string>
     <string name="checks_closeapp">Close app</string>
     <!-- Updater Helper -->
-    <string name="updater_checkingupdatetitle">Checking update...</string>
-    <string name="updater_checkingupdatemsg">Checking for available update...</string>
+    <string name="updater_widget_checkingupdate">Checking for available update...</string>
+    <string name="updater_widget_uptodate">You are now on the latest version.</string>
+    <string name="updater_widget_updateavailable">Update available!\nTap for more details.</string>
+    <string name="updater_widget_installupdate">Update ready to install!\nTap for more details.</string>
+    <string name="updater_widget_connectionerror">Unable to connect to the server!\nPlease check your internet connection.</string>
     <string name="updater_updateavailabletitle">Update available!</string>
     <string name="updater_updateavailablemsg">Version %1$s is available!\nCurrent version: %2$s\n\n%3$sPress on \'Update now\' to download update.</string>
     <string name="updater_updateavailablechangelog">Changelog:\n%1$s\n\n</string>
@@ -43,10 +47,6 @@
     <string name="updater_pendinginstallupdatemsg">Update is ready!\nDo you want to install it now?\n\nNote: you can install it later from About GURU &gt; Check for app update.</string>
     <string name="updater_installingtitle">Installing update...</string>
     <string name="updater_installingmsg">DON\'T close the app during update.\nApp will close after update.</string>
-    <string name="updater_uptodatetitle">Up to date!</string>
-    <string name="updater_uptodatemsg">You are now on the latest version.</string>
-    <string name="updater_connectionerrortitle">Connection error!</string>
-    <string name="updater_connectionerrormsg">Unable to connect to the server!\nPlease check your internet connection.</string>
     <string name="updater_downloaderrortitle">Download error!</string>
     <string name="updater_downloaderrormsg">Update couldn\'t be downloaded, please try again.</string>
     <string name="updater_installerrortitle">Update error!</string>
@@ -86,13 +86,15 @@
     <string name="device_batterycycles">Cycles</string>
     <string name="device_batteryunknown">Unknown</string>
     <string name="device_infotitle">Device status info</string>
-    <string name="device_infomsg">In this section, you can monitor and view the status of your device.\n\nCPU usage: here you can view real-time processor usage for each core, such as the current frequency or current usage percentage.\n\nGPU usage: here you can view real-time graphics processor usage, such as the current frequency or current usage percentage.\n\nMemory usage: here you can view the real-time RAM and ZRAM (virtual) memory usage, such as the current frequency or current usage percentage.\n\nThermal status: here you can view the temperature of the CPU, GPU, and battery.\n\nBattery status: here you can view the battery\'s capacity or health.</string>
+    <string name="device_infomsg">"On this page, you can monitor and view the status of your device.\n\nCPU usage: here you can view real-time processor usage for each core, such as the current frequency or current usage percentage.\n\nGPU usage: here you can view real-time graphics processor usage, such as the current frequency or current usage percentage.\n\nMemory usage: here you can view the real-time RAM and ZRAM (virtual memory) usage. For RAM it shows the current frequency or current usage percentage, and for ZRAM (virtual memory) it shows the usage percentage and the compression algorithm being used.\n    - Show memory: lets you choose whether to show the usage or the available RAM or ZRAM memory.\n\nThermal status: here you can view the temperature of the CPU, GPU, and battery in Celsius or Fahrenheit.\n    - Use Fahrenheit unit: lets you choose whether to show the unit in Fahrenheit or Celsius for the temperatures.\n\nBattery status: here you can view the battery\'s capacity or health."</string>
     <!-- General settings -->
     <string name="general_toolbartitle">General settings</string>
     <string name="general_sep_system">System settings</string>
     <string name="general_option_optimizeapps">Optimize all apps</string>
     <string name="general_option_battapps">Battery optimizations on apps</string>
     <string name="general_option_cachedapps">Freeze cached apps</string>
+    <string name="general_sep_kernel">Kernel settings</string>
+    <string name="general_option_wakelockblock">Wakelock blocker optimizations</string>
     <string name="general_sep_cpu">CPU settings</string>
     <string name="general_option_cpuhotplug">CPU hotplug optimizations</string>
     <string name="general_option_powereffi">Power efficient</string>
@@ -108,7 +110,7 @@
     <string name="general_option_batteryprotect">Battery charging protection</string>
     <string name="general_seekbar_battlimittitle">Battery charging limit</string>
     <string name="general_infotitle">General settings info</string>
-    <string name="general_infomsg">This section contains settings that provide basic optimization options.\n\nSystem settings: this category offers options that are normally hidden from the user (It\'s recommended to leave default settings).\n\nCPU settings: this category offers options such as efficiency or heat management (It\'s recommended to leave default settings).\n\nGPU settings: this category offers options such as efficiency boost, etc. (It\'s recommended to leave default settings).\n\nMemory settings: this category offers options related to (ZRAM) virtual memory optimizations (It\'s recommended to leave default settings).\n\nStorage settings: this category offers settings to improve UFS energy efficiency (It\'s recommended to leave default settings).\n\nBattery settings: this category offers battery charging protection options, among others.</string>
+    <string name="general_infomsg">"This page contains settings that provide basic optimization options.\n\nSystem settings: this section offers options that are normally hidden from the user (It\'s recommended to leave default settings).\n    - Optimize all apps: recompiles all apps with ART, both system and installed ones, using their real usage profile so they use less CPU when opening, improving performance and battery.\n    - Battery optimizations on apps: restricts the background processes of apps.\n    - Freeze cached apps: freezes background apps, improving battery by not using the CPU.\n\nKernel settings: this section offers options that work at kernel level, so they may or may not work properly depending on the kernel being used (It\'s recommended to leave default settings).\n    - Wakelock blocker optimizations: prevents processes or events from keeping the phone awake for internal tasks (monitoring, network scanning, events, etc.), improving battery consumption at idle (may slightly delay notifications or network reconnections).\n\nCPU settings: this section offers options such as efficiency or heat management (It\'s recommended to leave default settings).\n    - CPU hotplug optimizations: improves efficiency when the CPU turns its cores off or on and improves performance stability, improving battery consumption when the device is idle.\n    - Power efficient: improves the CPU power consumption by running tasks on the cores that are already active, avoiding waking the other idle cores, improving battery over time.\n    - Thermal optimizations: reduces the CPU temperature by applying light thermal and AC current limits at kernel level, which reduces the heat generated by the device, but may slightly reduce system performance.\n    - CPU efficiency boost: reduces high CPU usage spikes, which improves battery consumption over time.\n\nGPU settings: this section offers options such as efficiency boost, etc. (It\'s recommended to leave default settings).\n    - GPU efficiency boost: reduces high GPU usage spikes, slightly reduces the graphics load and applies a low-power profile, which improves battery over time.\n\nMemory settings: this section offers options related to (ZRAM) virtual memory optimizations (It\'s recommended to leave default settings).\n    - ZRAM optimizations: reduces how often the kernel moves apps from RAM to storage and vice versa, also reduces the ZRAM (virtual memory) compression intervals and keeps its cache for longer, reducing CPU usage, which improves battery consumption.\n\nStorage settings: this section offers settings to improve UFS energy efficiency (It\'s recommended to leave default settings).\n    - Storage optimizations: tunes the kernel to reduce the work done on each storage operation, with no I/O entropy and lighter I/O completion, thus reducing CPU usage, but it may slightly reduce read and write performance.\n\nBattery settings: this section offers battery charging protection options, among others.\n    - Battery charging protection: limits the maximum charging percentage to protect the battery and extend its health."</string>
     <string name="general_battprotectwarningtitle">Important!</string>
     <string name="general_battprotectwarningmsg">Make sure that battery protection on system is disabled to avoid conflicts/issues.\nYou can check this in Settings app &gt; Battery &gt; Battery protection.\n\nYou may need to re-plug the charger for the changes to take effect.</string>
     <string name="general_optimizeappstitle">Apps optimization notice!</string>
@@ -143,14 +145,12 @@
     <string name="advanced_uv_seekbar_iva">IVA margin</string>
     <string name="advanced_uv_seekbar_score">SCORE margin</string>
     <string name="advanced_infotitle">Advanced settings info</string>
-    <string name="advanced_infomsg">This section contains advanced options such as frequency options or undervoltage options.\n\nFrequency settings: this section contains frequency-related settings to allows you to control processing speed for little (efficiency) and big (performance) cores (It\'s recommended to leave default settings).\n\nUndervolt settings: this section contains options related to voltage intensity for each device component, these are based on percentage margins, each slider bar offers undervoltage values, such as CPU, GPU, RAM, display, audio, etc. (It\'s recommended to leave default settings).\n\nNote: increasing the frequency/speed will increase the heat generated by the device and these settings may make your device UNSTABLE or cause FREEZES depending on frequency and/or undervoltage settings you are using.</string>
+    <string name="advanced_infomsg">"This page contains advanced options such as CPU core frequency options or undervoltage options for each component.\n\nFrequency settings: this section contains frequency-related settings to allow you to control processing speed for little (efficiency) and big (performance) cores (It\'s recommended to leave default settings).\n    - Max little cores frequency: limits the maximum frequency the little CPU cores (efficiency cores) can reach.\n    - Max big cores frequency: limits the maximum frequency the big CPU cores (performance cores) can reach.\n\nUndervolt settings: this section contains options related to voltage intensity for each device component, these are based on percentage margins, each slider bar offers undervoltage values, such as CPU, GPU, RAM, display, audio, etc. (It\'s recommended to leave default settings).\n    - Little cores margin: lets you reduce the voltage percentage margin of the little CPU cores (efficiency cores).\n    - Big cores margin: lets you reduce the voltage percentage margin of the big CPU cores (performance cores).\n    - GPU margin: lets you reduce the voltage percentage margin of the GPU.\n    - RAM margin: lets you reduce the voltage percentage margin of the RAM.\n    - AUDIO margin: lets you reduce the voltage percentage margin of the device audio (speakers).\n    - CAMERA margin: lets you reduce the voltage percentage margin of the camera modules (camera sensors).\n    - CP margin: lets you reduce the voltage percentage margin of communications (mobile networks, Wi-Fi, Bluetooth, etc.).\n    - DISPLAY margin: lets you reduce the voltage percentage margin of the device display.\n    - FSYS margin: lets you reduce the voltage percentage margin of the device storage, removable memory (SD card) and storage connected via USB.\n    - INT margin: lets you reduce the voltage percentage margin of the device chipset buses.\n    - INTCAMERA margin: lets you reduce the voltage percentage margin of the camera ISP (image signal processor).\n    - IVA margin: lets you reduce the voltage percentage margin of the video codecs.\n    - SCORE margin: lets you reduce the voltage percentage margin of the image and video vision coprocessor.\n\nNote: increasing the frequency/speed will increase the heat generated by the device and these settings may make your device UNSTABLE or cause FREEZES depending on frequency and/or undervoltage settings you are using."</string>
     <!-- About GURU -->
     <string name="about_toolbartitle">About GURU</string>
-    <string name="about_sep_about_battery_guru">About Battery GURU</string>
-    <string name="about_appversion">App version</string>
-    <string name="about_sep_devinfo">Developer info</string>
-    <string name="about_developer">Developed by</string>
-    <string name="about_github">Source</string>
+    <string name="about_appversion">Version: %1$s</string>
+    <string name="about_developer">Developed by: %1$s</string>
+    <string name="about_developersummary">Developer profile</string>
     <string name="about_githubsummary">GitHub repository</string>
     <string name="about_sep_updates">Updates</string>
     <string name="about_option_changelog">Changelog</string>
@@ -164,8 +164,11 @@
     <string name="about_option_nsd">Disable network service discovery</string>
     <string name="about_button_reset_settings">Reset settings to default</string>
     <string name="about_infotitle">About GURU info</string>
-    <string name="about_infomsg">This section displays information about app version, developer info, experimental features, etc.\n\nExperimental: features that are still in testing but stable enough for the public (These options are disabled by default).</string>
+    <string name="about_infomsg">"This page displays information about app version, updates, experimental features, etc.\n\nImport/Export: save or load app settings from a file.\n    - Import settings: lets you load the app settings.\n    - Export settings: lets you save the app settings.\n\nExperimental: features that are still in testing but stable enough for the public (These options are disabled by default).\n    - Background app process limit: limits the apps that can stay open in the background.\n    - Force Doze on device idle: forces the device to enter deep sleep immediately after the device screen is locked.\n    - Disable network service discovery: disables the automatic search for local network services to reduce background traffic, but apps will not be able to find devices such as Chromecast, printers or other nearby devices (slightly reduces battery consumption)."</string>
     <string name="about_changelogtitle">Latest changelog</string>
+    <string name="about_import_warningtitle">Import settings notice!</string>
+    <string name="about_import_warningmsg">This action will cause you to lose your current settings, if you\'re sure you want to continue, press \'Import settings\'.\nThis action is IRREVERSIBLE!\n\nNote: app requires restart after importing settings.</string>
+    <string name="about_import_warning_btn_import">Import settings</string>
     <string name="about_import_errortitle">Error importing settings!</string>
     <string name="about_import_errormsg">The selected file is invalid or corrupt.</string>
     <string name="about_import_successtitle">Settings imported!</string>

@@ -23,7 +23,7 @@
         android:clipToPadding="false"
         android:paddingEnd="10dp"
         android:scrollbars="vertical">
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/dialog_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

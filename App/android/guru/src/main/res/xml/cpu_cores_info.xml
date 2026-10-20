@@ -31,21 +31,21 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_marginStart="12dp">
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/core_name_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/device_cpu_cores"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/core_freq_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N/A"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/core_percent_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,21 +78,21 @@
             android:layout_weight="1"
             android:orientation="vertical"
             android:layout_marginStart="12dp">
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/core_name_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/device_cpu_cores"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/core_freq_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="N/A"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"/>
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/core_percent_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

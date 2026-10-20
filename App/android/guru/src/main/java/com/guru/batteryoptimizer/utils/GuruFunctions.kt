@@ -3,7 +3,14 @@ package com.guru.batteryoptimizer.utils
 import android.content.Context
 import android.content.SharedPreferences
 
-class GuruFunctions(private val guru: GuruAPIs, private val context: Context) {
+// Global Values
+private const val FREQ_LIT = "/sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq"
+private const val FREQ_BIG = "/sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq"
+private const val FREQ_LIT_OFF = 1794000
+private const val FREQ_BIG_OFF = 2704000
+private const val FREQ_DEFAULT = 1690000
+
+class GuruFunctions(private val guru: GuruAPIs, context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences("guru_settings", Context.MODE_PRIVATE)
     private val scriptPath = "/data/data/com.guru.batteryoptimizer/guru.sh"
 
@@ -34,79 +41,42 @@ class GuruFunctions(private val guru: GuruAPIs, private val context: Context) {
     }
 
     // ======= Option Base Structure =======
-    private data class OptionDef(
-        val prefKey: String, val execKey: String,
-        val marker:  String,
-        val onSave:  String, val offSave: String,
-        val onCmd:   String, val offCmd:  String
+    private class OptionDef(
+        val key: String, val marker: String, val title: String, val default: Boolean,
+        val onSave: String, val offSave: String, val onCmd: String, val offCmd: String
     )
+    private fun opt(
+        key: String, marker: String, title: String, default: Boolean, on: String, off: String, join: String = "; ",
+        onCmd: String = on.replace("\n", join), offCmd: String = off.replace("\n", join)
+    ) = OptionDef(key, marker, title, default, "# $marker=1\n$on", "# $marker=0\n$off", onCmd, offCmd)
     private suspend fun applyToggle(opt: OptionDef, enabled: Boolean) {
-        saveBool(opt.prefKey, enabled)
+        saveBool(opt.key, enabled)
         val block   = if (enabled) opt.onSave else opt.offSave
         val liveCmd = if (enabled) opt.onCmd  else opt.offCmd
-        guru.execSafe(opt.execKey, "${awkBlock(opt.marker, block)}; $liveCmd")
+        guru.execSafe(opt.key, "${awkBlock(opt.marker, block)}; $liveCmd")
     }
 
     // ======= General Settings =======
-    private val OPT_BATT_APPS = OptionDef(
-        prefKey  = "battapps_opt",
-        execKey  = "battapps_opt",
-        marker   = "forceappsbattopt_on",
-        onSave  = "# forceappsbattopt_on=1\nsettings put global forced_app_standby_enabled 1",
-        offSave = "# forceappsbattopt_on=0\nsettings put global forced_app_standby_enabled 0",
-        onCmd   = "settings put global forced_app_standby_enabled 1",
-        offCmd  = "settings put global forced_app_standby_enabled 0"
-    )
-    private val OPT_CACHED_APPS = OptionDef(
-        prefKey  = "cachedapps_opt",
-        execKey  = "cachedapps_opt",
-        marker   = "cachedappsopt_on",
-        onSave  = "# cachedappsopt_on=1\nsettings put global cached_apps_freezer enabled",
-        offSave = "# cachedappsopt_on=0\nsettings put global cached_apps_freezer disabled",
-        onCmd   = "settings put global cached_apps_freezer enabled",
-        offCmd  = "settings put global cached_apps_freezer disabled"
-    )
-    private val OPT_CPU_HOTPLUG = OptionDef(
-        prefKey  = "cpu_hotplug_opt",
-        execKey  = "cpu_hotplug_opt",
-        marker   = "hotplugset_on",
-        onSave  = "# hotplugset_on=1\necho '0' > /sys/power/cpuhotplug/governor/user_mode\necho '0' > /sys/power/cpuhotplug/governor/enabled",
-        offSave = "# hotplugset_on=0\necho '1' > /sys/power/cpuhotplug/governor/user_mode\necho '1' > /sys/power/cpuhotplug/governor/enabled",
-        onCmd   = "echo '0' > /sys/power/cpuhotplug/governor/user_mode; echo '0' > /sys/power/cpuhotplug/governor/enabled",
-        offCmd  = "echo '1' > /sys/power/cpuhotplug/governor/user_mode; echo '1' > /sys/power/cpuhotplug/governor/enabled"
-    )
-    private val OPT_POWER_EFF = OptionDef(
-        prefKey  = "power_effi_opt",
-        execKey  = "power_effi_opt",
-        marker   = "powereffiset_on",
-        onSave  = "# powereffiset_on=1\necho 'Y' > /sys/module/workqueue/parameters/power_efficient",
-        offSave = "# powereffiset_on=0\necho 'N' > /sys/module/workqueue/parameters/power_efficient",
-        onCmd   = "echo 'Y' > /sys/module/workqueue/parameters/power_efficient",
-        offCmd  = "echo 'N' > /sys/module/workqueue/parameters/power_efficient"
-    )
-    private val OPT_THERMAL = OptionDef(
-        prefKey  = "thermal_opt",
-        execKey  = "thermal_opt",
-        marker   = "thermalset_on",
-        onSave  = "# thermalset_on=1\n" +
-            "system_table_set activity_manager_constants max_cached_processes=0,background_settle_time=0,fgservice_min_shown_time=0,fgservice_min_report_time=0,fgservice_screen_on_before_time=0,fgservice_screen_on_after_time=0,content_provider_retain_time=0,gc_timeout=0,gc_min_interval=0,full_pss_min_interval=0,full_pss_lowered_interval=0,power_check_interval=0,power_check_max_cpu_1=0,power_check_max_cpu_2=0,power_check_max_cpu_3=0,power_check_max_cpu_4=0,service_usage_interaction_time=0,usage_stats_interaction_interval=0,service_restart_duration=0,service_reset_run_duration=0,service_restart_duration_factor=0,service_min_restart_time_between=0,service_max_inactivity=0,service_bg_start_timeout=0,CUR_MAX_CACHED_PROCESSES=0,CUR_MAX_EMPTY_PROCESSES=0,CUR_TRIM_EMPTY_PROCESSES=0,CUR_TRIM_CACHED_PROCESSES=0\n" +
-            "chmod 666 /sys/devices/system/cpu/cpu[0-7]/max_cpus; chmod 666 /sys/devices/system/cpu/cpu[0-7]/min_cpus\n" +
-            "echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/max_cpus; echo 0 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus; echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres\n" +
-            "echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres; echo 80 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms\n" +
-            "echo 2 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/max_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/task_thres\n" +
-            "echo 80 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms; echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres\n" +
-            "chmod 444 /sys/devices/system/cpu/cpu[0-7]/max_cpus\n" +
-            "pm disable com.google.android.gms/.chimera.GmsIntentOperationService",
-        offSave = "# thermalset_on=0\nsystem_table_unset activity_manager_constants\npm enable com.google.android.gms/.chimera.GmsIntentOperationService",
-        onCmd   = "system_table_set activity_manager_constants max_cached_processes=0,background_settle_time=0,fgservice_min_shown_time=0,fgservice_min_report_time=0,fgservice_screen_on_before_time=0,fgservice_screen_on_after_time=0,content_provider_retain_time=0,gc_timeout=0,gc_min_interval=0,full_pss_min_interval=0,full_pss_lowered_interval=0,power_check_interval=0,power_check_max_cpu_1=0,power_check_max_cpu_2=0,power_check_max_cpu_3=0,power_check_max_cpu_4=0,service_usage_interaction_time=0,usage_stats_interaction_interval=0,service_restart_duration=0,service_reset_run_duration=0,service_restart_duration_factor=0,service_min_restart_time_between=0,service_max_inactivity=0,service_bg_start_timeout=0,CUR_MAX_CACHED_PROCESSES=0,CUR_MAX_EMPTY_PROCESSES=0,CUR_TRIM_EMPTY_PROCESSES=0,CUR_TRIM_CACHED_PROCESSES=0; chmod 666 /sys/devices/system/cpu/cpu[0-7]/max_cpus; chmod 666 /sys/devices/system/cpu/cpu[0-7]/min_cpus; echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/max_cpus; echo 0 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus; echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres; echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres; echo 80 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms; echo 2 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/max_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/task_thres; echo 80 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms; echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres; chmod 444 /sys/devices/system/cpu/cpu[0-7]/max_cpus; pm disable com.google.android.gms/.chimera.GmsIntentOperationService",
-        offCmd  = "system_table_unset activity_manager_constants; pm enable com.google.android.gms/.chimera.GmsIntentOperationService"
-    )
-    private val OPT_CPU_EFFI = OptionDef(
-        prefKey  = "cpu_effiboost_opt",
-        execKey  = "cpu_effiboost_opt",
-        marker   = "cpueffiset_on",
-        onSave  = "# cpueffiset_on=1\n" +
-            "echo '90' > /sys/kernel/ehmp/up_threshold\necho '80' > /sys/kernel/ehmp/down_threshold\necho '4096' > /sys/kernel/ehmp/min_residency\n" +
+    private val OPT_BATT_APPS = opt("battapps_opt", "forceappsbattopt_on", "BATTERY OPTIMIZATIONS ON APPS", true,
+        on  = "settings put global forced_app_standby_enabled 1",
+        off = "settings put global forced_app_standby_enabled 0")
+    private val OPT_CACHED_APPS = opt("cachedapps_opt", "cachedappsopt_on", "FREEZE CACHED APPS", true,
+        on  = "settings put global cached_apps_freezer enabled",
+        off = "settings put global cached_apps_freezer disabled")
+    private val OPT_WAKELOCK_BLOCK = opt("wakelock_opt", "wakelock_block_on", "WAKELOCK BLOCKER OPTIMIZATIONS", true,
+        on  = """P=/sys/devices/virtual/misc/boeffla_wakelock_blocker/wakelock_blocker; cur=${'$'}(cat ${'$'}P); [ "${'$'}(settings get global bgo_wl_prev)" = "null" ] && settings put global bgo_wl_prev "${'$'}{cur:-none}"; for w in wlan_ctrl_wake wlan_scan_wake wlan_evt_wake; do cur=${'$'}(cat ${'$'}P); case ";${'$'}cur;" in *";${'$'}w;"*) ;; *) if [ -z "${'$'}cur" ]; then echo "${'$'}w" > ${'$'}P; else echo "${'$'}cur;${'$'}w" > ${'$'}P; fi;; esac; done""",
+        off = """P=/sys/devices/virtual/misc/boeffla_wakelock_blocker/wakelock_blocker; prev=${'$'}(settings get global bgo_wl_prev); if [ "${'$'}prev" != "null" ]; then if [ "${'$'}prev" = "none" ]; then echo '' > ${'$'}P; else echo "${'$'}prev" > ${'$'}P; fi; settings delete global bgo_wl_prev; fi""")        
+    private val OPT_CPU_HOTPLUG = opt("cpu_hotplug_opt", "hotplugset_on", "CPU HOTPLUG OPTIMIZATIONS", true,
+        on  = "echo '0' > /sys/power/cpuhotplug/governor/user_mode\necho '0' > /sys/power/cpuhotplug/governor/enabled",
+        off = "echo '1' > /sys/power/cpuhotplug/governor/user_mode\necho '1' > /sys/power/cpuhotplug/governor/enabled")
+    private val OPT_POWER_EFF = opt("power_effi_opt", "powereffiset_on", "CPU POWER EFFICIENT", true,
+        on  = "echo 'Y' > /sys/module/workqueue/parameters/power_efficient",
+        off = "echo 'N' > /sys/module/workqueue/parameters/power_efficient")
+    private val OPT_THERMAL = opt("thermal_opt", "thermalset_on", "THERMAL OPTIMIZATIONS", true,
+        on  = "echo 85 > /sys/devices/platform/battery/power_supply/battery/siop_level\npm disable com.google.android.gms/.chimera.GmsIntentOperationService",
+        off = "echo 100 > /sys/devices/platform/battery/power_supply/battery/siop_level\npm enable com.google.android.gms/.chimera.GmsIntentOperationService")
+    private val OPT_CPU_EFFI = opt("cpu_effiboost_opt", "cpueffiset_on", "CPU EFFICIENCY BOOST", true,
+        on  = "echo '90' > /sys/kernel/ehmp/up_threshold\necho '80' > /sys/kernel/ehmp/down_threshold\necho '4096' > /sys/kernel/ehmp/min_residency\n" +
             "echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key/head\necho '500 0      0 0 0 0 0 0' > /sys/devices/virtual/input_booster/key/tail\n" +
             "echo '700 1014000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/head\necho '700 0       0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/tail\n" +
             "echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/head\necho '0   416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/tail\n" +
@@ -117,8 +87,7 @@ class GuruFunctions(private val guru: GuruAPIs, private val context: Context) {
             "echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/head\necho '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/tail\n" +
             "echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/head\necho '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/tail\n" +
             "echo '0   416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touchkey/head\necho '200 0      0 0 0 0 0 0' > /sys/devices/virtual/input_booster/touchkey/tail",
-        offSave = "# cpueffiset_on=0\n" +
-            "echo '79' > /sys/kernel/ehmp/up_threshold\necho '128' > /sys/kernel/ehmp/down_threshold\necho '8192' > /sys/kernel/ehmp/min_residency\n" +
+        off = "echo '79' > /sys/kernel/ehmp/up_threshold\necho '128' > /sys/kernel/ehmp/down_threshold\necho '8192' > /sys/kernel/ehmp/min_residency\n" +
             "echo '500 1066000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key/head\necho '500 0       0 0 0 0 0 0' > /sys/devices/virtual/input_booster/key/tail\n" +
             "echo '700 1469000 1053000 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/head\necho '700 0       1053000 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/tail\n" +
             "echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/head\necho '0   858000  832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/tail\n" +
@@ -129,179 +98,105 @@ class GuruFunctions(private val guru: GuruAPIs, private val context: Context) {
             "echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/head\necho '500 858000  832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/tail\n" +
             "echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/head\necho '500 858000  832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/tail\n" +
             "echo '0   1066000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touchkey/head\necho '200 0       0 0 0 0 0 0' > /sys/devices/virtual/input_booster/touchkey/tail",
-        onCmd   = "echo '85' > /sys/kernel/ehmp/up_threshold; echo '80' > /sys/kernel/ehmp/down_threshold; echo '4096' > /sys/kernel/ehmp/min_residency; echo '0' > /sys/kernel/ehmp/global_boost; echo '0 0 0 0' > /sys/kernel/ehmp/kernel_prefer_perf; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key/head; echo '500 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/key/tail; echo '700 1014000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/head; echo '700 0 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/head; echo '0 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/head; echo '0 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/tail; echo '1000 546000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/tail; echo '200 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/head; echo '600 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/tail; echo '0 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touchkey/head; echo '200 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/touchkey/tail",
-        offCmd  = "echo '79' > /sys/kernel/ehmp/up_threshold; echo '128' > /sys/kernel/ehmp/down_threshold; echo '8192' > /sys/kernel/ehmp/min_residency; echo '0' > /sys/kernel/ehmp/global_boost; echo '0 0 0 0' > /sys/kernel/ehmp/kernel_prefer_perf; echo '500 1066000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key/head; echo '500 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/key/tail; echo '700 1469000 1053000 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/head; echo '700 0 1053000 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/head; echo '0 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/head; echo '0 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/tail; echo '1000 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/tail; echo '200 1170000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/head; echo '600 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/tail; echo '0 1066000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touchkey/head; echo '200 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/touchkey/tail"
-    )
-    private val OPT_GPU_EFFI = OptionDef(
-        prefKey  = "gpu_effiboost_opt",
-        execKey  = "gpu_effiboost_opt",
-        marker   = "gpueffiset_on",
-        onSave  = "# gpueffiset_on=1\necho '1' > /sys/devices/platform/17500000.mali/dvfs_governor\necho '99'  > /sys/devices/platform/17500000.mali/highspeed_load\necho '5'   > /sys/devices/platform/17500000.mali/highspeed_delay\necho '150' > /sys/devices/platform/17500000.mali/dvfs_period\necho '100'  > /sys/kernel/gpu/gpu_poweroff_delay\necho '1'   > /sys/kernel/gpu/gpu_cl_boost_disable",
-        offSave = "# gpueffiset_on=0\necho '3' > /sys/devices/platform/17500000.mali/dvfs_governor\necho '94'  > /sys/devices/platform/17500000.mali/highspeed_load\necho '0'   > /sys/devices/platform/17500000.mali/highspeed_delay\necho '100' > /sys/devices/platform/17500000.mali/dvfs_period\necho '50'  > /sys/kernel/gpu/gpu_poweroff_delay\necho '0'   > /sys/kernel/gpu/gpu_cl_boost_disable",
-        onCmd   = "echo '1' > /sys/devices/platform/17500000.mali/dvfs_governor; echo '99' > /sys/devices/platform/17500000.mali/highspeed_load; echo '5' > /sys/devices/platform/17500000.mali/highspeed_delay; echo '150' > /sys/devices/platform/17500000.mali/dvfs_period; echo '100' > /sys/kernel/gpu/gpu_poweroff_delay; echo '1' > /sys/kernel/gpu/gpu_cl_boost_disable",
-        offCmd  = "echo '3' > /sys/devices/platform/17500000.mali/dvfs_governor; echo '94' > /sys/devices/platform/17500000.mali/highspeed_load; echo '0' > /sys/devices/platform/17500000.mali/highspeed_delay; echo '100' > /sys/devices/platform/17500000.mali/dvfs_period; echo '50' > /sys/kernel/gpu/gpu_poweroff_delay; echo '0' > /sys/kernel/gpu/gpu_cl_boost_disable"
-    )
-    private val OPT_SWAP = OptionDef(
-        prefKey  = "swap_opt",
-        execKey  = "swap_opt",
-        marker   = "swapset_on",
-        onSave  = "# swapset_on=1\necho '10' > /proc/sys/vm/dirty_ratio\necho '3' > /proc/sys/vm/dirty_background_ratio\necho '2500' > /proc/sys/vm/dirty_expire_centisecs\necho '1250' > /proc/sys/vm/dirty_writeback_centisecs\necho '2' > /proc/sys/vm/laptop_mode\necho '70' > /proc/sys/vm/swappiness",
-        offSave = "# swapset_on=0\necho '0' > /proc/sys/vm/dirty_ratio\necho '0' > /proc/sys/vm/dirty_background_ratio\necho '200' > /proc/sys/vm/dirty_expire_centisecs\necho '500' > /proc/sys/vm/dirty_writeback_centisecs\necho '0' > /proc/sys/vm/laptop_mode\necho '100' > /proc/sys/vm/swappiness",
-        onCmd   = "echo '10' > /proc/sys/vm/dirty_ratio; echo '3' > /proc/sys/vm/dirty_background_ratio; echo '2500' > /proc/sys/vm/dirty_expire_centisecs; echo '1250' > /proc/sys/vm/dirty_writeback_centisecs; echo '2' > /proc/sys/vm/laptop_mode; echo '70' > /proc/sys/vm/swappiness",
-        offCmd  = "echo '0' > /proc/sys/vm/dirty_ratio; echo '0' > /proc/sys/vm/dirty_background_ratio; echo '200' > /proc/sys/vm/dirty_expire_centisecs; echo '500' > /proc/sys/vm/dirty_writeback_centisecs; echo '0' > /proc/sys/vm/laptop_mode; echo '100' > /proc/sys/vm/swappiness"
-    )
-    private val OPT_STORAGE = OptionDef(
-        prefKey  = "storage_opt",
-        execKey  = "storage_opt",
-        marker   = "storageset_on",
-        onSave  = "# storageset_on=1\necho '1' > /sys/block/sda/queue/rotational\necho '1' > /sys/block/sda/queue/add_random\necho '2' > /sys/block/sda/queue/rq_affinity",
-        offSave = "# storageset_on=0\necho '0' > /sys/block/sda/queue/rotational\necho '0' > /sys/block/sda/queue/add_random\necho '1' > /sys/block/sda/queue/rq_affinity",
-        onCmd   = "echo '1' > /sys/block/sda/queue/rotational; echo '1' > /sys/block/sda/queue/add_random; echo '2' > /sys/block/sda/queue/rq_affinity",
-        offCmd  = "echo '0' > /sys/block/sda/queue/rotational; echo '0' > /sys/block/sda/queue/add_random; echo '1' > /sys/block/sda/queue/rq_affinity"
-    )
+        onCmd  = "echo '85' > /sys/kernel/ehmp/up_threshold; echo '80' > /sys/kernel/ehmp/down_threshold; echo '4096' > /sys/kernel/ehmp/min_residency; echo '0' > /sys/kernel/ehmp/global_boost; echo '0 0 0 0' > /sys/kernel/ehmp/kernel_prefer_perf; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key/head; echo '500 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/key/tail; echo '700 1014000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/head; echo '700 0 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/head; echo '0 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/head; echo '0 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/tail; echo '1000 546000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/tail; echo '200 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/head; echo '600 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/tail; echo '130 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/head; echo '500 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/tail; echo '0 416000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touchkey/head; echo '200 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/touchkey/tail",
+        offCmd = "echo '79' > /sys/kernel/ehmp/up_threshold; echo '128' > /sys/kernel/ehmp/down_threshold; echo '8192' > /sys/kernel/ehmp/min_residency; echo '0' > /sys/kernel/ehmp/global_boost; echo '0 0 0 0' > /sys/kernel/ehmp/kernel_prefer_perf; echo '500 1066000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/key/head; echo '500 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/key/tail; echo '700 1469000 1053000 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/head; echo '700 0 1053000 0 0 1 1 0' > /sys/devices/virtual/input_booster/key_two/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/head; echo '0 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/keyboard/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/head; echo '0 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/mouse_wheel/tail; echo '1000 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/multitouch/tail; echo '200 1170000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/head; echo '600 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/pen_hover/tail; echo '130 1066000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/head; echo '500 858000 832000 0 0 1 1 0' > /sys/devices/virtual/input_booster/touch/tail; echo '0 1066000 0 0 0 1 1 0' > /sys/devices/virtual/input_booster/touchkey/head; echo '200 0 0 0 0 0 0 0' > /sys/devices/virtual/input_booster/touchkey/tail")
+    private val OPT_GPU_EFFI = opt("gpu_effiboost_opt", "gpueffiset_on", "GPU EFFICIENCY BOOST", true,
+        on  = "echo '1' > /sys/devices/platform/17500000.mali/dvfs_governor\necho '99'  > /sys/devices/platform/17500000.mali/highspeed_load\necho '5'   > /sys/devices/platform/17500000.mali/highspeed_delay\necho '150' > /sys/devices/platform/17500000.mali/dvfs_period\necho '100'  > /sys/kernel/gpu/gpu_poweroff_delay\necho '1'   > /sys/kernel/gpu/gpu_cl_boost_disable",
+        off = "echo '3' > /sys/devices/platform/17500000.mali/dvfs_governor\necho '94'  > /sys/devices/platform/17500000.mali/highspeed_load\necho '0'   > /sys/devices/platform/17500000.mali/highspeed_delay\necho '100' > /sys/devices/platform/17500000.mali/dvfs_period\necho '50'  > /sys/kernel/gpu/gpu_poweroff_delay\necho '0'   > /sys/kernel/gpu/gpu_cl_boost_disable",
+        onCmd  = "echo '1' > /sys/devices/platform/17500000.mali/dvfs_governor; echo '99' > /sys/devices/platform/17500000.mali/highspeed_load; echo '5' > /sys/devices/platform/17500000.mali/highspeed_delay; echo '150' > /sys/devices/platform/17500000.mali/dvfs_period; echo '100' > /sys/kernel/gpu/gpu_poweroff_delay; echo '1' > /sys/kernel/gpu/gpu_cl_boost_disable",
+        offCmd = "echo '3' > /sys/devices/platform/17500000.mali/dvfs_governor; echo '94' > /sys/devices/platform/17500000.mali/highspeed_load; echo '0' > /sys/devices/platform/17500000.mali/highspeed_delay; echo '100' > /sys/devices/platform/17500000.mali/dvfs_period; echo '50' > /sys/kernel/gpu/gpu_poweroff_delay; echo '0' > /sys/kernel/gpu/gpu_cl_boost_disable")
+    private val OPT_SWAP = opt("swap_opt", "swapset_on", "SWAP OPTIMIZATIONS", true,
+        on  = "echo '20' > /proc/sys/vm/dirty_ratio\necho '5' > /proc/sys/vm/dirty_background_ratio\necho '2500' > /proc/sys/vm/dirty_expire_centisecs\necho '2500' > /proc/sys/vm/dirty_writeback_centisecs\necho '60' > /proc/sys/vm/swappiness",
+        off = "echo '0' > /proc/sys/vm/dirty_ratio\necho '0' > /proc/sys/vm/dirty_background_ratio\necho '200' > /proc/sys/vm/dirty_expire_centisecs\necho '500' > /proc/sys/vm/dirty_writeback_centisecs\necho '100' > /proc/sys/vm/swappiness")
+    private val OPT_STORAGE = opt("storage_opt", "storageset_on", "STORAGE OPTIMIZATIONS", true,
+        on  = "echo '1' > /sys/block/sda/queue/rotational\necho '1' > /sys/block/sda/queue/add_random\necho '2' > /sys/block/sda/queue/rq_affinity",
+        off = "echo '0' > /sys/block/sda/queue/rotational\necho '0' > /sys/block/sda/queue/add_random\necho '1' > /sys/block/sda/queue/rq_affinity")
 
     // ======= About GURU (Labs) =======
-    private val OPT_FORCE_DOZE = OptionDef(
-        prefKey  = "forcedoze_opt",
-        execKey  = "forcedoze_opt",
-        marker   = "forcedoze_on",
-        onSave  = "# forcedoze_on=1\ndumpsys deviceidle force-idle",
-        offSave = "# forcedoze_on=0\ndumpsys deviceidle unforce",
-        onCmd   = "dumpsys deviceidle force-idle",
-        offCmd  = "dumpsys deviceidle unforce"
-    )
-    private val OPT_LIMIT_BG = OptionDef(
-        prefKey  = "limitprocess_opt",
-        execKey  = "limitprocess_opt",
-        marker   = "limitprocess_on",
-        onSave  = "# limitprocess_on=1\nSDK=\$(getprop ro.build.version.sdk)\nif [ \"\$SDK\" -eq 36 ]; then\nservice call activity 52 i32 4\nelif [ \"\$SDK\" -eq 35 ]; then\nservice call activity 51 i32 4\nelif [ \"\$SDK\" -eq 34 ]; then\nservice call activity 51 i32 4\nelif [ \"\$SDK\" -eq 33 ]; then\nservice call activity 44 i32 4\nfi",
-        offSave = "# limitprocess_on=0\nSDK=\$(getprop ro.build.version.sdk)\nif [ \"\$SDK\" -eq 36 ]; then\nservice call activity 52 i32 -1\nelif [ \"\$SDK\" -eq 35 ]; then\nservice call activity 51 i32 -1\nelif [ \"\$SDK\" -eq 34 ]; then\nservice call activity 51 i32 -1\nelif [ \"\$SDK\" -eq 33 ]; then\nservice call activity 44 i32 -1\nfi",
-        onCmd   = "SDK=\$(getprop ro.build.version.sdk)\nif [ \"\$SDK\" -eq 36 ]; then\nservice call activity 52 i32 4\nelif [ \"\$SDK\" -eq 35 ]; then\nservice call activity 51 i32 4\nelif [ \"\$SDK\" -eq 34 ]; then\nservice call activity 51 i32 4\nelif [ \"\$SDK\" -eq 33 ]; then\nservice call activity 44 i32 4\nfi",
-        offCmd  = "SDK=\$(getprop ro.build.version.sdk)\nif [ \"\$SDK\" -eq 36 ]; then\nservice call activity 52 i32 -1\nelif [ \"\$SDK\" -eq 35 ]; then\nservice call activity 51 i32 -1\nelif [ \"\$SDK\" -eq 34 ]; then\nservice call activity 51 i32 -1\nelif [ \"\$SDK\" -eq 33 ]; then\nservice call activity 44 i32 -1\nfi"
-    )
-    private val OPT_NSD = OptionDef(
-        prefKey  = "nsd_opt",
-        execKey  = "nsd_opt",
-        marker   = "nsdopt_on",
-        onSave  = "# nsdopt_on=1\nsettings put global nsd_on 1",
-        offSave = "# nsdopt_on=0\nsettings put global nsd_on 0",
-        onCmd   = "settings put global nsd_on 1",
-        offCmd  = "settings put global nsd_on 0"
-    )
+    private val OPT_LIMIT_BG = opt("limitprocess_opt", "limitprocess_on", "LIMIT BACKGROUND APP PROCESS (LABS)", false,
+        on  = "SDK=\$(getprop ro.build.version.sdk)\nif [ \"\$SDK\" -eq 36 ]; then\nservice call activity 52 i32 4\nelif [ \"\$SDK\" -eq 35 ]; then\nservice call activity 51 i32 4\nelif [ \"\$SDK\" -eq 34 ]; then\nservice call activity 51 i32 4\nelif [ \"\$SDK\" -eq 33 ]; then\nservice call activity 44 i32 4\nfi",
+        off = "SDK=\$(getprop ro.build.version.sdk)\nif [ \"\$SDK\" -eq 36 ]; then\nservice call activity 52 i32 -1\nelif [ \"\$SDK\" -eq 35 ]; then\nservice call activity 51 i32 -1\nelif [ \"\$SDK\" -eq 34 ]; then\nservice call activity 51 i32 -1\nelif [ \"\$SDK\" -eq 33 ]; then\nservice call activity 44 i32 -1\nfi",
+        join = "\n")
+    private val OPT_FORCE_DOZE = opt("forcedoze_opt", "forcedoze_on", "FORCE DOZE (LABS)", false,
+        on  = "dumpsys deviceidle force-idle",
+        off = "dumpsys deviceidle unforce")
+    private val OPT_NSD = opt("nsd_opt", "nsdopt_on", "NETWORK SERVICE DISCOVERY (LABS)", false,
+        on  = "settings put global nsd_on 1",
+        off = "settings put global nsd_on 0")
+    private val GENERAL_OPTS = listOf(OPT_BATT_APPS, OPT_CACHED_APPS, OPT_WAKELOCK_BLOCK, OPT_CPU_HOTPLUG, OPT_POWER_EFF, OPT_THERMAL, OPT_CPU_EFFI, OPT_GPU_EFFI, OPT_SWAP, OPT_STORAGE)
+    private val LABS_OPTS = listOf(OPT_LIMIT_BG, OPT_FORCE_DOZE, OPT_NSD)
 
     // ======= Apply Functions (General Settings) =======
-    suspend fun applyBattAppsOpt(enabled: Boolean)   = applyToggle(OPT_BATT_APPS,   enabled)
-    suspend fun applyCachedAppsOpt(enabled: Boolean) = applyToggle(OPT_CACHED_APPS, enabled)
-    suspend fun applyCpuHotplug(enabled: Boolean)    = applyToggle(OPT_CPU_HOTPLUG, enabled)
-    suspend fun applyPowerEff(enabled: Boolean)      = applyToggle(OPT_POWER_EFF,   enabled)
-    suspend fun applyThermalOpt(enabled: Boolean)    = applyToggle(OPT_THERMAL,     enabled)
-    suspend fun applyCpuEffiBoost(enabled: Boolean)  = applyToggle(OPT_CPU_EFFI,    enabled)
-    suspend fun applyGpuEffiBoost(enabled: Boolean)  = applyToggle(OPT_GPU_EFFI,    enabled)
-    suspend fun applySwapOpt(enabled: Boolean)       = applyToggle(OPT_SWAP,        enabled)
-    suspend fun applyStorageOpt(enabled: Boolean)    = applyToggle(OPT_STORAGE,     enabled)
+    suspend fun applyBattAppsOpt(enabled: Boolean)      = applyToggle(OPT_BATT_APPS,      enabled)
+    suspend fun applyCachedAppsOpt(enabled: Boolean)    = applyToggle(OPT_CACHED_APPS,    enabled)
+    suspend fun applyWakelockBlocker(enabled: Boolean)  = applyToggle(OPT_WAKELOCK_BLOCK, enabled)
+    suspend fun applyCpuHotplug(enabled: Boolean)       = applyToggle(OPT_CPU_HOTPLUG,    enabled)
+    suspend fun applyPowerEff(enabled: Boolean)         = applyToggle(OPT_POWER_EFF,      enabled)
+    suspend fun applyThermalOpt(enabled: Boolean)       = applyToggle(OPT_THERMAL,        enabled)
+    suspend fun applyCpuEffiBoost(enabled: Boolean)     = applyToggle(OPT_CPU_EFFI,       enabled)
+    suspend fun applyGpuEffiBoost(enabled: Boolean)     = applyToggle(OPT_GPU_EFFI,       enabled)
+    suspend fun applySwapOpt(enabled: Boolean)          = applyToggle(OPT_SWAP,           enabled)
+    suspend fun applyStorageOpt(enabled: Boolean)       = applyToggle(OPT_STORAGE,        enabled)
     // Battery Protection (Unique Logic)
+    private fun battProtectBlock(protectEnabled: Boolean, level: Int) =
+        "# batteryprotect_on=${if (protectEnabled) 1 else 0}\n# battery_litmit=${level}%\n" +
+        "echo '${if (protectEnabled) level else 100}' > /sys/class/power_supply/battery/batt_full_capacity"
     suspend fun applyBattLevel(level: Int, protectEnabled: Boolean) {
-        saveAll {putBoolean("batteryprotect_opt", protectEnabled); putInt("batt_level", level)}
+        saveAll { putBoolean("batteryprotect_opt", protectEnabled); putInt("batt_level", level) }
         val battCapacity = if (protectEnabled) level else 100
-        val scriptCmd = buildString {
-            append(if (protectEnabled) "sed -i \"s|^# batteryprotect_on=.*|# batteryprotect_on=1|\" $scriptPath"
-                   else                "sed -i \"s|^# batteryprotect_on=.*|# batteryprotect_on=0|\" $scriptPath")
-            append("; sed -i \"s|^# battery_litmit=.*|# battery_litmit=${level}%|\" $scriptPath")
-            append("; ${sedValue("/sys/class/power_supply/battery/batt_full_capacity", "$battCapacity")}")
-        }
+        val scriptCmd = "sed -i \"s|^# batteryprotect_on=.*|# batteryprotect_on=${if (protectEnabled) 1 else 0}|\" $scriptPath" +
+            "; sed -i \"s|^# battery_litmit=.*|# battery_litmit=${level}%|\" $scriptPath" +
+            "; ${sedValue("/sys/class/power_supply/battery/batt_full_capacity", "$battCapacity")}"
         guru.execSafe("batt_level", "$scriptCmd; echo '$battCapacity' > /sys/class/power_supply/battery/batt_full_capacity")
     }
 
     // ======= Apply Functions (Advanced Settings - Unique Logics) =======
     // Freqs Settings
+    private fun freqBlock(enabled: Boolean, litHz: Int, bigHz: Int) =
+        "# frqset_on=${if (enabled) 1 else 0}\n# lit=${litHz / 1000}\n" +
+        "echo '${if (enabled) litHz else FREQ_LIT_OFF}' > $FREQ_LIT\n# big=${bigHz / 1000}\n" +
+        "echo '${if (enabled) bigHz else FREQ_BIG_OFF}' > $FREQ_BIG"
+    private suspend fun applyFreqs(enabled: Boolean, litHz: Int, bigHz: Int, liveLit: Boolean, liveBig: Boolean) {
+        val live = listOfNotNull(
+            if (liveLit) "echo '${if (enabled) litHz else FREQ_LIT_OFF}' > $FREQ_LIT" else null,
+            if (liveBig) "echo '${if (enabled) bigHz else FREQ_BIG_OFF}' > $FREQ_BIG" else null
+        ).joinToString("; ")
+        guru.execSafe("frq_master", awkBlock("frqset_on", freqBlock(enabled, litHz, bigHz)) + (if (live.isNotEmpty()) "; $live" else ""))
+    }
     suspend fun applyFreqsMaster(enabled: Boolean) {
         saveBool("frq_on", enabled)
-        val litHz  = prefs.getInt("frq_little", 1690000)
-        val bigHz  = prefs.getInt("frq_big",    1690000)
-        val litMhz = litHz / 1000
-        val bigMhz = bigHz / 1000
-        val block = if (enabled) """
-# frqset_on=1
-# lit=$litMhz
-echo '$litHz' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-# big=$bigMhz
-echo '$bigHz' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq""".trimIndent()
-        else """
-# frqset_on=0
-# lit=$litMhz
-echo '1794000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-# big=$bigMhz
-echo '2704000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq""".trimIndent()
-        val liveCmd = if (enabled) "echo '$litHz' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq; echo '$bigHz' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq"
-                      else         "echo '1794000' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq; echo '2704000' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq"
-        guru.execSafe("frq_master", "${awkBlock("frqset_on", block)}; $liveCmd")
+        applyFreqs(enabled, getInt("frq_little", FREQ_DEFAULT), getInt("frq_big", FREQ_DEFAULT), liveLit = true, liveBig = true)
     }
     suspend fun applyLitFreq(valueHz: Int) {
         saveInt("frq_little", valueHz)
-        val enabled = prefs.getBoolean("frq_on", true)
-        val bigHz   = prefs.getInt("frq_big", 1690000)
-        val litMhz  = valueHz / 1000
-        val bigMhz  = bigHz / 1000
-        val echoLit = if (enabled) valueHz else 1794000
-        val echoBig = if (enabled) bigHz   else 2704000
-        val block = """
-# frqset_on=${if (enabled) 1 else 0}
-# lit=$litMhz
-echo '$echoLit' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-# big=$bigMhz
-echo '$echoBig' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq""".trimIndent()
-        val liveCmd = if (enabled) "echo '$valueHz' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq" else ""
-        guru.execSafe("frq_master", "${awkBlock("frqset_on", block)}${if (liveCmd.isNotEmpty()) "; $liveCmd" else ""}")
+        val enabled = getBool("frq_on", true)
+        applyFreqs(enabled, valueHz, getInt("frq_big", FREQ_DEFAULT), liveLit = enabled, liveBig = false)
     }
     suspend fun applyBigFreq(valueHz: Int) {
         saveInt("frq_big", valueHz)
-        val enabled = prefs.getBoolean("frq_on", true)
-        val litHz   = prefs.getInt("frq_little", 1690000)
-        val litMhz  = litHz / 1000
-        val bigMhz  = valueHz / 1000
-        val echoLit = if (enabled) litHz   else 1794000
-        val echoBig = if (enabled) valueHz else 2704000
-        val block = """
-# frqset_on=${if (enabled) 1 else 0}
-# lit=$litMhz
-echo '$echoLit' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
-# big=$bigMhz
-echo '$echoBig' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq""".trimIndent()
-        val liveCmd = if (enabled) "echo '$valueHz' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq" else ""
-        guru.execSafe("frq_master", "${awkBlock("frqset_on", block)}${if (liveCmd.isNotEmpty()) "; $liveCmd" else ""}")
+        val enabled = getBool("frq_on", true)
+        applyFreqs(enabled, getInt("frq_little", FREQ_DEFAULT), valueHz, liveLit = false, liveBig = enabled)
     }
     // UV Settings
     private val voltNames    = listOf("big","lit","g3d","mif","aud","cam","cp","disp","fsys0","int","intcam","iva","score")
     private val voltDefaults = mapOf("cp" to 0).withDefault { -4 }
+    private fun voltSaved(name: String) = getInt("${name}_volt", voltDefaults.getValue(name))
+    private fun voltEcho(name: String, value: Int) = "echo '$value' > /sys/power/percent_margin/${name}_margin_percent"
+    private fun voltBlock(enabled: Boolean) =
+        (listOf("# voltset_on=${if (enabled) 1 else 0}") + voltNames.flatMap { name ->
+            listOf("# ${name}_volt=${voltSaved(name)}", voltEcho(name, if (enabled) voltSaved(name) else 0))
+        }).joinToString("\n")
     suspend fun applyVoltMaster(enabled: Boolean) {
         saveBool("volt_on", enabled)
-        val lines = buildString {
-            appendLine(if (enabled) "# voltset_on=1" else "# voltset_on=0")
-            voltNames.forEachIndexed { i, name ->
-                val saved = prefs.getInt("${name}_volt", voltDefaults.getValue(name))
-                val echo  = if (enabled) saved else 0
-                appendLine("# ${name}_volt=${saved}")
-                if (i < voltNames.lastIndex) appendLine("echo '$echo' > /sys/power/percent_margin/${name}_margin_percent")
-                else append("echo '$echo' > /sys/power/percent_margin/${name}_margin_percent")
-            }
-        }
-        val liveCmd = voltNames.joinToString("; ") { name ->
-            val saved = prefs.getInt("${name}_volt", voltDefaults.getValue(name))
-            val echo  = if (enabled) saved else 0
-            "echo '$echo' > /sys/power/percent_margin/${name}_margin_percent"
-        }
-        guru.execSafe("volt_master", "${awkBlock("voltset_on", lines)}; $liveCmd")
+        val liveCmd = voltNames.joinToString("; ") { name -> voltEcho(name, if (enabled) voltSaved(name) else 0) }
+        guru.execSafe("volt_master", "${awkBlock("voltset_on", voltBlock(enabled))}; $liveCmd")
     }
     suspend fun applyVolt(key: String, value: Int) {
         val name      = key.removeSuffix("_volt")
         saveInt(key, value)
-        val enabled   = prefs.getBoolean("volt_on", true)
-        val echoValue = if (enabled) value else 0
-        val scriptCmd = buildString {
-            append("sed -i \"s|^# ${key}=.*|# ${key}=${value}|\" $scriptPath")
-            append("; ${sedValue("/sys/power/percent_margin/${name}_margin_percent", "$echoValue")}")
-        }
-        guru.execSafe("volt_$name", "$scriptCmd; echo '$echoValue' > /sys/power/percent_margin/${name}_margin_percent")
+        val echoValue = if (getBool("volt_on", true)) value else 0
+        val scriptCmd = "sed -i \"s|^# ${key}=.*|# ${key}=${value}|\" $scriptPath" + "; ${sedValue("/sys/power/percent_margin/${name}_margin_percent", "$echoValue")}"
+        guru.execSafe("volt_$name", "$scriptCmd; ${voltEcho(name, echoValue)}")
     }
 
     // ======= Apply Functions (About GURU) =======
@@ -311,45 +206,14 @@ echo '$echoBig' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq""".tr
 
     // ======= Build Script For Apply Preferences =======
     fun buildScript(): String {
-        // General
-        val battApps    = getBool("battapps_opt",       true)
-        val cachedApps  = getBool("cachedapps_opt",     true)
-        val hotplug     = getBool("cpu_hotplug_opt",    true)
-        val powerEffi   = getBool("power_effi_opt",     true)
-        val thermal     = getBool("thermal_opt",        true)
-        val cpuEffi     = getBool("cpu_effiboost_opt",  true)
-        val gpuEffi     = getBool("gpu_effiboost_opt",  true)
-        val swap        = getBool("swap_opt",           true)
-        val storage     = getBool("storage_opt",        true)
+        fun optSections(list: List<OptionDef>) = list.map { it.title to (if (getBool(it.key, it.default)) it.onSave else it.offSave) }
         val battProtect = getBool("batteryprotect_opt", false)
-        val battLevel   = getInt("batt_level",          90)
-        val battCapacity = if (battProtect) battLevel else 100
-        // Freqs
-        val frqOn       = getBool("frq_on",             true)
-        val litHz       = getInt("frq_little",          1690000)
-        val bigHz       = getInt("frq_big",             1690000)
-        val litMhz      = litHz / 1000
-        val bigMhz      = bigHz / 1000
-        val echoLit     = if (frqOn) litHz else 1794000
-        val echoBig     = if (frqOn) bigHz else 2704000
-        // UV
-        val voltOn      = getBool("volt_on",            true)
-        val voltValues  = voltNames.associateWith { name -> getInt("${name}_volt", voltDefaults.getValue(name)) }
-        val voltageLines = buildString {
-            appendLine("# voltset_on=${if (voltOn) 1 else 0}")
-            voltNames.forEach { name ->
-                val saved = voltValues[name]!!
-                val echo  = if (voltOn) saved else 0
-                appendLine("# ${name}_volt=$saved")
-                appendLine("echo '$echo' > /sys/power/percent_margin/${name}_margin_percent")
-            }
-        }
-        // About (Labs)
-        val limitProc   = getBool("limitprocess_opt",   false)
-        val forceDoze   = getBool("forcedoze_opt",      false)
-        val nsd         = getBool("nsd_opt",            false)
-        // Build String logic
-        fun block(opt: OptionDef, enabled: Boolean) = if (enabled) opt.onSave else opt.offSave
+        val sections =
+            optSections(GENERAL_OPTS) + listOf(
+                "BATTERY PROTECTION" to battProtectBlock(battProtect, getInt("batt_level", 90)),
+                "FREQS SETTINGS"     to freqBlock(getBool("frq_on", true), getInt("frq_little", FREQ_DEFAULT), getInt("frq_big", FREQ_DEFAULT)),
+                "VOLTAGE SETTINGS"   to voltBlock(getBool("volt_on", true))
+            ) + optSections(LABS_OPTS)
         return buildString {
             appendLine("# BATTERY GURU OPTIMIZER (ALL SETTINGS)")
             appendLine("# Developed by @EliezerB03")
@@ -358,57 +222,11 @@ echo '$echoBig' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq""".tr
             appendLine()
             appendLine("# ============== ALL OPTIMIZATIONS  ============== #")
             appendLine()
-            appendLine("#---------------< BATTERY OPTIMIZATIONS ON APPS >---------------#")
-            appendLine(block(OPT_BATT_APPS,   battApps))
-            appendLine()
-            appendLine("#---------------< FREEZE CACHED APPS >---------------#")
-            appendLine(block(OPT_CACHED_APPS, cachedApps))
-            appendLine()
-            appendLine("#---------------< CPU HOTPLUG OPTIMIZATIONS >---------------#")
-            appendLine(block(OPT_CPU_HOTPLUG, hotplug))
-            appendLine()
-            appendLine("#---------------< CPU POWER EFFICIENT >---------------#")
-            appendLine(block(OPT_POWER_EFF,   powerEffi))
-            appendLine()
-            appendLine("#---------------< THERMAL OPTIMIZATIONS >---------------#")
-            appendLine(block(OPT_THERMAL,     thermal))
-            appendLine()
-            appendLine("#---------------< CPU EFFICIENCY BOOST >---------------#")
-            appendLine(block(OPT_CPU_EFFI,    cpuEffi))
-            appendLine()
-            appendLine("#---------------< GPU EFFICIENCY BOOST >---------------#")
-            appendLine(block(OPT_GPU_EFFI,    gpuEffi))
-            appendLine()
-            appendLine("#---------------< SWAP OPTIMIZATIONS >---------------#")
-            appendLine(block(OPT_SWAP,        swap))
-            appendLine()
-            appendLine("#---------------< STORAGE OPTIMIZATIONS >---------------#")
-            appendLine(block(OPT_STORAGE,     storage))
-            appendLine()
-            appendLine("#---------------< BATTERY PROTECTION >---------------#")
-            appendLine("# batteryprotect_on=${if (battProtect) 1 else 0}")
-            appendLine("# battery_litmit=${battLevel}%")
-            appendLine("echo '$battCapacity' > /sys/class/power_supply/battery/batt_full_capacity")
-            appendLine()
-            appendLine("#---------------< FREQS SETTINGS >---------------#")
-            appendLine("# frqset_on=${if (frqOn) 1 else 0}")
-            appendLine("# lit=$litMhz")
-            appendLine("echo '$echoLit' > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq")
-            appendLine("# big=$bigMhz")
-            appendLine("echo '$echoBig' > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq")
-            appendLine()
-            appendLine("#---------------< VOLTAGE SETTINGS >---------------#")
-            append(voltageLines)
-            appendLine()
-            appendLine("#---------------< LIMIT BACKGROUND APP PROCESS (LABS) >---------------#")
-            appendLine(block(OPT_LIMIT_BG,    limitProc))
-            appendLine()
-            appendLine("#---------------< FORCE DOZE (LABS) >---------------#")
-            appendLine(block(OPT_FORCE_DOZE,  forceDoze))
-            appendLine()
-            appendLine("#---------------< NETWORK SERVICE DISCOVERY (LABS) >---------------#")
-            appendLine(block(OPT_NSD,         nsd))
-            appendLine()
+            sections.forEach { (title, body) ->
+                appendLine("#---------------< $title >---------------#")
+                appendLine(body)
+                appendLine()
+            }
             appendLine("# ======================================")
         }
     }
@@ -436,6 +254,19 @@ settings put global forced_app_standby_enabled 1
 # cachedappsopt_on=1
 settings put global cached_apps_freezer enabled
 
+#---------------< WAKELOCK BLOCKER OPTIMIZATIONS >---------------#
+# wakelock_block_on=1
+P=/sys/devices/virtual/misc/boeffla_wakelock_blocker/wakelock_blocker
+cur=${'$'}(cat ${'$'}P)
+[ "${'$'}(settings get global bgo_wl_prev)" = "null" ] && settings put global bgo_wl_prev "${'$'}{cur:-none}"
+for w in wlan_ctrl_wake wlan_scan_wake wlan_evt_wake; do
+cur=${'$'}(cat ${'$'}P)
+case ";${'$'}cur;" in
+*";${'$'}w;"*) ;;
+*) if [ -z "${'$'}cur" ]; then echo "${'$'}w" > ${'$'}P; else echo "${'$'}cur;${'$'}w" > ${'$'}P; fi;;
+esac
+done
+
 #---------------< CPU HOTPLUG OPTIMIZATIONS >---------------#
 # hotplugset_on=1
 echo '0' > /sys/power/cpuhotplug/governor/user_mode
@@ -447,13 +278,7 @@ echo 'Y' > /sys/module/workqueue/parameters/power_efficient
 
 #---------------< THERMAL OPTIMIZATIONS >---------------#
 # thermalset_on=1
-system_table_set activity_manager_constants max_cached_processes=0,background_settle_time=0,fgservice_min_shown_time=0,fgservice_min_report_time=0,fgservice_screen_on_before_time=0,fgservice_screen_on_after_time=0,content_provider_retain_time=0,gc_timeout=0,gc_min_interval=0,full_pss_min_interval=0,full_pss_lowered_interval=0,power_check_interval=0,power_check_max_cpu_1=0,power_check_max_cpu_2=0,power_check_max_cpu_3=0,power_check_max_cpu_4=0,service_usage_interaction_time=0,usage_stats_interaction_interval=0,service_restart_duration=0,service_reset_run_duration=0,service_restart_duration_factor=0,service_min_restart_time_between=0,service_max_inactivity=0,service_bg_start_timeout=0,CUR_MAX_CACHED_PROCESSES=0,CUR_MAX_EMPTY_PROCESSES=0,CUR_TRIM_EMPTY_PROCESSES=0,CUR_TRIM_CACHED_PROCESSES=0
-chmod 666 /sys/devices/system/cpu/cpu[0-7]/max_cpus; chmod 666 /sys/devices/system/cpu/cpu[0-7]/min_cpus
-echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/max_cpus; echo 0 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus; echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_down_thres
-echo 4 > /sys/devices/system/cpu/cpu4/core_ctl/task_thres; echo 80 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu4/core_ctl/offline_delay_ms
-echo 2 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/max_cpus; echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/task_thres
-echo 80 > /sys/devices/system/cpu/cpu0/core_ctl/busy_up_thres; echo 100 > /sys/devices/system/cpu/cpu0/core_ctl/offline_delay_ms; echo 60 > /sys/devices/system/cpu/cpu0/core_ctl/busy_down_thres
-chmod 444 /sys/devices/system/cpu/cpu[0-7]/max_cpus
+echo 85 > /sys/devices/platform/battery/power_supply/battery/siop_level
 pm disable com.google.android.gms/.chimera.GmsIntentOperationService
 
 #---------------< CPU EFFICIENCY BOOST >---------------#
@@ -493,12 +318,12 @@ echo '1' > /sys/kernel/gpu/gpu_cl_boost_disable
 
 #---------------< SWAP OPTIMIZATIONS >---------------#
 # swapset_on=1
-echo '10' > /proc/sys/vm/dirty_ratio
-echo '3' > /proc/sys/vm/dirty_background_ratio
+echo '20' > /proc/sys/vm/dirty_ratio
+echo '5' > /proc/sys/vm/dirty_background_ratio
 echo '2500' > /proc/sys/vm/dirty_expire_centisecs
-echo '1250' > /proc/sys/vm/dirty_writeback_centisecs
-echo '2' > /proc/sys/vm/laptop_mode
-echo '70' > /proc/sys/vm/swappiness
+echo '2500' > /proc/sys/vm/dirty_writeback_centisecs
+echo '60' > /proc/sys/vm/swappiness
+echo '50' > /proc/sys/vm/vfs_cache_pressure
 
 #---------------< STORAGE OPTIMIZATIONS >---------------#
 # storageset_on=1

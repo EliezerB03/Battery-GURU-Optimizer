@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="UpdatableWidget">
+        <attr name="widgetLayout" format="reference"/>
+        <attr name="showWidget" format="boolean"/>
+        <attr name="widgetMarginEnd" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="BottomSeparator">
+        <attr name="extraBottomMargin" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="ListItemView">
+        <attr name="title"/>
+        <attr name="summary" format="string"/>
+        <attr name="showTopDivider" format="boolean"/>
+        <attr name="showBottomDivider" format="boolean"/>
+        <attr name="summaryUserUpdatable" format="boolean"/>
+    </declare-styleable>
+</resources>

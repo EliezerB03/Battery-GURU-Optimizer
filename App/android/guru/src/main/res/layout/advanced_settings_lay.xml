@@ -16,55 +16,44 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingHorizontal="10dp">
-            <dev.oneuiproject.oneui.widget.Separator
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
 
             <!-- WARNING -->
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?android:colorBackground"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
+                android:paddingHorizontal="17dp"
+                android:paddingVertical="10dp"
+                android:gravity="center_vertical">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ic_warning_freq"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="17dp"
-                    android:paddingEnd="17dp"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:id="@+id/ic_warning_freq"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_warning"
-                        android:layout_marginEnd="15dp"/>
-                    <TextView
-                        android:id="@+id/text_warning_advanced"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/Color_Warning"
-                        android:text="@string/advanced_warning"/>
-                </LinearLayout>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+                    android:src="@drawable/ic_warning"
+                    android:layout_marginEnd="15dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_warning_advanced"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/Color_TextWarning"
+                    android:text="@string/advanced_warning"/>
+            </LinearLayout>
 
             <!-- ==================== FREQS SECTION ==================== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_freqs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_sep_freqs"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_frequency"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
+                app:seslLayoutRoundedCorner="corner_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.SwitchItemView
+                <com.guru.batteryoptimizer.widgets.SwitchItemView
                     android:id="@+id/switch_freqs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +64,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <dev.oneuiproject.oneui.widget.CardItemView
+                    <com.guru.batteryoptimizer.widgets.CardItemView
                         android:id="@+id/lit_freq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -92,7 +81,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <dev.oneuiproject.oneui.widget.CardItemView
+                    <com.guru.batteryoptimizer.widgets.CardItemView
                         android:id="@+id/big_freq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -105,22 +94,23 @@
                         android:layout_height="wrap_content"
                         android:visibility="invisible"/>
                 </FrameLayout>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
 
             <!-- ==================== UV SECTION ==================== -->
-            <dev.oneuiproject.oneui.widget.Separator
+            <com.guru.batteryoptimizer.widgets.SectionSeparator
                 android:id="@+id/sep_uv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/advanced_sep_uv"
                 android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_voltage"/>
-            <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            <androidx.appcompat.widget.SeslLinearLayoutCompat
+                app:seslLayoutRoundedCorner="corner_all"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:orientation="vertical">
-                <dev.oneuiproject.oneui.widget.SwitchItemView
+                <com.guru.batteryoptimizer.widgets.SwitchItemView
                     android:id="@+id/switch_uv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,60 +128,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvLitVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_cpulittle"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvLitVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvLitVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarLitVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvLitVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -208,60 +189,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvBigVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_cpubig"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvBigVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvBigVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarBigVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvBigVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -278,60 +250,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvGpuVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_gpu"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvGpuVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvGpuVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarGpuVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvGpuVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -348,60 +311,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvMifVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_mif"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvMifVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvMifVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarMifVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvMifVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -418,60 +372,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvAudVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_aud"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvAudVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvAudVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarAudVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvAudVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -488,60 +433,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvCamVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_cam"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvCamVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvCamVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarCamVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvCamVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -558,60 +494,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvCPVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_cp"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvCPVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvCPVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarCPVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="0"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvCPVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -628,60 +555,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvDispVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_disp"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvDispVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvDispVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarDispVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvDispVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -698,60 +616,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvFsysVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_fsys"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvFsysVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvFsysVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarFsysVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvFsysVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -768,60 +677,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvIntVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_int"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvIntVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvIntVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarIntVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvIntVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -838,60 +738,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvIntCamVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_intcam"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvIntCamVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvIntCamVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarIntCamVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvIntCamVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -908,60 +799,51 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvIvaVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_iva"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvIvaVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvIvaVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarIvaVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvIvaVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
@@ -978,70 +860,62 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="17dp"
-                        android:paddingEnd="17dp"
+                        android:paddingHorizontal="17dp"
                         android:paddingTop="15dp"
                         android:paddingBottom="25dp">
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvScoreVoltTitle"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/advanced_uv_seekbar_score"
-                            android:gravity="start"
                             android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"/>
-                        <TextView
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvScoreVoltPercent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="?attr/colorPrimary"
                             android:textStyle="bold"
-                            android:gravity="end"
                             android:textSize="14sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="25dp"
-                        android:paddingEnd="25dp"
+                        android:paddingHorizontal="25dp"
                         android:paddingBottom="25dp"
                         android:gravity="center_vertical">
                         <ImageButton
                             android:id="@+id/tvScoreVoltDown"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_minus"
                             android:scaleType="center"
                             android:contentDescription="Decrease"/>
-                        <dev.oneuiproject.oneui.widget.SeekBarPlus
+                        <com.guru.batteryoptimizer.widgets.SeekBarPlus
                             android:id="@+id/seekBarScoreVolt"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:max="10"
-                            android:min="0"
-                            android:progress="4"
-                            app:centerBasedBar="false"
-                            app:seamless="false"/>
+                            android:min="0"/>
                         <ImageButton
                             android:id="@+id/tvScoreVoltUp"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/oui_des_preference_seekbar_pro_btn_bg"
+                            android:background="@drawable/seekbar_btn_bg"
                             android:src="@drawable/ic_seekbar_plus"
                             android:scaleType="center"
                             android:contentDescription="Increase"/>
                     </LinearLayout>
                 </LinearLayout>
-            </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
-
-            <dev.oneuiproject.oneui.widget.Separator
+            </androidx.appcompat.widget.SeslLinearLayoutCompat>
+            <!-- ====== SpaceBottom Reserved ====== -->
+            <View
+                android:id="@+id/fragment_tail_space"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="120dp"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </FrameLayout>

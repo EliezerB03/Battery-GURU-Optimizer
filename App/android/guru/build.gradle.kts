@@ -3,6 +3,7 @@ plugins {
 }
 android {
     namespace = "com.guru.batteryoptimizer"
+    ndkVersion = "30.0.16248370"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
@@ -11,42 +12,33 @@ android {
     defaultConfig {
         applicationId = "com.guru.batteryoptimizer"
         minSdk = 33
-        targetSdk = 35
-        versionName = "4.0.1"
-        versionCode = 40100
+        targetSdk = 36
+        versionName = "4.1"
+        versionCode = 41000
         ndk {
             abiFilters += "arm64-v8a"
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-        }
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
     }
     buildFeatures {
         viewBinding = false
+        buildConfig = true
     }
     lint {
         checkReleaseBuilds = false
         abortOnError = false
     }
     project.afterEvaluate {
-        tasks.named("assembleRelease") {
-            doLast {
-                val outputDir = file("${layout.buildDirectory.get()}/outputs/apk/release")
-                val original = File(outputDir, "guru-release.apk").takeIf {it.exists()}?: outputDir.listFiles()?.firstOrNull {it.extension == "apk"}
-                original?.renameTo(File(outputDir, "bgo-app-release.apk"))
-            }
-        }
-        tasks.named("assembleDebug") {
-            doLast {
-                val outputDir = file("${layout.buildDirectory.get()}/outputs/apk/debug")
-                val original = File(outputDir, "guru-debug.apk").takeIf {it.exists()}?: outputDir.listFiles()?.firstOrNull {it.extension == "apk"}
-                original?.renameTo(File(outputDir, "bgo-app-debug.apk"))
+        listOf("release", "debug").forEach { type ->
+            tasks.named("assemble${type.replaceFirstChar { it.uppercase() }}") {
+                doLast {
+                    val outputDir = file("${layout.buildDirectory.get()}/outputs/apk/$type")
+                    val original = File(outputDir, "guru-$type.apk").takeIf {it.exists()}?: outputDir.listFiles()?.firstOrNull {it.extension == "apk"}
+                    original?.renameTo(File(outputDir, "bgo-app-$type.apk"))
+                }
             }
         }
     }
@@ -83,11 +75,28 @@ android {
 configurations.all {
     exclude(group = "sesl.androidx.picker", module = "picker-app")
     exclude(group = "sesl.androidx.picker", module = "picker-color")
+    exclude(group = "androidx.core", module = "core")
+    exclude(group = "androidx.core", module = "core-ktx")
+    exclude(group = "androidx.customview", module = "customview")
+    exclude(group = "androidx.coordinatorlayout", module = "coordinatorlayout")
+    exclude(group = "androidx.drawerlayout", module = "drawerlayout")
+    exclude(group = "androidx.viewpager2", module = "viewpager2")
+    exclude(group = "androidx.viewpager", module = "viewpager")
+    exclude(group = "androidx.appcompat", module = "appcompat")
+    exclude(group = "androidx.fragment", module = "fragment")
+    exclude(group = "androidx.preference", module = "preference")
+    exclude(group = "androidx.slidingpanelayout", module = "slidingpanelayout")
+    exclude(group = "androidx.swiperefreshlayout", module = "swiperefreshlayout")
+    exclude(group = "com.google.android.material", module = "material")
 }
 dependencies {
-    implementation("io.github.tribalfs:oneui-design:0.9.19+oneui8")
+    //sesl material
+    implementation("sesl.com.google.android.material:material:1.14.0+1.0.47-sesl9+rev8")
+    //sesl androidx
+    implementation("sesl.androidx.appcompat:appcompat:1.8.0+1.0.38-sesl9+rev4")
+    implementation("sesl.androidx.core:core:1.19.0+1.0.29-sesl9+rev3")
+    implementation("sesl.androidx.fragment:fragment:1.9.0+1.0.6-sesl9+rev1")
+    //others
+    implementation("androidx.core:core-splashscreen:1.2.0")
     implementation("com.github.topjohnwu.libsu:core:6.0.0")
-    implementation("androidx.core:core-splashscreen:1.2.0") {
-        exclude(group = "androidx.core", module = "core")
-    }
 }

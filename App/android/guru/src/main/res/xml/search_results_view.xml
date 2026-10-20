@@ -3,5 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:overScrollMode="always"
-    android:scrollbars="vertical"/>
+    android:fillViewport="true"
+    android:overScrollMode="ifContentScrolls"
+    android:scrollbars="vertical">
+    <LinearLayout
+        android:id="@+id/search_results_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="10dp">
+        <!-- ====== SpaceBottom Reserved ====== -->
+        <View
+            android:id="@+id/search_tail_space"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

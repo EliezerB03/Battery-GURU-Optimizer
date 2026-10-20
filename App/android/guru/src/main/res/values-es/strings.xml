@@ -6,6 +6,7 @@
     <string name="search_hint">Buscar opciones</string>
     <string name="search_type_to_search">Escribe algo para buscar</string>
     <string name="search_no_results">No se encontraron resultados</string>
+    <string name="search_sep_results">Resultados</string>
     <string name="dialog_progress">Progreso:</string>
     <string name="dialog_btn_ok">De acuerdo</string>
     <string name="dialog_btn_close">Cerrar</string>
@@ -25,8 +26,11 @@
     <string name="checks_fatalrootlostmsg">¡Se perdió el acceso ROOT!\n¡La app requiere acceso ROOT para funcionar!</string>
     <string name="checks_closeapp">Cerrar app</string>
     <!-- Updater Helper -->
-    <string name="updater_checkingupdatetitle">Buscando actualización...</string>
-    <string name="updater_checkingupdatemsg">Buscando actualización disponible...</string>
+    <string name="updater_widget_checkingupdate">Buscando actualización disponible...</string>
+    <string name="updater_widget_uptodate">Tienes la versión más reciente instalada.</string>
+    <string name="updater_widget_updateavailable">¡Actualización disponible!\nToca para más detalles.</string>
+    <string name="updater_widget_installupdate">¡Actualización lista para instalar!\nToca para más detalles.</string>
+    <string name="updater_widget_connectionerror">¡No se pudo conectar al servidor!\nRevisa tu conexión a internet.</string>
     <string name="updater_updateavailabletitle">¡Actualización disponible!</string>
     <string name="updater_updateavailablemsg">¡La versión %1$s está disponible!\nVersión actual: %2$s\n\n%3$sPulsa \'Actualizar ahora\' para descargar la actualización.</string>
     <string name="updater_updateavailablechangelog">Novedades:\n%1$s\n\n</string>
@@ -38,10 +42,6 @@
     <string name="updater_pendinginstallupdatemsg">¡La actualización está lista!\n¿Deseas instalarla ahora?\n\nNota: puedes instalarla más tarde desde Acerca de GURU &gt; Buscar actualización.</string>
     <string name="updater_installingtitle">Instalando actualización...</string>
     <string name="updater_installingmsg">NO cierres la app durante la actualización.\nLa app se cerrará al finalizar.</string>
-    <string name="updater_uptodatetitle">¡Al día!</string>
-    <string name="updater_uptodatemsg">Tienes la versión más reciente instalada.</string>
-    <string name="updater_connectionerrortitle">¡Error de conexión!</string>
-    <string name="updater_connectionerrormsg">¡No se pudo conectar al servidor!\nRevisa tu conexión a internet.</string>
     <string name="updater_downloaderrortitle">¡Error de descarga!</string>
     <string name="updater_downloaderrormsg">No se pudo descargar la actualización, intenta de nuevo.</string>
     <string name="updater_installerrortitle">¡Error de instalación!</string>
@@ -81,13 +81,15 @@
     <string name="device_batterycycles">Ciclos</string>
     <string name="device_batteryunknown">Desconocido</string>
     <string name="device_infotitle">Info de estado del dispositivo</string>
-    <string name="device_infomsg">En esta sección podras monitorear y consultar el estado de tu dispositivo.\n\nUso de CPU: aquí podras consultar el uso del procesador en tiempo real para cada núcleo, como la frecuencia actual o el uso actual en porcentaje.\n\nUso de GPU: aquí puedes consultar el uso del procesador gráfico en tiempo real como la frecuencia actual o el uso actual en porcentaje.\n\nUso de memoria: aquí puedes consultar el uso en tiempo real de la memoria RAM y ZRAM (virtual) como la frecuencia actual o el uso actual en porcentaje.\n\nEstado térmico: aquí puedes consultar las temperaturas de la CPU, GPU y batería.\n\nEstado de la batería: aquí puedes consultar la capacidad o salud de la batería</string>
+    <string name="device_infomsg">"En esta página podrás monitorear y consultar el estado de tu dispositivo.\n\nUso de CPU: aquí podrás consultar el uso del procesador en tiempo real para cada núcleo, como la frecuencia actual o el uso actual en porcentaje.\n\nUso de GPU: aquí puedes consultar el uso del procesador gráfico en tiempo real como la frecuencia actual o el uso actual en porcentaje.\n\nUso de memoria: aquí puedes consultar el uso en tiempo real de la memoria RAM y ZRAM (memoria virtual), para la RAM mostrará la frecuencia actual o el uso actual en porcentaje y para ZRAM (memoria virtual) será el uso en porcentaje y el algoritmo de compresión que se está usando.\n    - Mostrar memoria: puedes elegir si mostrar el uso o la memoria RAM o ZRAM disponible.\n\nEstado térmico: aquí puedes consultar las temperaturas de la CPU, GPU y batería en Celsius o Fahrenheit.\n    - Usar unidad Fahrenheit: permite elegir si mostrar la unidad en Fahrenheit o Celsius para las temperaturas.\n\nEstado de la batería: aquí puedes consultar la capacidad o salud de la batería."</string>
     <!-- General settings -->
     <string name="general_toolbartitle">Ajustes generales</string>
     <string name="general_sep_system">Ajustes del sistema</string>
     <string name="general_option_optimizeapps">Optimizar todas las apps</string>
     <string name="general_option_battapps">Optimización de batería en apps</string>
     <string name="general_option_cachedapps">Congelar apps en caché</string>
+    <string name="general_sep_kernel">Ajustes del Kernel</string>
+    <string name="general_option_wakelockblock">Optimizaciones de Wakelock blocker</string>
     <string name="general_sep_cpu">Ajustes de CPU</string>
     <string name="general_option_cpuhotplug">Optimizaciones de CPU hotplug</string>
     <string name="general_option_powereffi">Eficiencia energética</string>
@@ -103,7 +105,7 @@
     <string name="general_option_batteryprotect">Protección de carga de batería</string>
     <string name="general_seekbar_battlimittitle">Límite de carga de batería</string>
     <string name="general_infotitle">Info de ajustes generales</string>
-    <string name="general_infomsg">Esta sección contiene ajustes que ofrecen opciones de optimización básica.\n\nAjustes del sistema: esta categoría ofrece opciones normalmente ocultas al usuario (Se recomienda dejar los ajustes por defecto).\n\nAjustes de CPU: esta categoría ofrece opciones como eficiencia o gestión térmica (Se recomienda dejar los ajustes por defecto).\n\nAjustes de GPU: esta categoría ofrece opciones como impulso de eficiencia, etc. (Se recomienda dejar los ajustes por defecto).\n\nAjustes de memoria: esta categoría ofrece opciones relacionadas con optimizaciones de memoria virtual (ZRAM) (Se recomienda dejar los ajustes por defecto).\n\nAjustes de almacenamiento: esta categoría ofrece ajustes para mejorar la eficiencia energética de UFS (Se recomienda dejar los ajustes por defecto).\n\nAjustes de batería: esta categoría ofrece opciones de protección de carga de batería, entre otros.</string>
+    <string name="general_infomsg">"Esta página contiene ajustes que ofrecen opciones de optimización básica.\n\nAjustes del sistema: esta sección ofrece opciones normalmente ocultas al usuario (Se recomienda dejar los ajustes por defecto).\n    - Optimizar todas las apps: recompila todas las apps con ART tanto las del sistema como instaladas con su perfil de uso real para que usen menos CPU al abrir, mejorando el rendimiento y batería.\n    - Optimización de batería en apps: restringe los procesos de las apps en segundo plano.\n    - Congelar apps en caché: congela las apps en segundo plano mejorando la batería al no usar la CPU.\n\nAjustes del Kernel: esta sección ofrece opciones que funcionan a nivel de kernel, por lo que pueden o no funcionar correctamente dependiendo del kernel que se use (Se recomienda dejar los ajustes por defecto).\n    - Optimizaciones de Wakelock blocker: evita que procesos o eventos mantengan el teléfono despierto para tareas internas (control, búsqueda de redes, eventos, etc), mejorando el consumo de batería en reposo (puede retrasar ligeramente las notificaciones o reconexiones de red).\n\nAjustes de CPU: esta sección ofrece opciones como eficiencia o gestión térmica (Se recomienda dejar los ajustes por defecto).\n    - Optimizaciones de CPU hotplug: mejora la eficiencia cuando la CPU apaga o enciende sus núcleos y mejora la estabilidad del rendimiento, mejorando el consumo de batería cuando el dispositivo está en reposo.\n    - Eficiencia energética: mejora el consumo energético de la CPU al ejecutar las tareas en los núcleos ya activos, evitando activar los demás núcleos que están en reposo, mejorando la batería a lo largo del tiempo.\n    - Optimizaciones térmicas: reduce la temperatura de la CPU aplicando limitaciones ligeras térmicas y de la corriente AC a nivel de kernel, por lo que reduce el calor generado por el dispositivo, pero puede reducir un poco el rendimiento del sistema.\n    - Impulso de eficiencia de CPU: reduce los picos de alto uso de la CPU por lo que mejora el consumo de batería a lo largo del tiempo.\n\nAjustes de GPU: esta sección ofrece opciones como impulso de eficiencia, etc. (Se recomienda dejar los ajustes por defecto).\n    - Impulso de eficiencia de GPU: reduce los picos de alto uso de la GPU, reduce ligeramente la carga gráfica y aplica un perfil de bajo consumo, por lo que mejora la batería a lo largo del tiempo.\n\nAjustes de memoria: esta sección ofrece opciones relacionadas con optimizaciones de memoria virtual (ZRAM) (Se recomienda dejar los ajustes por defecto).\n    - Optimizaciones de ZRAM: reduce los intervalos en que el kernel mueve las apps de la RAM al almacenamiento y viceversa, también reduce los intervalos de compresión de la ZRAM (memoria virtual) y conserva el caché de la misma durante más tiempo, reduciendo el uso de la CPU, por lo que mejora el consumo de batería.\n\nAjustes de almacenamiento: esta sección ofrece ajustes para mejorar la eficiencia energética de UFS (Se recomienda dejar los ajustes por defecto).\n    - Optimizaciones de almacenamiento: ajusta el kernel para reducir el trabajo en cada operación de almacenamiento, sin entropía de I/O y con finalización de I/O más ligera, reduciendo así el uso de la CPU, pero puede reducir ligeramente el rendimiento de lectura y escritura.\n\nAjustes de batería: esta sección ofrece opciones de protección de carga de batería, entre otros.\n    - Protección de carga de batería: limita el porcentaje de carga máxima para proteger la batería y prolongar su salud."</string>
     <string name="general_battprotectwarningtitle">¡Importante!</string>
     <string name="general_battprotectwarningmsg">Asegúrate de que la protección de batería del sistema esté desactivada para evitar conflictos.\nPuedes verificarlo en Ajustes &gt; Batería &gt; Protección de batería.\n\nEs posible que necesites volver a conectar el cargador para que los cambios surtan efecto.</string>
     <string name="general_optimizeappstitle">¡Aviso de optimización de apps!</string>
@@ -123,7 +125,7 @@
     <string name="advanced_option_maxlittle">Frecuencia máxima de núcleos pequeños</string>
     <string name="advanced_option_maxbig">Frecuencia máxima de núcleos grandes</string>
     <string name="advanced_sep_uv">Ajustes de subtensión</string>
-    <string name="advanced_option_use_uv">Subtensión personalizadas</string>
+    <string name="advanced_option_use_uv">Subtensiones personalizadas</string>
     <string name="advanced_uv_seekbar_cpulittle">Margen de núcleos pequeños</string>
     <string name="advanced_uv_seekbar_cpubig">Margen de núcleos grandes</string>
     <string name="advanced_uv_seekbar_gpu">Margen de GPU</string>
@@ -138,14 +140,12 @@
     <string name="advanced_uv_seekbar_iva">Margen de IVA</string>
     <string name="advanced_uv_seekbar_score">Margen de SCORE</string>
     <string name="advanced_infotitle">Info de ajustes avanzados</string>
-    <string name="advanced_infomsg">Esta sección contiene opciones avanzadas como opciones de frecuencia u opciones de subtensión.\n\nAjustes de frecuencias: esta sección contiene ajustes relacionados con la frecuencia que le permiten controlar la velocidad de procesamiento para núcleos pequeños (eficiencia) y grandes (rendimiento) (Se recomienda dejar los ajustes por defecto).\n\nAjustes de subtensión: esta sección ofrece opciones relacionadas con la intensidad de voltaje para cada componente del dispositivo, estos se basan en margenes porcentuales, cada barra deslizante ofrece valores de subtensión, como CPU, GPU, RAM, pantalla, audio, etc. (Se recomienda dejar los ajustes por defecto)\n\nNota: aumentar la frecuencia/velocidad aumentará el calor generado por el dispositivo y estos ajustes pueden hacer que su dispositivo sea INESTABLE o cause CONGELAMIENTOS dependiendo de los ajustes de frecuencia y/o subtensión que esté utilizando.</string>
+    <string name="advanced_infomsg">"Esta página contiene opciones avanzadas como opciones de frecuencia de los núcleos de CPU y opciones de subtensión de cada componente.\n\nAjustes de frecuencias: esta sección contiene ajustes relacionados con la frecuencia que le permiten controlar la velocidad de procesamiento para núcleos pequeños (eficiencia) y grandes (rendimiento) (Se recomienda dejar los ajustes por defecto).\n    - Frecuencia máxima de núcleos pequeños: limita la frecuencia máxima que pueden alcanzar los núcleos pequeños de la CPU (núcleos de eficiencia).\n    - Frecuencia máxima de núcleos grandes: limita la frecuencia máxima que pueden alcanzar los núcleos grandes de la CPU (núcleos de rendimiento).\n\nAjustes de subtensión: esta sección ofrece opciones relacionadas con la intensidad de voltaje para cada componente del dispositivo, estos se basan en márgenes porcentuales, cada barra deslizante ofrece valores de subtensión, como CPU, GPU, RAM, pantalla, audio, etc. (Se recomienda dejar los ajustes por defecto).\n    - Margen de núcleos pequeños: permite reducir el margen porcentual del voltaje de los núcleos pequeños de la CPU (núcleos de eficiencia).\n    - Margen de núcleos grandes: permite reducir el margen porcentual del voltaje de los núcleos grandes de la CPU (núcleos de rendimiento).\n    - Margen de GPU: permite reducir el margen porcentual del voltaje de la GPU.\n    - Margen de RAM: permite reducir el margen porcentual del voltaje de la memoria RAM.\n    - Margen de AUDIO: permite reducir el margen porcentual del voltaje del audio del dispositivo (altavoces).\n    - Margen de CAMERA: permite reducir el margen porcentual del voltaje de los módulos de la cámara (sensores de la cámara).\n    - Margen de CP: permite reducir el margen porcentual del voltaje de las comunicaciones (redes móviles, Wi-Fi, Bluetooth, etc.).\n    - Margen de DISPLAY: permite reducir el margen porcentual del voltaje de la pantalla del dispositivo.\n    - Margen de FSYS: permite reducir el margen porcentual del voltaje del almacenamiento del dispositivo, memoria extraíble (SD card) y almacenamiento conectado mediante USB.\n    - Margen de INT: permite reducir el margen porcentual del voltaje de los buses del chipset del dispositivo.\n    - Margen de INTCAMERA: permite reducir el margen porcentual del voltaje de la cámara ISP (Sensor de procesamiento de imagen).\n    - Margen de IVA: permite reducir el margen porcentual del voltaje de los codecs de video.\n    - Margen de SCORE: permite reducir el margen porcentual del voltaje del co-procesador de visión de imagen y video.\n\nNota: aumentar la frecuencia/velocidad aumentará el calor generado por el dispositivo y estos ajustes pueden hacer que su dispositivo sea INESTABLE o cause CONGELAMIENTOS dependiendo de los ajustes de frecuencia y/o subtensión que esté utilizando."</string>
     <!-- About GURU -->
     <string name="about_toolbartitle">Acerca de GURU</string>
-    <string name="about_sep_about_battery_guru">Acerca de Battery GURU</string>
-    <string name="about_appversion">Versión de la app</string>
-    <string name="about_sep_devinfo">Info del desarrollador</string>
-    <string name="about_developer">Desarrollado por</string>
-    <string name="about_github">Fuente</string>
+    <string name="about_appversion">Versión: %1$s</string>
+    <string name="about_developer">Desarrollado por: %1$s</string>
+    <string name="about_developersummary">Perfil del desarrollador</string>
     <string name="about_githubsummary">Repositorio de GitHub</string>
     <string name="about_sep_updates">Actualizaciones</string>
     <string name="about_option_changelog">Registro de cambios</string>
@@ -159,8 +159,11 @@
     <string name="about_option_nsd">Desactivar detección de servicios de red</string>
     <string name="about_button_reset_settings">Restablecer ajustes por defecto</string>
     <string name="about_infotitle">Info de Acerca de GURU</string>
-    <string name="about_infomsg">Esta sección muestra información sobre la versión de la app, información del desarrollador, funciones experimentales y más.\n\nExperimental: funciones que aún están en pruebas pero lo suficientemente estables para el público (Estas opciones están desactivadas por defecto).</string>
+    <string name="about_infomsg">"Esta página muestra información sobre la versión de la app, actualizaciones, funciones experimentales y más.\n\nImportar/Exportar: guarda o carga los ajustes de la app en un archivo.\n    - Importar ajustes: permite cargar los ajustes de la app.\n    - Exportar ajustes: permite guardar los ajustes de la app.\n\nExperimental: funciones que aún están en pruebas pero lo suficientemente estables para el público (Estas opciones están desactivadas por defecto).\n    - Límite de procesos de apps en segundo plano: limita las apps que pueden estar abiertas en segundo plano.\n    - Forzar Doze en inactividad del dispositivo: fuerza al dispositivo a entrar en sueño profundo inmediatamente después de bloquear la pantalla del dispositivo.\n    - Desactivar detección de servicios de red: desactiva la búsqueda automática de los servicios de red local para reducir el tráfico en segundo plano, pero las apps no podrán encontrar dispositivos como Chromecast, impresoras u otros dispositivos cercanos (reduce el consumo de la batería ligeramente)."</string>
     <string name="about_changelogtitle">Registro de cambios más reciente</string>
+    <string name="about_import_warningtitle">¡Aviso de importación de ajustes!</string>
+    <string name="about_import_warningmsg">Esta acción hará que pierdas tus ajustes actuales, si estás seguro de que quieres continuar, presiona \'Importar ajustes\'.\n¡Esta acción es IRREVERSIBLE!\n\nNota: la app necesita reiniciarse después de importar los ajustes.</string>
+    <string name="about_import_warning_btn_import">Importar ajustes</string>
     <string name="about_import_errortitle">¡Error al importar los ajustes!</string>
     <string name="about_import_errormsg">El archivo seleccionado no es válido o está dañado.</string>
     <string name="about_import_successtitle">¡Ajustes importados!</string>

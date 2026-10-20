@@ -1,4 +1,8 @@
 <resources>
     <color name="Theme_Color">#000000</color>
-    <color name="Color_Warning">#C7C603</color>
+    <color name="Color_ICWarning">#FF8400</color>
+    <color name="Color_TextWarning">#C7C603</color>
+    <color name="round_and_bgcolor">@color/sesl_round_and_bgcolor_dark</color>
+    <color name="app_label_text_color">@color/sesl_action_bar_text_color_title_dark</color>
+    <color name="app_sub_text_color">@color/sesl_list_subheader_text_color_dark</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.guru.batteryoptimizer.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Handler
@@ -10,6 +11,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.atomic.AtomicBoolean
@@ -17,30 +19,24 @@ import org.json.JSONObject
 
 class GuruAPIs(private val context: Context) {
     // ======= Objet Variables =======
-    companion object {
-        init {
-            Shell.setDefaultBuilder(
-                Shell.Builder.create()
-                    .setFlags(Shell.FLAG_MOUNT_MASTER)
-                    .setTimeout(10)
-            )
-        }
-    }
+    companion object {init {Shell.setDefaultBuilder(Shell.Builder.create().setFlags(Shell.FLAG_MOUNT_MASTER).setTimeout(10))}}
+    private var currentActivity: WeakReference<Activity>? = null
     private val mainHandler = Handler(Looper.getMainLooper())
-    private var currentActivity: java.lang.ref.WeakReference<android.app.Activity>? = null
     private fun runOnUiThread(block: () -> Unit) = mainHandler.post(block)
+    @Volatile var cancelRunningOperations: Boolean = false
 
     // ======= Download State =======
+    private var onProgressCallback: ((Int) -> Unit)? = null
+    private var onCompleteCallback: (() -> Unit)? = null
+    private var onCancelCallback: (() -> Unit)? = null
+    private var onErrorCallback: (() -> Unit)? = null
     var isDownloading: Boolean = false
         private set
     var downloadProgress: Int = 0
         private set
     var downloadCompletedWhileDetached: Boolean = false
     private val downloadCancelFlag = AtomicBoolean(false)
-    private var onProgressCallback: ((Int) -> Unit)? = null
-    private var onCompleteCallback: (() -> Unit)? = null
-    private var onCancelCallback: (() -> Unit)? = null
-    private var onErrorCallback: (() -> Unit)? = null
+    private val optimizeCancelFlag = AtomicBoolean(false)
     fun reattachDownloadCallbacks(
         onProgress: ((Int) -> Unit)?,
         onComplete: () -> Unit,
@@ -58,138 +54,92 @@ class GuruAPIs(private val context: Context) {
         onCancelCallback   = null
         onErrorCallback    = null
     }
-    fun cancelActiveDownload() {
-        downloadCancelFlag.set(true)
-    }
+    fun cancelActiveDownload() { downloadCancelFlag.set(true) }
 
     // ======= Reset State =======
     var isResetting: Boolean = false
         private set
-    
+
     // ======= Optimizing Apps State =======
     var isAppOptimizing: Boolean = false
         private set
     var onOptimizeProgress: ((Int) -> Unit)? = null
     var onOptimizeComplete: (() -> Unit)? = null
     var onOptimizeCancel: (() -> Unit)? = null
-    private val optimizeCancelFlag = AtomicBoolean(false)
-    fun cancelActiveOptimize() {
-        optimizeCancelFlag.set(true)
+    fun cancelActiveOptimize() { optimizeCancelFlag.set(true) }
+    private fun optimizeCancelled() = cancelRunningOperations || optimizeCancelFlag.get()
+    private fun finishOptimizeCancelled() {
+        isAppOptimizing = false
+        runOnUiThread { onOptimizeCancel?.invoke() }
     }
 
     // ======= Helpers =======
-    private fun errorJson(e: Exception) = runCatching {
-        JSONObject().apply {
-            put("success", false)
-            put("error", e.message)
-        }.toString()
-    }.getOrElse { """{"success":false,"error":"Unknown error"}""" }
+    private fun errorJson(e: Throwable) = JSONObject().put("success", false).put("error", e.message).toString()
 
     // ======= Download File Helper =======
-    private fun downloadFile(
-        urlStr: String,
-        outFile: File,
-        onProgress: ((Int) -> Unit)? = null,
-        isCancelled: () -> Boolean = { false }
-    ) {
+    private fun downloadFile(urlStr: String, outFile: File, onProgress: ((Int) -> Unit)?, isCancelled: () -> Boolean) {
         val conn = (URL(urlStr).openConnection() as HttpURLConnection).apply {
             connectTimeout = 10_000
             readTimeout    = 10_000
             connect()
         }
-        val totalBytes = conn.contentLengthLong
-        var downloaded = 0L
-        conn.inputStream.use { input ->
-            FileOutputStream(outFile).use { output ->
-                val buffer = ByteArray(8192)
-                var bytes: Int
-                while (input.read(buffer).also { bytes = it } != -1) {
-                    if (isCancelled()) {
-                        conn.disconnect()
-                        throw CancellationException("Download cancelled")
-                    }
-                    output.write(buffer, 0, bytes)
-                    downloaded += bytes
-                    if (totalBytes > 0) {
-                        val percent = ((downloaded * 100) / totalBytes).toInt()
-                        onProgress?.invoke(percent)
+        try {
+            val totalBytes = conn.contentLengthLong
+            var downloaded = 0L
+            conn.inputStream.use { input ->
+                FileOutputStream(outFile).use { output ->
+                    val buffer = ByteArray(8192)
+                    var bytes: Int
+                    while (input.read(buffer).also { bytes = it } != -1) {
+                        if (isCancelled()) {
+                            conn.disconnect()
+                            throw CancellationException("Download cancelled")
+                        }
+                        output.write(buffer, 0, bytes)
+                        downloaded += bytes
+                        if (totalBytes > 0) onProgress?.invoke(((downloaded * 100) / totalBytes).toInt())
                     }
                 }
             }
-        }
-        conn.disconnect()
+        } finally { conn.disconnect() }
     }
-    private fun downloadFileWithRetry(
-        urlStr: String,
-        outFile: File,
-        onProgress: ((Int) -> Unit)? = null,
-        isCancelled: () -> Boolean = { false }
-    ) {
-        val retryDeadline   = System.currentTimeMillis() + 10_000L
-        val retryIntervalMs = 500L
+    private fun downloadFileWithRetry(urlStr: String, outFile: File, onProgress: ((Int) -> Unit)?, isCancelled: () -> Boolean) {
+        val retryDeadline = System.currentTimeMillis() + 10_000L
         var lastException: Exception? = null
-        var attempted = false
-        while (!attempted || System.currentTimeMillis() < retryDeadline) {
+        do {
             if (isCancelled()) throw CancellationException("Download cancelled")
             try {
                 downloadFile(urlStr, outFile, onProgress, isCancelled)
                 return
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                lastException = e
-                attempted = true
-                if (System.currentTimeMillis() < retryDeadline) {
-                    Thread.sleep(retryIntervalMs)
-                }
-            }
-        }
-        throw lastException ?: Exception("Download failed")
+            } catch (e: CancellationException) { throw e }
+            catch (e: Exception) { if (System.currentTimeMillis() < retryDeadline) Thread.sleep(500L)}
+        } while (System.currentTimeMillis() < retryDeadline)
+        throw lastException!!
     }
 
     // ============ APIs (ROOT) ============
-    @Volatile var cancelRunningOperations: Boolean = false
+    // isRoot
     fun isRoot(): String = runCatching {
         val cached = Shell.getCachedShell()
-        if (cached != null && cached.isAlive) {
-            val hasRoot = runCatching {
+        val hasRoot = if (cached != null && cached.isAlive) {
+            runCatching {
                 Shell.Builder.create()
                     .setFlags(Shell.FLAG_MOUNT_MASTER)
                     .setTimeout(5)
                     .build("su")
                     .use { it.isRoot }
-            }.getOrElse { false }
-            if (!hasRoot) closeShell()
-            JSONObject().apply {
-                put("success", true)
-                put("hasRoot", hasRoot)
-            }.toString()
+            }.getOrElse { false }.also { if (!it) closeShell() }
         } else {
             closeShell()
-            val hasRoot = Shell.getShell().isRoot
-            JSONObject().apply {
-                put("success", true)
-                put("hasRoot", hasRoot)
-            }.toString()
+            Shell.getShell().isRoot
         }
-    }.getOrElse { e ->
-        runCatching {
-            JSONObject().apply {
-                put("success", false)
-                put("hasRoot", false)
-                put("error", (e as Exception).message)
-            }.toString()
-        }.getOrElse { """{"success":false,"hasRoot":false,"error":"Unknown error"}""" }
-    }
+        JSONObject().put("success", true).put("hasRoot", hasRoot).toString()
+    }.getOrElse { e -> JSONObject().put("success", false).put("hasRoot", false).put("error", e.message).toString() }
     // getDeviceInfo
     fun getDeviceInfo(): String = runCatching {
-        val model = Shell.cmd("getprop ro.boot.em.model").exec().out
-            .firstOrNull()?.trim().orEmpty()
-        JSONObject().apply {
-            put("success", true)
-            put("model",   model)
-        }.toString()
-    }.getOrElse { e -> errorJson(e as Exception) }
+        val model = Shell.cmd("getprop ro.boot.em.model").exec().out.firstOrNull()?.trim().orEmpty()
+        JSONObject().put("success", true).put("model", model).toString()
+    }.getOrElse { e -> errorJson(e) }
     // downloadUpdate
     fun downloadUpdate(
         url: String,
@@ -201,10 +151,7 @@ class GuruAPIs(private val context: Context) {
         downloadCancelFlag.set(false)
         isDownloading = true
         downloadProgress = 0
-        onProgressCallback = onProgress
-        onCompleteCallback = onComplete
-        onCancelCallback   = onCancel
-        onErrorCallback    = onError
+        reattachDownloadCallbacks(onProgress, onComplete, onCancel, onError)
         val apkFile = File(context.cacheDir, "update.apk")
         Thread {
             runCatching {
@@ -212,24 +159,17 @@ class GuruAPIs(private val context: Context) {
                     downloadProgress = percent
                     runOnUiThread { onProgressCallback?.invoke(percent) }
                 }, isCancelled = { downloadCancelFlag.get() || cancelRunningOperations })
+                isDownloading = false
                 if (cancelRunningOperations) {
-                    isDownloading = false
                     runCatching { apkFile.delete() }
                     return@runCatching
                 }
-                isDownloading = false
-                if (onCompleteCallback != null) {
-                    runOnUiThread { onCompleteCallback?.invoke() }
-                } else {
-                    downloadCompletedWhileDetached = true
-                }
+                if (onCompleteCallback != null) runOnUiThread { onCompleteCallback?.invoke() }
+                else downloadCompletedWhileDetached = true
             }.onFailure { e ->
                 isDownloading = false
                 runCatching { apkFile.delete() }
-                if (!cancelRunningOperations) runOnUiThread {
-                    if (e is CancellationException) onCancelCallback?.invoke()
-                    else onErrorCallback?.invoke()
-                }
+                if (!cancelRunningOperations) runOnUiThread { if (e is CancellationException) onCancelCallback?.invoke() else onErrorCallback?.invoke() }
             }
         }.start()
     }
@@ -250,9 +190,7 @@ class GuruAPIs(private val context: Context) {
                     android.os.Process.killProcess(android.os.Process.myPid())
                     System.exit(0)
                 }
-            }.onFailure {
-                runOnUiThread { onError() }
-            }
+            }.onFailure { runOnUiThread { onError() } }
         }.start()
     }
     // resetToDefault
@@ -263,8 +201,7 @@ class GuruAPIs(private val context: Context) {
             if (cancelRunningOperations) { isResetting = false; return@Thread }
             runCatching {
                 if (cancelRunningOperations) { isResetting = false; return@Thread }
-                val pkg  = "com.guru.batteryoptimizer"
-                val base = "/data/data/$pkg"
+                val base = "/data/data/com.guru.batteryoptimizer"
                 val destPath = "$base/guru.sh"
                 val escaped = GuruFunctions.Scripts.GURU_SCRIPT.replace("'", "'\\''")
                 Thread.sleep(1600)
@@ -284,27 +221,19 @@ class GuruAPIs(private val context: Context) {
         isAppOptimizing = true
         optimizeCancelFlag.set(false)
         Thread {
-            if (cancelRunningOperations || optimizeCancelFlag.get()) { isAppOptimizing = false; return@Thread }
+            if (optimizeCancelled()) { isAppOptimizing = false; return@Thread }
             runCatching {
-                if (cancelRunningOperations || optimizeCancelFlag.get()) { isAppOptimizing = false; return@Thread }
+                if (optimizeCancelled()) { isAppOptimizing = false; return@Thread }
                 Thread.sleep(500)
-                if (cancelRunningOperations || optimizeCancelFlag.get()) {
-                    isAppOptimizing = false
-                    runOnUiThread { onOptimizeCancel?.invoke() }
-                    return@Thread
-                }
-                val packages = exec("pm list packages | cut -d: -f2").lines().map {it.trim()}.filter {it.isNotEmpty()}
+                if (optimizeCancelled()) { finishOptimizeCancelled(); return@Thread }
+                val packages = exec("pm list packages | cut -d: -f2").lines().map { it.trim() }.filter { it.isNotEmpty() }
                 val total = packages.size
                 var done = 0
                 for (pkg in packages) {
-                    if (cancelRunningOperations || optimizeCancelFlag.get()) {
-                        isAppOptimizing = false
-                        runOnUiThread { onOptimizeCancel?.invoke() }
-                        return@Thread
-                    }
+                    if (optimizeCancelled()) { finishOptimizeCancelled(); return@Thread }
                     exec("cmd package compile -m speed-profile \"$pkg\" > /dev/null 2>&1")
                     done++
-                    val percent = if (total > 0) ((done * 100) / total) else 0
+                    val percent = if (total > 0) (done * 100) / total else 0
                     runOnUiThread { onOptimizeProgress?.invoke(percent) }
                 }
                 Thread.sleep(100)
@@ -323,21 +252,16 @@ class GuruAPIs(private val context: Context) {
             val d = execScope.async { runCatching { exec(command) }.getOrElse { "" } }
             pendingJobs[key] = d; d
         }
-        return try {
-            deferred.await()
-        } catch (_: CancellationException) {
-            ""
-        } finally {
-            execMutex.withLock { if (pendingJobs[key] === deferred) pendingJobs.remove(key) }
-        }
+        return try { deferred.await() }
+        catch (_: CancellationException) { "" }
+        finally { execMutex.withLock { if (pendingJobs[key] === deferred) pendingJobs.remove(key) }}
     }
     // exec (core function)
     fun exec(command: String): String = runCatching {
         val result = Shell.cmd(command).exec()
-        if (!result.isSuccess) return ""
-        result.out.joinToString("\n")
+        if (result.isSuccess) result.out.joinToString("\n") else ""
     }.getOrElse { "" }
-    
+
     // ============ APIs (NON ROOT) ============
     // closeApp
     fun closeApp() {
@@ -345,18 +269,17 @@ class GuruAPIs(private val context: Context) {
             execScope.cancel()
             closeShell()
         }
-        Handler(Looper.getMainLooper()).post {
+        mainHandler.post {
             currentActivity?.get()?.finish()
-            Handler(Looper.getMainLooper()).postDelayed({ android.os.Process.killProcess(android.os.Process.myPid()) }, 250)
+            mainHandler.postDelayed({ android.os.Process.killProcess(android.os.Process.myPid()) }, 250)
         }
     }
-    fun attachActivity(activity: android.app.Activity) {currentActivity = java.lang.ref.WeakReference(activity)}
+    fun attachActivity(activity: Activity) { currentActivity = WeakReference(activity) }
     // restartApp
     fun restartApp() {
-        Handler(Looper.getMainLooper()).post {
+        mainHandler.post {
             val intent = context.packageManager.getLaunchIntentForPackage(context.packageName) ?: return@post
-            val mainIntent = Intent.makeRestartActivityTask(intent.component)
-            context.startActivity(mainIntent)
+            context.startActivity(Intent.makeRestartActivityTask(intent.component))
             Runtime.getRuntime().exit(0)
         }
     }
@@ -365,12 +288,12 @@ class GuruAPIs(private val context: Context) {
     // getAppInfo
     fun getAppInfo(): String = runCatching {
         val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-        JSONObject().apply {
-            put("success",     true)
-            put("versionCode", pInfo.longVersionCode)
-            put("versionName", pInfo.versionName)
-            put("packageName", context.packageName)
-            put("updateUrl",   "https://raw.githubusercontent.com/EliezerB03/Battery-GURU-Optimizer/master/App/updater.json")
-        }.toString()
-    }.getOrElse { e -> errorJson(e as Exception) }
+        JSONObject()
+            .put("success", true)
+            .put("versionCode", pInfo.longVersionCode)
+            .put("versionName", pInfo.versionName)
+            .put("packageName", context.packageName)
+            .put("updateUrl", "https://raw.githubusercontent.com/EliezerB03/Battery-GURU-Optimizer/master/App/updater.json")
+            .toString()
+    }.getOrElse { e -> errorJson(e) }
 }
